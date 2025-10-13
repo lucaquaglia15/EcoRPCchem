@@ -11,5 +11,7 @@
 | |_README.md
 | |_runLogger.sh
 |
-|_
+|_analysis
+|
+|_plots
 ```
