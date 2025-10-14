@@ -1,0 +1,9 @@
+setup.py
+vk4reader/__init__.py
+vk4reader/plot.py
+vk4reader/reader.py
+vk4reader/vk4extract.py
+vk4reader.egg-info/PKG-INFO
+vk4reader.egg-info/SOURCES.txt
+vk4reader.egg-info/dependency_links.txt
+vk4reader.egg-info/top_level.txt
