@@ -1,3 +1,7 @@
 *.pyc
 logger/.env
 analysis/vk4reader.egg-info
+analysis/vk4reader/vk4reader.egg-info/PKG-INFO
+analysis/vk4reader/vk4reader.egg-info/SOURCES.txt
+analysis/vk4reader/vk4reader.egg-info/dependency_links.txt
+analysis/vk4reader/vk4reader.egg-info/top_level.txt
