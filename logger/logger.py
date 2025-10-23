@@ -88,7 +88,7 @@ def read_pressure_ADC():
 
 	chan = AnalogIn(ads, ads1x15.Pin.A0)
 	press = chan.value
-	voltage = (chan.voltage)*20
+	voltage = chan.voltage
 
 	print(f"Raw ADC Value: {press}, Voltage: {voltage:.4f} V")
 
