@@ -8,6 +8,11 @@ from hvl_ccb.dev.labjack import LabJack
 from dotenv import dotenv_values
 import smbus2
 import bme280
+import busio
+
+#ADC libraries
+import board
+from adafruit_ads1x15 import ADS1115, AnalogIn, ads1x15
 
 #Read environmental temperature/pressure/humidity via BME280
 def readEnv():
@@ -73,6 +78,41 @@ def read_pressure(device_type="ANY", connection_type="ANY", identifier="ANY"):
 		print("Connection error to the labjack:", {e})
 		return None, None
 
+#Read pressure via ADC connected to pressure sensor
+def read_pressure_ADC(): 
+	
+	#Config of ADC
+	i2c = board.I2C()
+	ads = ADS1115(i2c)
+	ads.gain = 1
+
+	chan = AnalogIn(ads, ads1x15.Pin.A0)
+	press = chan.value
+	voltage = (chan.voltage)*20
+
+	print(f"Raw ADC Value: {press}, Voltage: {voltage:.4f} V")
+
+	#Connect to ADC
+	try:
+				
+		print("Press: %f V"% voltage)
+				
+		#Convert to usable values
+		#Pressure sensor: 4-20 mA sensor from 0 to 2500 mbar absolute pressure connected to a labjack probe to convert current into voltage
+		#4 mA = 0 mbar -> 0.47 V
+		#20 mA = 2500 mbar -> 2.36 V
+		#Linear relationship p = m_{press}*V + q_{press}
+		
+		mpress = 1322.7513
+		qpress = -621.693
+		pressure = mpress*voltage + qpress
+		
+		return voltage, pressure
+	
+	except (ConnectionRefusedError, OSError) as e:
+		print("Connection error to the ADC:", {e})
+		return None, None
+
 #Read temperature and humidity via ethernet
 def read_temperature_and_humidity(ip="192.168.0.7",port=1111):
 	
@@ -126,7 +166,10 @@ def main():
 	print("Current date and time:", now.strftime("%Y-%m-%d %H:%M:%S"))
 	
 	#Get pressure from labjack
-	voltagePress, pressure = read_pressure() #voltage reading, mbar reding
+	#voltagePress, pressure = read_pressure() #voltage reading, mbar reding
+
+	#Get pressure from ADC
+	voltagePress, pressure = read_pressure_ADC() #voltage reading, mbar reding
 				
 	#Get temperature and humidity from Vaisala sensor inside vessel
 	humidity, temperature = read_temperature_and_humidity()
