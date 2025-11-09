@@ -24,6 +24,9 @@
 | | | |_reader.py
 | | | |_vk4extract.py
 | |
+| |_trends
+| | |_plotPressure.py
+| |
 | |_README.md
 |
 |_plots
