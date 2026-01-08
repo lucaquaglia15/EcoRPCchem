@@ -1,5 +1,6 @@
 setup.py
 vk4reader/__init__.py
+vk4reader/correction.py
 vk4reader/plot.py
 vk4reader/reader.py
 vk4reader/vk4extract.py
