@@ -14,24 +14,25 @@ def main():
     tempEn = []
 
     with open(pathEmission, 'r') as emissions:
-        for line in emissions:
+        for element in emissions:
         
-            line = line.replace("\n", "") #Remove trailing \n
-            line = line.split("\t") #Split string in list in correspondence of \t
+            element = element.replace("\n", "") #Remove trailing \n
+            element = element.split("\t") #Split string in list in correspondence of \t
         
-            line.pop(0) #Remove first element (number identifier of the element obtained from website: https://physics.uwo.ca/~lgonchar/courses/p9826/xdb.pdf)
-            key = line[0] #Key for dictionary
+            element.pop(0) #Remove first element (number identifier of the element obtained from website: https://physics.uwo.ca/~lgonchar/courses/p9826/xdb.pdf)
+            key = element[0] #Key for dictionary
         
-            line.pop(0) #remove element name
+            element.pop(0) #remove element name
            
            #Add all emission energy to a temporary list
-            for temp in line:
+            for temp in element:
                 if temp != '—':
                     print("temp in loop:",temp)
                     tempEn.append(float(temp))
-            print("tempEn:",tempEn)
+            print("tempEn:",type(tempEn))
 
-            emissionDict.update({key: tempEn}) 
+            #Add list to dictionary, key is element name
+            emissionDict[key] = tempEn.copy()
 
             tempEn.clear() 
     
