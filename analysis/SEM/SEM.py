@@ -5,6 +5,9 @@ import scipy as s
 
 def main():
 
+    #If true -> debug printouts enabled
+    debug = False
+
     #Path to x-ray emission lines table
     pathEmission = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/xRayEmissions.txt"
 
@@ -27,16 +30,16 @@ def main():
            #Add all emission energy to a temporary list
             for temp in element:
                 if temp != '—':
-                    print("temp in loop:",temp)
                     tempEn.append(float(temp))
-            print("tempEn:",type(tempEn))
 
             #Add list to dictionary, key is element name
             emissionDict[key] = tempEn.copy()
 
+            #Clear list for next element
             tempEn.clear() 
     
-    print(emissionDict)
+    if debug:
+        print(emissionDict)
 
     #Path to spectrum csv file
     path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/SEM_measurements_December2025_w49/csvSpectra/S1_G1/Area 1/Full Area 1_1.csv"
@@ -46,13 +49,14 @@ def main():
 
     energy, counts = np.genfromtxt(path,delimiter=',',unpack=True)
 
-    print(energy)
-    print(counts)
+    if debug:
+        print("Energy:",energy)
+        print("Counts:",counts)
 
     plt.hist(energy,bins=4096,weights=counts,histtype='step')
 
-    plt.xlabel('Energy [keV]')
-    plt.ylabel('Counts')
+    plt.xlabel("Energy [keV]")
+    plt.ylabel("Counts")
     plt.yscale("log")  # Convert y-axis to logarithmic scale
     plt.show()
 
