@@ -3,6 +3,7 @@ import seaborn as sns
 import numpy as np
 import pandas as pd
 from peakutils import indexes
+from peakutils import baseline
 from scipy.signal import find_peaks as fp
 
 def main():
@@ -36,7 +37,7 @@ def main():
            #Add all emission energy to a temporary list
             for temp in element:
                 if temp != '—':
-                    tempEn.append(float(temp)*1e-3)
+                    tempEn.append(float(temp))
 
             #Add list to dictionary, key is element name
             emissionDict[key] = tempEn.copy()
@@ -65,40 +66,68 @@ def main():
     #Load spectrum to find peaks
     spectrum = pd.read_csv(path, delimiter = ',',index_col=0)
     spectrum.columns = ["Counts"]
-    spectrum.index.names = ['Energy']
+    spectrum.index.names = ["Energy"]
     
     if debug:
         print(spectrum)
 
-    #peak utils peak find parameters
+    #peak utils peak find
+    """
     mdist = 1
     thres_ = 0.025
 
     p1 = indexes(spectrum.Counts.values, min_dist=mdist,thres=thres_)
     print(spectrum.iloc[p1])
+    """
 
-    #scipy
+    #Compute baseline
+    deg = 8 #Was 7
+    bl = baseline(spectrum.Counts, deg=deg)
+
+    #scipy peak find
     h = 175
-    prom = 75 #Was 100
-    dist = None #Was 5
+    prom = 75 #Was 100 but not working as good
+    dist = None #Was 5 but not working as good either
 
-    print(spectrum.Counts.values)
+    #print(spectrum.Counts.values)
 
-    p2, _ = fp(x=spectrum.Counts,
+    peakList, _ = fp(x=spectrum.Counts,
                height=h,
                prominence=prom,
                distance=dist)
-    print("p2:",p2)
-    print("peak info:",_)
     
+    #print("peakList:",peakList)
+    #print("peak info:",_)
     
-    #With peaks
-    spectrum.plot()
+    #Energy values of peaks (in eV)
+    peakValues = []
+    possibleElements = []
     
-    sns.scatterplot(data=spectrum.iloc[p2].reset_index(),
+    for peak in peakList:
+        val = spectrum.index[peak]*1e3
+        peakValues.append(val)
+        print("values:",val, val - 0.05*val, val + 0.05*val)
+        #Identify peaks
+        for elName, elEmission in emissionDict.items():
+            if any((val - 0.03*val) <= emEnergy <= (val + 0.03*val) for emEnergy in elEmission):
+                print("peak index:",peak,"peak value:",val,"eV")
+                possibleElements.append(elName)
+
+        print("peak index:",peak,"peak value:",val,"eV. Possible elements:",possibleElements)
+        possibleElements.clear()
+    
+    #Draw with peaks
+    spectrum.plot(alpha = 0.5)
+    
+    sns.scatterplot(data=spectrum.iloc[peakList].reset_index(),
                     x = "Energy",
                     y = "Counts",
                     color = "red", alpha = 0.5)
+    
+    #Plot baseline
+    #plt.plot(spectrum.index.to_numpy(), np.asarray(bl), alpha = 0.2)
+    #Plot data - baseline
+    #plt.plot(spectrum.index.to_numpy(), np.asarray(spectrum.Counts - bl))
     
     plt.show()
 
