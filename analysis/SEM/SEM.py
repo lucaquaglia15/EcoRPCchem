@@ -54,7 +54,6 @@ def main():
 
     #Path to spectrum csv file to draw histo
     #path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/SEM_measurements_December2025_w49/csvSpectra/S1_G1/Area 1/Full Area 1_1.csv"
-
     path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/SEM_measurements_December2025_w49/csvSpectra/S1_G1/Area 2/Full Area 1_1.csv"
 
     energy, counts = np.genfromtxt(path,delimiter=',',unpack=True)
@@ -71,7 +70,7 @@ def main():
     if debug:
         print(spectrum)
 
-    #peak utils peak find
+    #peak utils peak find, not used for now
     """
     mdist = 1
     thres_ = 0.025
@@ -89,15 +88,10 @@ def main():
     prom = 75 #Was 100 but not working as good
     dist = None #Was 5 but not working as good either
 
-    #print(spectrum.Counts.values)
-
     peakList, _ = fp(x=spectrum.Counts,
                height=h,
                prominence=prom,
                distance=dist)
-    
-    #print("peakList:",peakList)
-    #print("peak info:",_)
     
     #Energy values of peaks (in eV)
     peakValues = []
