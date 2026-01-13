@@ -52,7 +52,9 @@ def main():
     #############################
 
     #Path to spectrum csv file to draw histo
-    path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/SEM_measurements_December2025_w49/csvSpectra/S1_G1/Area 1/Full Area 1_1.csv"
+    #path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/SEM_measurements_December2025_w49/csvSpectra/S1_G1/Area 1/Full Area 1_1.csv"
+
+    path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/SEM_measurements_December2025_w49/csvSpectra/S1_G1/Area 2/Full Area 1_1.csv"
 
     energy, counts = np.genfromtxt(path,delimiter=',',unpack=True)
 
@@ -70,21 +72,33 @@ def main():
 
     #peak utils peak find parameters
     mdist = 1
-    thres_ = 0.03
+    thres_ = 0.025
 
     p1 = indexes(spectrum.Counts.values, min_dist=mdist,thres=thres_)
     print(spectrum.iloc[p1])
 
-    #Raw spectrum
-    #spectrum.plot()
+    #scipy
+    h = 175
+    prom = 75 #Was 100
+    dist = None #Was 5
 
+    print(spectrum.Counts.values)
+
+    p2, _ = fp(x=spectrum.Counts,
+               height=h,
+               prominence=prom,
+               distance=dist)
+    print("p2:",p2)
+    print("peak info:",_)
+    
+    
     #With peaks
     spectrum.plot()
     
-    sns.scatterplot(data=spectrum.iloc[p1],
+    sns.scatterplot(data=spectrum.iloc[p2].reset_index(),
                     x = "Energy",
                     y = "Counts",
-                    color = "red")
+                    color = "red", alpha = 0.5)
     
     plt.show()
 
