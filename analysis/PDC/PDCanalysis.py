@@ -1,10 +1,14 @@
 import h5py
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
+import json
 
+#Show all the keys withing the hdf5 file
 def get_all(name):
     print(name)
 
+#Main
 def main():
 
     path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/PDC/unaged_old_bakelite"
@@ -14,29 +18,43 @@ def main():
     values = "block0_values"
     data = "data_" + key + "_" + volt
     dataPath = key + "/" + volt + "/" + data + "/" + values
+
+    #Key for the additional data (eq time, polarization time, depolarization time)
+    keyAdditional = "measurement_fixtures"
     
     #Number of points to be merged
-    N = 200
+    N = 100
 
     print(dataPath)
 
     fileName = path + "/" + name
 
     with h5py.File(fileName, "r") as f:
-        #Print list of keys
         for k in f.keys():
             print(k)
 
-        #print("\n")
-
+        #Load measurement data
         data = f[dataPath][:]
-    
-        #print("\n")
 
-        #Visit all groups
-        #f.visit(get_all)
+        #Load additional information about the measurement (useful to extract polarization, de-polarization and eq time of the measurement)
+        rawAdditionalData = f[keyAdditional][()]
 
-    # Plot the data without filters
+    #Convert additional info to json
+    if isinstance(rawAdditionalData, (bytes, bytearray)):
+        rawAdditionalData = rawAdditionalData.decode("utf-8")
+
+    additionalData = json.loads(rawAdditionalData)
+
+    #Extract data
+    queue = additionalData["MEASUREMENT_QUEUE"][0]
+
+    time_eq   = int(queue["TIME_EQ"])
+    time_pol  = int(queue["TIME_POL"])
+    time_dpol = int(queue["TIME_DPOL"])
+
+    print(time_eq,time_pol,time_dpol)
+
+    # All data without filters
     relTime = data[:,1]
     current = data[:,2]
 
@@ -49,18 +67,16 @@ def main():
     current_clean = current[mask]
 
     t0 = 0 #start
-    t1 = 1800 #equilibrium time
-    t2 = 1800 + 18000 #polarization
-    t3 = 1800 + 18000 + 18000 #de-polarization
+    t1 = time_eq #equilibrium time
+    t2 = time_eq + time_pol #polarization
+    t3 = time_eq + time_pol + time_dpol #de-polarization
 
     print("Size of time after cleaning:",len(relTime_clean)," size of current after cleaning:",len(current_clean))
 
     # Interval 1: 0 → 1800
     mask1 = (relTime_clean >= t0) & (relTime_clean < t1)
-
     # Interval 2: 1800 → 19800
     mask2 = (relTime_clean >= t1) & (relTime_clean < t2)
-
     # Interval 3: 19800 → 37800
     mask3 = (relTime_clean >= t2) & (relTime_clean < t3)
 
@@ -68,8 +84,14 @@ def main():
     polTime_clean, polCurrent_clean = relTime_clean[mask2], current_clean[mask2]
     dpolTime_clean, dpolCurrent_clean = relTime_clean[mask3], current_clean[mask3]
 
+    #Rescale so that all times start from 0
     polTime_clean = polTime_clean - polTime_clean[0]
     dpolTime_clean = dpolTime_clean - dpolTime_clean[0]
+
+    print("Before moving average:")
+    print("Size of equilibrium time:",len(eqTime_clean)," size of eq. current after cleaning:",len(eqCurrent_clean))
+    print("Size of polarization time:",len(polTime_clean)," size of pol. current after cleaning:",len(polCurrent_clean))
+    print("Size of depolarization time:",len(dpolTime_clean)," size of depol. current after cleaning:",len(dpolCurrent_clean))
 
     #Moving average every N samples for polarization current
     nPolTime = len(polTime_clean) // N
@@ -87,17 +109,47 @@ def main():
     dpolTime_clean_binned = np.nanmean(dpolTime_clean_trim.reshape(ndPolTime, N), axis=1)
     dpolCurrent_clean_binned = np.nanmean(dpolCurrent_clean_trim.reshape(ndPolCurrent, N), axis=1)
 
-    print("Before re-binning:")
-    print("Size of equilibrium time:",len(eqTime_clean)," size of eq. current after cleaning:",len(eqCurrent_clean))
-    print("Size of polarization time:",len(polTime_clean)," size of pol. current after cleaning:",len(polCurrent_clean))
-    print("Size of depolarization time:",len(dpolTime_clean)," size of depol. current after cleaning:",len(dpolCurrent_clean))
- 
-    print("After re-binning:")
+    print("After moving average:")
     #print("Size of equilibrium time:",len(eqTime_clean)," size of eq. current after cleaning:",len(eqCurrent_clean))
     print("Size of polarization time:",len(polTime_clean_binned)," size of pol. current after cleaning:",len(polCurrent_clean_binned))
     print("Size of depolarization time:",len(dpolTime_clean_binned)," size of depol. current after cleaning:",len(dpolCurrent_clean_binned))
+    print("Last x value of pol current after rebin:",polTime_clean_binned[-1])
+    print("Last x value of dpol current after rebin:",dpolTime_clean_binned[-1])
 
-    #Subtraction
+    #Subtraction. 
+    #Get the avergae of pol current over the last 1000 seconds
+    #Seconds in which to get average
+    DT = 1000
+
+    tPolCurrEnd = polTime_clean_binned[-1]
+    tPolCurrStart = tPolCurrEnd - DT
+
+    maskPolCurr = polTime_clean_binned >= tPolCurrStart
+
+    polcurrentLast = polCurrent_clean_binned[maskPolCurr]
+
+    mean_polCurr = np.nanmean(polcurrentLast)
+    n_points_meanPolcurr = len(polcurrentLast)
+
+    #Get the avergae of dpol current over the last 1000 seconds
+    tdPolCurrEnd = dpolTime_clean_binned[-1]
+    tdPolCurrStart = tdPolCurrEnd - DT
+
+    maskdPolCurr = dpolTime_clean_binned >= tdPolCurrStart
+
+    dpolcurrentLast = dpolCurrent_clean_binned[maskdPolCurr]
+
+    mean_dpolCurr = np.nanmean(dpolcurrentLast)
+    n_points_meandPolcurr = len(dpolcurrentLast)
+
+    #PDC current
+    pdc = mean_polCurr-mean_dpolCurr
+
+    print("Mean pol current:",mean_polCurr,"with number of points:",n_points_meanPolcurr)
+    print("Mean dpol current:",mean_dpolCurr,"with number of points:",n_points_meandPolcurr)
+    print("PDC current:",pdc)
+
+    """
     n = min(len(polCurrent_clean_binned), len(dpolCurrent_clean_binned))
     print("minimum length of the lists:",n)
 
@@ -106,49 +158,27 @@ def main():
     print(timeDiff)
 
     print("Size of timeDiff:",len(timeDiff),", size of current subtraction:",len(PDCcurret))
-
-
-    #Plot
     """
-    plt.figure()
-    #plt.plot(polTime_clean_binned, polCurrent_clean_binned, marker="o", linestyle="none")
-    #plt.plot(dpolTime_clean_binned, dpolCurrent_clean_binned, marker="o", linestyle="none")
-    plt.plot(timeDiff, PDCcurret, marker="o", linestyle="none")
-    plt.xlabel("Time [s]")
-    plt.ylabel("Current")
-    plt.title("Current vs Time")
-    plt.grid(True)
-    plt.show()
     
-
-    """
-    fig, ax_left = plt.subplots()
-
-    # Left y-axis plots
-    ax_left.plot(polTime_clean_binned, polCurrent_clean_binned, label="Polarization current", color="C0")
-    ax_left.plot(timeDiff, PDCcurret, label="Pol - depolarization currents", color="C2")
-    ax_left.set_xlabel("Time [s]")
-    ax_left.set_ylabel("Pol / Pol-Dep")
-
-    # Right y-axis
-    #ax_right = ax_left.twinx()
-    #ax_right.plot(dpolTime_clean_binned, dpolCurrent_clean_binned, label="Depolarization current", color="C1")
-    #ax_right.set_ylabel("Depolarization current")
-
-    # Combine legends
-    lines_left, labels_left = ax_left.get_legend_handles_labels()
-    #lines_right, labels_right = ax_right.get_legend_handles_labels()
-
-    """ax_left.legend(
-        lines_left + lines_right,
-        labels_left + labels_right,
-        loc="best"
-    )"""
-
+    #Plot
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    axes = plt.gca()
+    plt.plot(polTime_clean_binned, polCurrent_clean_binned, marker="o", linestyle="none",c="green",alpha=0.5,label="Polarization current")
+    plt.plot(dpolTime_clean_binned, dpolCurrent_clean_binned, marker="o", linestyle="none",c="red",alpha=0.5,label="Depolarization current")
+    #plt.plot(timeDiff, PDCcurret, marker="o", linestyle="none",c="blue")
+    maxY = axes.get_ylim()[1]
+    minY = axes.get_ylim()[0]
+    rect1 = matplotlib.patches.Rectangle((tPolCurrStart,float(minY)),DT,float(maxY-minY),color="grey",alpha=0.2)
+    ax.add_patch(rect1)
+    ax.legend()
+    
+    plt.xlabel("Time [s]")
+    plt.ylabel("Current [A]")
+    plt.grid(True)
     plt.title("Polarization, de-polarization currents")
     plt.show()
     
-
 if __name__ == "__main__":
     main()
 
