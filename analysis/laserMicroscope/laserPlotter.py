@@ -4,8 +4,8 @@ from vk4reader.reader import load
 from vk4reader.correction import plane_correction
 
 #Path to the data
-data = load("/home/luca/cernbox/marieCurie/EcoRPCchem/data/laserMicroscope/Unaged Bakelite measurements/S4_B0/150x_Oiled_defect.vk4")
-
+#data = load("/home/luca/cernbox/marieCurie/EcoRPCchem/data/laserMicroscope/Unaged Bakelite measurements/S4_B0/150x_Oiled_defect.vk4")
+data = load("/home/luca/cernbox/marieCurie/EcoRPCchem/data/bakelite/S1/S1_B0/50x_Defect_1.vk4")
 height = data["height"]
 corrected, plane, coeffs = plane_correction(height)
 
