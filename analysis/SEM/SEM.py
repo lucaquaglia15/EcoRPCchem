@@ -54,7 +54,7 @@ def main():
 
     #Path to spectrum csv file to draw histo
     #path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/SEM_measurements_December2025_w49/csvSpectra/S1_G1/Area 1/Full Area 1_1.csv"
-    path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/SEM_measurements_December2025_w49/csvSpectra/S1_G1/Area 2/Full Area 1_1.csv"
+    path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/bakelite/S8/S8_B1/csv_spectra_S8_B1/Area 1 10 kV/Full Area 1_1.csv"
 
     energy, counts = np.genfromtxt(path,delimiter=',',unpack=True)
 
@@ -80,7 +80,7 @@ def main():
     """
 
     #Compute baseline
-    deg = 8 #Was 7
+    deg = 7 #7 for glass
     bl = baseline(spectrum.Counts, deg=deg)
 
     #scipy peak find
@@ -88,11 +88,13 @@ def main():
     prom = 75 #Was 100 but not working as good
     dist = None #Was 5 but not working as good either
 
-    peakList, _ = fp(x=spectrum.Counts,
+    peakList, info = fp(x=spectrum.Counts,
                height=h,
                prominence=prom,
                distance=dist)
     
+    print(info)
+
     #Energy values of peaks (in eV)
     peakValues = []
     possibleElements = []
@@ -110,6 +112,12 @@ def main():
         print("peak index:",peak,"peak value:",val,"eV. Possible elements:",possibleElements)
         possibleElements.clear()
     
+    #Integrate peaks
+    for peakNum in range(len(peakList)):
+        lower = info["left_bases"][peakNum]
+        upper = info["right_bases"][peakNum]
+        print("Peak #:",peakNum,"lower:",lower,"upper:",upper,"area:",np.trapz(spectrum.Counts[lower:upper]))
+
     #Draw with peaks
     spectrum.plot(alpha = 0.5)
     
