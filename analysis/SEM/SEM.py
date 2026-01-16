@@ -9,6 +9,15 @@ from scipy.signal import savgol_filter
 from scipy import sparse
 from scipy.sparse.linalg import spsolve
 
+#To do 16/01/2026
+#1
+#Find a better element matching algorithm because for example the Calcium has vey intense peak but it's currently not being picked up because a match with all emission
+#lines is requested
+#2
+#understand why the integration of the peaks does not work
+#3 
+#Produce a table of the elements with their concentrations
+
 #ALS filter from https://stackoverflow.com/questions/29156532/python-baseline-correction-library
 def baseline_als(y, lam, p, niter=10):
   L = len(y)
@@ -129,19 +138,39 @@ def main():
         peakValues.append(val)
         print("values:",val, val - 0.08*val, val + 0.08*val)
 
-
+    ##################
+    # Identify peaks #
+    ##################
     for elName, elEmission in emissionDict.items():
-        print("Element:",elName)
-        print("peakVlues:",peakValues)
+        #print("Element:",elName)
+        #print("peakVlues:",peakValues)
 
         if all(any(abs(p - r) / r <= 0.08 for p in peakValues)for r in elEmission):
-            print("It's a match")
+            #print("It's a match")
             possibleElements.append(elName)
-        else:
+        else: #Remove from peakList if it does not match any emission line
             continue
     
     print("Possible elements:",possibleElements)
     
+    #############################
+    # Remove "artificial" peaks #
+    #############################
+
+    allEmissionLines = [
+        line
+        for emissions in emissionDict.values()
+        for line in emissions
+    ]
+
+    filteredPeakValues = [
+        p for p in peakValues
+        if any(abs(p - r) / r <= 0.08 for r in allEmissionLines)
+    ]
+
+    print("All peaks:",peakValues)
+    print("Real peaks:",filteredPeakValues)
+
     """
     for peak in peakList:
         val = spectrum.index[peak]*1e3
@@ -156,7 +185,7 @@ def main():
         print("peak index:",peak,"peak value:",val,"eV. Possible elements:",possibleElements)
         possibleElements.clear()
     """
-    
+
     #Integrate peaks
     for peakNum in range(len(peakList)):
         lower = info["left_bases"][peakNum]
@@ -179,24 +208,6 @@ def main():
                     y = "Counts",
                     color = "red")
     
-    """
-    spectrum.plot(alpha = 0.5)
-    
-    #2sns.scatterplot(data=spectrum.iloc[peakList].reset_index(),
-    #                x = "Energy",
-    #                y = "Counts",
-    #                color = "red", alpha = 0.5)
-    
-    sns.scatterplot(data=cleanSpectrum.iloc[peakList].reset_index(),
-                    x = "Energy",
-                    y = "Counts",
-                    color = "red", alpha = 0.5)
-    
-    #Plot baseline
-    plt.plot(spectrum.index.to_numpy(), np.asarray(bl), alpha = 0.2)
-    #Plot data - baseline
-    plt.plot(spectrum.index.to_numpy(), np.asarray(spectrum.Counts - bl))
-    """
     plt.show()
 
 if __name__ == "__main__":
