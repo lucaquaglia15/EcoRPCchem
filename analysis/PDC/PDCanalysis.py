@@ -3,35 +3,43 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 import json
+import math 
 
 #Show all the keys withing the hdf5 file
 def get_all(name):
     print(name)
 
+#Get electrode area
+def electrodeArea(diameter):
+    return math.pi*((diameter/2)**2)
+
+#Calculate resistivity
+def computeResistivity(area, pdc, thickness, voltage):
+    res = (area*voltage)/(thickness*pdc)
+    return res
+
 #Main
 def main():
 
     path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/PDC/unaged_old_bakelite"
-    name = "bakelite_test_Luca_q_long.hdf5"
+    #name = "bakelite_test_Luca_q_long.hdf5"
+    name = "bakelite_test_Luca_q_500V.hdf5"
     key = "TNone"
-    volt = "100V"
     values = "block0_values"
-    data = "data_" + key + "_" + volt
-    dataPath = key + "/" + volt + "/" + data + "/" + values
-
-    #Key for the additional data (eq time, polarization time, depolarization time)
-    keyAdditional = "measurement_fixtures"
+    keyAdditional = "measurement_fixtures" #Key for the additional data (eq time, polarization time, depolarization time, voltage)
     
     #Number of points to be merged
     N = 100
-
-    print(dataPath)
 
     fileName = path + "/" + name
 
     with h5py.File(fileName, "r") as f:
         for k in f.keys():
             print(k)
+            
+        volt = next(iter(f[key]))
+
+        dataPath = f"{key}/{volt}/data_{key}_{volt}/{values}"
 
         #Load measurement data
         data = f[dataPath][:]
@@ -51,8 +59,14 @@ def main():
     time_eq   = int(queue["TIME_EQ"])
     time_pol  = int(queue["TIME_POL"])
     time_dpol = int(queue["TIME_DPOL"])
+    voltage = float(queue["VOLTAGE_DC"])
 
-    print(time_eq,time_pol,time_dpol)
+    print(time_eq,time_pol,time_dpol,voltage)
+
+    #Thickness of sample directly from data
+    thickness = float(additionalData["SAMPLE_THICKNESS_UM"])*1e-3 #in um
+
+    print("Sample thickness from file:",thickness,"mm")
 
     # All data without filters
     relTime = data[:,1]
@@ -145,9 +159,15 @@ def main():
     #PDC current
     pdc = mean_polCurr-mean_dpolCurr
 
+    #Calculate resistivity
+    area = electrodeArea(8.4) #Diameter in cm
+    resistivity = computeResistivity(area, pdc, thickness*1e-1, voltage)
+
+    #Printouts
     print("Mean pol current:",mean_polCurr,"with number of points:",n_points_meanPolcurr)
     print("Mean dpol current:",mean_dpolCurr,"with number of points:",n_points_meandPolcurr)
     print("PDC current:",pdc)
+    print("Resistivity:","{:e}".format(resistivity),"Ohm*cm")
 
     """
     n = min(len(polCurrent_clean_binned), len(dpolCurrent_clean_binned))
