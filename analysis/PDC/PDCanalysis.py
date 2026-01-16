@@ -31,6 +31,7 @@ def main():
     #Number of points to be merged
     N = 100
 
+    #Name of HDF5 file
     fileName = path + "/" + name
 
     with h5py.File(fileName, "r") as f:
