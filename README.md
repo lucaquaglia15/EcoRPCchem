@@ -19,6 +19,9 @@
 | |_PDC
 | | |_PDCanalysis.py
 | |
+| |_SEM
+| | |_SEM.py
+| |
 | |_vk4reader
 | | |_setup.py
 | | |_vk4reader
