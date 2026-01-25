@@ -10,12 +10,166 @@ from scipy.signal import peak_widths
 from scipy import sparse
 from scipy.sparse.linalg import spsolve
 
-#To do 22/01/2026
+#To do 25/01/2026
 #1
-#Find a better element matching algorithm because for example the Calcium has vey intense peak but it's currently not being picked up because a match with all emission
-#lines is requested
-#2
-#Produce a table of the elements with their concentrations
+#Verify that it works for all data samples
+
+#Integrate valid elements
+def integrate_elements(element_map_full, spectrum):
+    import numpy as np
+
+    element_integrals = {}
+
+    for el, shells in element_map_full.items():
+        total_area = 0.0
+
+        for peak in shells["K"] + shells["L"]:
+            bounds = peak["bounds"]
+            # use first and last element as integration limits
+            lo, hi = int(bounds[0]), int(bounds[-1])
+
+            # clamp to spectrum
+            lo = max(0, lo)
+            hi = min(len(spectrum) - 1, hi)
+
+            total_area += np.trapz(spectrum[lo:hi])
+
+        element_integrals[el] = total_area
+
+    return element_integrals
+
+#Attach more info to a peak
+def peak_info(i, peakValues, bounds):
+    return {
+        "peak_idx": i,
+        "energy": peakValues[i],
+        "bounds": bounds[i]
+    }
+
+#Enrich element map info
+def attach_peak_metadata(element_map, peakValues, bounds):
+    enriched = {}
+
+    for el, shells in element_map.items():
+        enriched[el] = {"K": [], "L": []}
+
+        for shell in ("K", "L"):
+            for i in shells[shell]:
+                enriched[el][shell].append(
+                    peak_info(i, peakValues, bounds)
+                )
+
+    return enriched
+
+#Only get valid emission lines from the spectrum (to filter out spurious peaks)
+def valid_emission_lines(elements, peaks, tol=20):
+    valid_lines = set()
+
+    for lines in elements.values():
+        K, L = split_K_L(lines)
+
+        K_found = any(peak_present(e, peaks, tol) for e in K)
+        L_found = any(peak_present(e, peaks, tol) for e in L)
+
+        if L_found and not K_found:
+            continue  # reject element
+
+        valid_lines.update(K)
+        valid_lines.update(L)
+
+    return valid_lines
+
+#Remove the spurious peaks
+def filter_spurious_peaks(peakList, peakValues, bounds, valid_lines, tol=20):
+    new_peakList = []
+    new_peakValues = []
+    new_bounds = []
+
+    for idx, val, bnd in zip(peakList, peakValues, bounds):
+        if any(abs(val - e) <= tol for e in valid_lines):
+            new_peakList.append(idx)
+            new_peakValues.append(val)
+            new_bounds.append(bnd)
+
+    return new_peakList, new_peakValues, new_bounds
+
+#Split K and L lines
+def split_K_L(lines):
+    if len(lines) < 2:
+        return lines, []
+
+    split_idx = None
+    for i in range(1, len(lines)):
+        if (lines[i] + 50) < lines[i - 1]:
+            split_idx = i
+            break
+
+    if split_idx is None:
+        # Only K lines
+        return lines, []
+
+    K = lines[:split_idx]
+    L = lines[split_idx:]
+    return K, L
+
+#Peak value to index
+def match_peak_indices(peaks, lines, tol=20):
+    return [
+        i for i, p in enumerate(peaks)
+        if any(abs(p - e) <= tol for e in lines)
+    ]
+
+#Element peak indeces
+def element_peak_indices(lines, peaks, tol=20):
+    K, L = split_K_L(lines)
+
+    K_idx = match_peak_indices(peaks, K, tol)
+    L_idx = match_peak_indices(peaks, L, tol)
+
+    # Enforce physics:
+    # L lines alone are not allowed
+    if L_idx and not K_idx:
+        return None
+
+    # Element is present if at least one K or L peak exists
+    if K_idx or L_idx:
+        return {
+            "K": sorted(K_idx),
+            "L": sorted(L_idx)
+        }
+
+    return None
+
+#Build element map
+def build_element_peak_map(elements, peaks, tol=20):
+    element_map = {}
+
+    for el, lines in elements.items():
+        res = element_peak_indices(lines, peaks, tol)
+        if res is not None:
+            element_map[el] = res
+
+    return element_map
+
+#Is peak present? With 20 eV tolerance
+def peak_present(line_energy, peaks, tol=20):
+    return any(abs(p - line_energy) <= tol for p in peaks)
+
+#There is L line but no K line
+def element_present(lines, peaks, tol=20):
+    K, L = split_K_L(lines)
+    #print("K",K)
+    #print("L",L)
+
+    L_found = any(peak_present(e, peaks, tol) for e in L)
+    K_found = any(peak_present(e, peaks, tol) for e in K)
+
+    if L_found and not K_found:
+        return False   # physically inconsistent
+    elif not L_found and not K_found:
+        return False 
+    
+    return L_found or K_found
 
 #Find peak min and max 
 def findMinMax(peaks, mins):
@@ -36,7 +190,7 @@ def findMinMax(peaks, mins):
     
     return bounds
 
-#ALS filter from https://stackoverflow.com/questions/29156532/python-baseline-correction-library
+#ALS baseline from https://stackoverflow.com/questions/29156532/python-baseline-correction-library
 def baseline_als(y, lam, p, niter):
   L = len(y)
   D = sparse.diags([1,-2,1],[0,-1,-2], shape=(L,L-2))
@@ -143,7 +297,8 @@ def main():
                distance=dist)
     print(info)
 
-    # Find minima, needed for peak integration
+    #Find minima, needed for peak integration. Cannot use the built-in left/right bases since they are calculated using the peak prominence and
+    #they do not correspond exactly to what we need for peak integration
     y =cleanSpectrum
     minList, _ = fp(-y) #invert the spectrum to find minima
     bounds = findMinMax(peakList, minList) #Get peak bounds from function
@@ -151,85 +306,99 @@ def main():
 
     #Energy values of peaks (in eV)
     peakValues = []
-    possibleElements = []
 
-    #Check if all elements of emission energy list for one element
-    #are present in peak list
+    #Check if all elements of emission energy list for one element are present in peak list
     for peak in peakList:
         val = spectrum.index[peak]*1e3
         peakValues.append(val)
-        #print("values:",val, val - 0.05*val, val + 0.05*val)
         print("values:",val, val - 20, val + 20)
 
     ##################
     # Identify peaks #
     ##################
-    for elName, elEmission in emissionDict.items():
-        #print("Element:",elName)
-        #print("peakVlues:",peakValues)
-        #if all(any(abs(p - r) / r <= 0.05 for p in peakValues)for r in elEmission):
-        if all(any(abs(p - r) <= 20 for p in peakValues)for r in elEmission):    
-            #print("It's a match")
-            possibleElements.append(elName)
-        else: #Remove from peakList if it does not match any emission line
-            continue
-    
-    print("Possible elements:",possibleElements)
-    
+    elements_present = {}
+    elements_rejected = {}
+
+    #Is the emission line present in the data?
+    for el, lines in emissionDict.items():
+        present = element_present(lines, peakValues, tol=20)
+
+        if present:
+            elements_present[el] = lines
+        else:
+            elements_rejected[el] = lines
+
+    #Debug printout
+    if False:
+        print("Present elements:")
+        for el in elements_present:
+            print(el)
+
+        print("\nRejected (L without K):")
+        for el in elements_rejected:
+            print(el)
+
+    #Build a dictionary of elements and lines in the peaks I found
+    #key = element name
+    #element = list of K = [a,b,c] and L = [d,e,f] where a,...,f are the indeces of the elements in my list
+    element_peaks = build_element_peak_map(
+        emissionDict,
+        peakValues,
+        tol=20
+    )
+
+    print(element_peaks)
+   
     #############################
     # Remove "artificial" peaks #
     #############################
-    allEmissionLines = [
-        line
-        for emissions in emissionDict.values()
-        for line in emissions
-    ]
+    validLines = valid_emission_lines(emissionDict,peakValues,tol=20)
+    validPeakindices, validPeaks, validBounds = filter_spurious_peaks(peakList, peakValues, bounds, validLines, tol=20)
+    
+    print("Peaks before cleaning:",peakValues,"indices",peakList,"bounds",bounds)
+    print("Peaks after cleaning:",validPeaks,"indeces",validPeakindices,"bounds",validBounds)
 
-    filteredPeakValues = [
-        p for p in peakValues
-        #if any(abs(p - r) / r <= 0.05 for r in allEmissionLines)
-        if any(abs(p - r) <= 20 for r in allEmissionLines)
-    ]
+    #Attach all info to element map: peak position, K and L lines, bounds of each peak
+    element_map_full = attach_peak_metadata(
+        element_peaks,
+        validPeaks,
+        validBounds
+    )
 
-    print("All peaks:",peakValues)
-    print("Real peaks:",filteredPeakValues)
+    print("Full elements dictionary",element_map_full)
 
-    """
-    for peak in peakList:
-        val = spectrum.index[peak]*1e3
-        peakValues.append(val)
-        print("values:",val, val - 0.05*val, val + 0.05*val)
-        #Identify peaks
-        for elName, elEmission in emissionDict.items():
-            if any((val - 0.03*val) <= emEnergy <= (val + 0.03*val) for emEnergy in elEmission):
-                print("peak index:",peak,"peak value:",val,"eV")
-                possibleElements.append(elName)
+    ###################
+    # Integrate peaks #
+    ###################
+    totArea = 0.
+    concentrations = dict()
+    
+    totArea = integrate_elements(element_map_full,cleanSpectrum)
+    print("Integral per element:",totArea)
 
-        print("peak index:",peak,"peak value:",val,"eV. Possible elements:",possibleElements)
-        possibleElements.clear()
-    """
-
-    #Integrate peaks
-    for peakNum in range(len(peakList)):
-        #lower = info["left_bases"][peakNum]
-        #upper = info["right_bases"][peakNum]
-        lower = bounds[peakNum][0]
-        upper = bounds[peakNum][2]
-        #print("Peak #:",peakNum,"lower:",lower,"upper:",upper,"area:",np.trapz(spectrum.Counts[lower:upper]))
-        print("Peak #:",peakNum,"lower:",lower,"upper:",upper,"area:",np.trapz(cleanSpectrum[lower:upper]))
+    #Sum all areas
+    res = sum(totArea.values())
+    
+    #Compute concentration
+    for el,area in totArea.items():
+        concentrations[el] = ((area/res)*100)
+        
+    print("Concentrations",concentrations)
 
     #Draw raw spectrum
-    spectrum.plot(color="blue",alpha=0.2)
+    spectrum.plot(color="blue",alpha=0.2,label="Original data")
     #Draw with Sav-Gol filter
-    plt.plot(spectrum.index.to_numpy(), np.asarray(yFilter),color="green",label="Original spectrum")
+    plt.plot(spectrum.index.to_numpy(), np.asarray(yFilter),color="green",label="Sav-Gol filter")
     #Draw baseline
     plt.plot(spectrum.index.to_numpy(), np.asarray(bl),color="pink",alpha = 0.2,label="Baseline")
     #Plot data - baseline
     plt.plot(spectrum.index.to_numpy(), np.asarray(yFilter - bl),color="grey",label="Cleaned spectrum")
     
+    #Create df from cleaned data in order to plot the markers of the peaks on the cleaned spectrum
     clean_df = pd.DataFrame({"Energy": spectrum.index.values,"Counts": cleanSpectrum})
 
-    sns.scatterplot(data=clean_df.iloc[peakList].reset_index(),
+    #Show peaks
+    sns.scatterplot(data=clean_df.iloc[validPeakindices].reset_index(),
                     x = "Energy",
                     y = "Counts",
                     color = "red",
