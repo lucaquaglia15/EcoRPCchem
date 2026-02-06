@@ -252,8 +252,11 @@ def main():
     #Path to spectrum csv file to draw histo
     #path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/glass/S1/S1_G1/csv_spectra_S1_G1/Area 1/Full Area 1_1.csv"
     #path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/bakelite/S8/S8_B1/csv_spectra_S8_B1/Area 1 10 kV/Full Area 1_1.csv"
-    path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/glass/S1/S1_G1/csv_spectra_S1_G1/Area 4_30kV/Full Area 1_1.csv"
+    #path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/bakelite/S11/S11_B1_CS/csv_spectra_S11_B1_CS/Area 1/Selected Area 2_1.csv"
+    #path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/glass/S1/S1_G1/csv_spectra_S1_G1/Area 4_30kV/Full Area 1_1.csv"
+    path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/bakelite/S4/S4_B1/csv_spectra_S4_B1/Area 2/Full Area 1_1.csv"
     #path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/bakelite/S12/S12_B0/csv_spectra_S12_B0/Area 1 10 kV/Selected Area 4_1.csv"
+    #path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/bakelite/S12/S12_B0/csv_spectra_S12_B0/Area 1 10 kV/Full Area 1_1.csv"
 
     energy, counts = np.genfromtxt(path,delimiter=',',unpack=True)
 

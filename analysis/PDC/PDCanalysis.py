@@ -21,9 +21,13 @@ def computeResistivity(area, pdc, thickness, voltage):
 #Main
 def main():
 
-    path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/PDC/unaged_old_bakelite"
+    #path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/PDC/unaged_old_bakelite"
+    path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/bakelite/S9/S9_B0/"
     #name = "bakelite_test_Luca_q_long.hdf5"
-    name = "bakelite_test_Luca_q_500V.hdf5"
+    #name = "bakelite_test_Luca_q_500V.hdf5"
+    #name = "bakelite_test_Luca_q_500V_long.hdf5"
+    #name = "bakelite_test_Luca_q_800V.hdf5"
+    name = "bakelite_500V_dry.hdf5"
     key = "TNone"
     values = "block0_values"
     keyAdditional = "measurement_fixtures" #Key for the additional data (eq time, polarization time, depolarization time, voltage)
