@@ -11,6 +11,10 @@ from scipy import sparse
 from scipy.sparse.linalg import spsolve
 from pathlib import Path
 
+#To do 25/01/2026
+#1
+#Verify that it works for all data samples
+
 #Integrate valid elements
 def integrate_elements(element_map_full, spectrum):
     import numpy as np
@@ -255,7 +259,7 @@ def main():
     #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S4/S4_B1/csv_spectra_S4_B1/Area 2/Full Area 1_1.csv").expanduser()
     #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S12/S12_B0/csv_spectra_S12_B0/Area 1 10 kV/Selected Area 4_1.csv").expanduser()
     #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S12/S12_B0/csv_spectra_S12_B0/Area 1 10 kV/Full Area 1_1.csv").expanduser()
-    path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S7/S7_B0/csv_spectra_S7_B0/Area 1/EDS Spot 1_1.csv").expanduser()
+    path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S6/S6_B1/csv_spectra_S6_B1/Area 2/EDS Spot 3_1.csv").expanduser()
     path1 = Path("~/marieCurie/EcoRPCchem/data/bakelite/S6/S6_B1/csv_spectra_S6_B1/Area 2/EDS Spot 4_1.csv").expanduser()
     path2 = Path("~/marieCurie/EcoRPCchem/data/bakelite/S6/S6_B1/csv_spectra_S6_B1/Area 2/EDS Spot 5_1.csv").expanduser()
 
@@ -270,6 +274,14 @@ def main():
     spectrum.columns = ["Counts"]
     spectrum.index.names = ["Energy"]
 
+    spectrum1 = pd.read_csv(path1, delimiter = ',',index_col=0)
+    spectrum1.columns = ["Counts"]
+    spectrum1.index.names = ["Energy"]
+
+    spectrum2 = pd.read_csv(path2, delimiter = ',',index_col=0)
+    spectrum2.columns = ["Counts"]
+    spectrum2.index.names = ["Energy"]
+    
     if debug:
         print(spectrum)
 
@@ -303,7 +315,7 @@ def main():
 
     #Find minima, needed for peak integration. Cannot use the built-in left/right bases since they are calculated using the peak prominence and
     #they do not correspond exactly to what we need for peak integration
-    y=cleanSpectrum
+    y =cleanSpectrum
     minList, _ = fp(-y) #invert the spectrum to find minima
     bounds = findMinMax(peakList, minList) #Get peak bounds from function
     print(bounds)
@@ -351,7 +363,7 @@ def main():
         tol=20
     )
 
-    print("element_peaks:",element_peaks)
+    print(element_peaks)
    
     #############################
     # Remove "artificial" peaks #
@@ -359,19 +371,14 @@ def main():
     validLines = valid_emission_lines(emissionDict,peakValues,tol=20)
     validPeakindices, validPeaks, validBounds = filter_spurious_peaks(peakList, peakValues, bounds, validLines, tol=20)
     
-    print("Peaks before cleaning:",peakValues)
-    print("Indices before cleaning",peakList)
-    print("Bounds before cleaning",bounds)
-    
-    print("Peaks after cleaning:",validPeaks)
-    print("Indeces after cleaning",validPeakindices)
-    print("Bounds after cleaning",validBounds)
+    print("Peaks before cleaning:",peakValues,"indices",peakList,"bounds",bounds)
+    print("Peaks after cleaning:",validPeaks,"indeces",validPeakindices,"bounds",validBounds)
 
     #Attach all info to element map: peak position, K and L lines, bounds of each peak
     element_map_full = attach_peak_metadata(
         element_peaks,
-        peakValues, #validPeaks
-        bounds #validBounds
+        validPeaks,
+        validBounds
     )
 
     print("Full elements dictionary",element_map_full)
@@ -398,10 +405,13 @@ def main():
     fig, ax = plt.subplots()
 
     # Plot all on the same axis
-    #spectrum.plot(ax=ax, label='Spot 1')
+    spectrum.plot(ax=ax, label='Spot 1')
+    spectrum1.plot(ax=ax, label='Spot 2')
+    spectrum2.plot(ax=ax, label='Spot 3')
 
+    """
     #Draw raw spectrum
-    spectrum.plot(color="blue",alpha=0.2,label="EDX spot")
+    spectrum.plot(color="blue",alpha=0.2,label="Spot 1")
     
     #Draw with Sav-Gol filter
     plt.plot(spectrum.index.to_numpy(), np.asarray(yFilter),color="green",label="Sav-Gol filter")
@@ -419,12 +429,12 @@ def main():
                     y = "Counts",
                     color = "red",
                     label="Peaks")
-    
+    """
     #plt.legend()
     ax.legend(["Spot 1", "Spot 2", "Spot 3"])
     ax.set_xlabel("Energy [keV]")
     ax.set_ylabel("Counts")
-    plt.xlim(0, 10)
+    plt.xlim(0, 3)
     plt.grid(True)
     ax.grid(True,which="both",linewidth=0.3,alpha=0.5)
     plt.savefig("../../plots/S6_B1_area2_Spots.png",bbox_inches='tight',dpi=300)
