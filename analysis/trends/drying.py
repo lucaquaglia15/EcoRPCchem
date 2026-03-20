@@ -15,7 +15,7 @@ def convertTime(df):
 
 def main():
 
-    #Path to data file
+    #Path to data file, bakelite
     path = "../../data/sample_conditioning/dryingSummary.csv"
 
     #Read as pd 
@@ -82,6 +82,36 @@ def main():
     plt.legend()
     plt.savefig("../../plots/moistureContentDrying.png",bbox_inches='tight',dpi=300)
     plt.show()
+
+    #Path to data file glass
+    pathGlass = "../../data/sample_conditioning/dryingGlassSummary.csv"
+
+    #Read as pd 
+    dfDryingDataGlass = pd.read_csv(pathGlass, sep=',', header=None,skiprows=1,index_col=0)
+
+    #Index column + column names
+    dfDryingDataGlass.index.names = ["date"]
+    dfDryingDataGlass.columns = ["avgS1_G2","errAvgS1_G2","moistureS1_G2","sqrtT"]
+
+    #Convert index colum to date/time and other columns to numbers
+    convertTime(dfDryingDataGlass)
+    dfDryingDataGlass = dfDryingDataGlass.apply(pd.to_numeric)
+
+    print(dfDryingDataGlass)
+    print(dfDryingDataGlass.iloc[:, 3])
+
+    #Plot data
+    #Avg of S1_G2 +- err on S1_G2
+    ax = dfDryingDataGlass.plot(y="avgS1_G2", marker="o", linestyle="none",c="green",label="Glass sample")
+    ax.errorbar(dfDryingDataGlass.index,dfDryingDataGlass["avgS1_G2"],yerr=dfDryingDataGlass["errAvgS1_G2"],fmt="none",ecolor="green",capsize=3)
+
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Weight [g]')
+    plt.grid()
+    plt.legend()
+    plt.savefig("../../plots/weightInTimeDryGlass.png",bbox_inches='tight',dpi=300)
+    plt.show()
+
 
 if __name__ == "__main__":
 	main()
