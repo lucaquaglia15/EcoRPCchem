@@ -35,12 +35,12 @@ def main():
     temp = "°C"
     RH = "%"
 
-    vessel_P = "../../data/Absolute pressure in the vessel.csv"
-    vessel_RH = "../../data/RH in the vessel.csv"
-    vessel_T = "../../data/Temperature inside the vessel.csv"
-    lab_P = "../../data/Pressure in the lab.csv"
-    lab_T = "../../data/Temperature inside the lab.csv"
-    lab_RH = "../../data/RH in the lab.csv"
+    vessel_P = "../../data/trends/Absolute pressure in the vessel.csv"
+    vessel_RH = "../../data/trends/RH in the vessel.csv"
+    vessel_T = "../../data/trends/Temperature inside the vessel.csv"
+    lab_P = "../../data/trends/Pressure in the lab.csv"
+    lab_T = "../../data/trends/Temperature inside the lab.csv"
+    lab_RH = "../../data/trends/RH in the lab.csv"
 
     #Load CSV files
     #Vessel P
@@ -144,19 +144,20 @@ def main():
                     top=0.986, bottom=0.065, 
                     wspace=0.4, hspace=0.250)
 
+    plt.savefig("../../plots/vesselTrends_Nov2025_Feb2026.png",bbox_inches='tight',dpi=300)
     plt.show()
 
     fig1, axes1 = plt.subplots(nrows=3, ncols=1)
 
-    df_filtered_P_lab.plot(ax=axes1[0],color="blue",label="Pressure in the vessel",grid=True)
+    df_filtered_P_lab.plot(ax=axes1[0],color="blue",label="Pressure in the lab",grid=True)
     axes1[0].legend(["Lab pressure"])
     axes1[0].tick_params(labelrotation=0)
     axes1[0].set_ylabel('Pressure [mbar]')
-    df_filtered_RH_lab.plot(ax=axes1[1],color="red",label="RH in the vessel",grid=True)
+    df_filtered_RH_lab.plot(ax=axes1[1],color="red",label="RH in the lab",grid=True)
     axes1[1].legend(["Lab RH"])
     axes1[1].tick_params(labelrotation=0)
     axes1[1].set_ylabel('RH [%]')
-    df_filtered_T_lab.plot(ax=axes1[2],color="green",label="Temperature in the vessel",grid=True)
+    df_filtered_T_lab.plot(ax=axes1[2],color="green",label="Temperature in the lab",grid=True)
     axes1[2].legend(["Lab temperature"])
     axes1[2].tick_params(labelrotation=0)
     axes1[2].set_ylabel('Temperature [°C]')
@@ -165,6 +166,7 @@ def main():
                     top=0.986, bottom=0.065, 
                     wspace=0.4, hspace=0.250)
 
+    plt.savefig("../../plots/LabTrends_Nov2025_Feb2026.png",bbox_inches='tight',dpi=300)
     plt.show()
 
 if __name__ == "__main__":
