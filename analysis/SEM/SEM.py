@@ -19,76 +19,22 @@ def integrate_elements(element_map_full, spectrum):
 
     for el, shells in element_map_full.items():
         total_area = 0.0
+        print(el, shells)
 
         for peak in shells["K"] + shells["L"]:
-            bounds = peak["bounds"]
-            # use first and last element as integration limits
-            lo, hi = int(bounds[0]), int(bounds[-1])
+            print(peak[0],peak[2])
 
-            # clamp to spectrum
+            lo, hi = int(peak[0]), int(peak[2])
+
+            #Clamp to spectrum to avoid that the min and meax of each integration interval is not < 0 or > end of spectrum
             lo = max(0, lo)
             hi = min(len(spectrum) - 1, hi)
 
             total_area += np.trapezoid(spectrum[lo:hi])
-
+            
         element_integrals[el] = total_area
 
     return element_integrals
-
-#Attach more info to a peak
-def peak_info(i, peakValues, bounds):
-    return {
-        "peak_idx": i,
-        "energy": peakValues[i],
-        "bounds": bounds[i]
-    }
-
-#Enrich element map info
-def attach_peak_metadata(element_map, peakValues, bounds):
-    enriched = {}
-
-    for el, shells in element_map.items():
-        enriched[el] = {"K": [], "L": []}
-
-        for shell in ("K", "L"):
-            for i in shells[shell]:
-                enriched[el][shell].append(
-                    peak_info(i, peakValues, bounds)
-                )
-
-    return enriched
-
-#Only get valid emission lines from the spectrum (to filter out spurious peaks)
-def valid_emission_lines(elements, peaks, tol=20):
-    valid_lines = set()
-
-    for lines in elements.values():
-        K, L = split_K_L(lines)
-
-        K_found = any(peak_present(e, peaks, tol) for e in K)
-        L_found = any(peak_present(e, peaks, tol) for e in L)
-
-        if L_found and not K_found:
-            continue  # reject element
-
-        valid_lines.update(K)
-        valid_lines.update(L)
-
-    return valid_lines
-
-#Remove the spurious peaks
-def filter_spurious_peaks(peakList, peakValues, bounds, valid_lines, tol=20):
-    new_peakList = []
-    new_peakValues = []
-    new_bounds = []
-
-    for idx, val, bnd in zip(peakList, peakValues, bounds):
-        if any(abs(val - e) <= tol for e in valid_lines):
-            new_peakList.append(idx)
-            new_peakValues.append(val)
-            new_bounds.append(bnd)
-
-    return new_peakList, new_peakValues, new_bounds
 
 #Split K and L lines
 def split_K_L(lines):
@@ -113,60 +59,25 @@ def split_K_L(lines):
     L = lines[split_idx:]
     return K, L #K and L as lists
 
-#Peak value to index
-def match_peak_indices(peaks, lines, tol=20):
-    return [
-        i for i, p in enumerate(peaks)
-        if any(abs(p - e) <= tol for e in lines)
-    ]
-
-#Element peak indeces
-def element_peak_indices(lines, peaks, tol=20):
-    K, L = split_K_L(lines)
-
-    K_idx = match_peak_indices(peaks, K, tol)
-    L_idx = match_peak_indices(peaks, L, tol)
-
-    # Enforce physics:
-    # L lines alone are not allowed
-    if L_idx and not K_idx:
-        return None
-
-    # Element is present if at least one K or L peak exists
-    if K_idx or L_idx:
-        return {
-            "K": sorted(K_idx),
-            "L": sorted(L_idx)
-        }
-
-    return None
-
-#Build element map
-def build_element_peak_map(elements, peaks, tol=20):
-    element_map = {}
-
-    for el, lines in elements.items():
-        res = element_peak_indices(lines, peaks, tol)
-        if res is not None:
-            element_map[el] = res
-
-    return element_map
-
-#Is peak present? With 20 eV tolerance
-def peak_present(line_energy, peaks, tol=20):
-    return any(abs(p - line_energy) <= tol for p in peaks)
-
 #Find of the given element is present in the spectrum
 #lines = emission energies in elements dictionary
 #peaks = energy of the peaks found in data
 #tol = tolerance of 20 eV (arbitrary)
-def element_present(lines, peaks, tol=20):
+#def element_present(lines, peaks, tol=20):
+def element_present(lines, peakStructure, tol=20):   
+    
     K, L = split_K_L(lines) #Split the K and L emission lines of each element in the dictionary fo all elements
 
-    #Find peaks in our spectra that correspond to known emission lines
-    K_matches = [peak for peak in peaks if any(abs(peak - line) <= tol for line in K)]
-    L_matches = [peak for peak in peaks if any(abs(peak - line) <= tol for line in L)]
-    
+    K_matches= [
+        peak for peak in peakStructure
+        if any(abs(peak[4] - line) <= tol for line in K)
+    ]
+
+    L_matches= [
+        peak for peak in peakStructure
+        if any(abs(peak[4] - line) <= tol for line in L)
+    ]
+
     #print("K_matches:",K_matches)
     #print("L_matches:",L_matches)
 
@@ -180,16 +91,12 @@ def element_present(lines, peaks, tol=20):
     if len(L_matches) > 0:
         L_found = True
     
-    #L_found = any(peak_present(e, peaks, tol) for e in L) #Is any of the L emission lines found in the spectrum?
-    #K_found = any(peak_present(e, peaks, tol) for e in K) #Is any of the K emission lines found in the spectrum?
-
     if L_found and not K_found: #L lines are weaker than K so if we find some L lines without K it might mean that the L lines are just noise peaks
         return ([],[],False)   
     elif not L_found and not K_found: #If none is found (maybe it never happens) it is not even to be considered an element
         return ([],[],False)   
     
-    #print("K_found:",K_found,"L_found:",L_found)
-    
+    #print("K_found:",K_found,"L_found:",L_found)  
     return (K_matches, L_matches, L_found or K_found)
 
 #Find peak min and max 
@@ -234,7 +141,6 @@ def main():
     ##############################
 
     #Path to x-ray emission lines table
-    #pathEmission = "/Users/luca/marieCurie/EcoRPCchem/data/xRayEmissions.txt"
     pathEmission = Path("~/marieCurie/EcoRPCchem/data/xRayEmissions.txt").expanduser()
 
     #Dictionary for x-ray emission energy lines
@@ -324,6 +230,7 @@ def main():
                distance=dist)
     
     print("info:",info)
+    print(info['peak_heights'][0])
     print("peakList:",peakList)
 
     #Find minima, needed for peak integration. Cannot use the built-in left/right bases since they are calculated using the peak prominence and
@@ -331,80 +238,73 @@ def main():
     y=cleanSpectrum
     minList, _ = fp(-y) #invert the spectrum to find minima
     bounds = findMinMax(peakList, minList) #Get peak bounds from function
+    bounds = [(int(x), int(y), int(z)) for (x, y, z) in bounds]
     print("bounds:",bounds)
+    
+    #All peak structure in eV rather than indeces
+    peakStructure = []
+    
+    #Convert all elements from indeces to eenrgy values
+    #peak structure is: (index of left peak min, index of peak, index of right peak min, left peak min in eV, peak in eV, right peak min in eV, peak height)
+    #indeces are needed for integration and peak height for plotting element names at the end
+    for i,peak in enumerate(bounds):
+        m1 = peak[0]
+        p = peak[1]
+        m2 = peak[2]
+        m1En = spectrum.index[peak[0]]*1e3
+        pEn = spectrum.index[peak[1]]*1e3
+        m2En = spectrum.index[peak[2]]*1e3
+        h = info['peak_heights'][i]
 
-    #Energy values of peaks (in eV)
-    peakValues = []
-
-    #Append the energies of the peaks to the list (we start from indeces and move to energy values in this step)
-    for peak in peakList:
-        val = spectrum.index[peak]*1e3
-        peakValues.append(val)
-        print("values:",val, val - 20, val + 20)
+        peakTuple = (m1,p,m2,m1En,pEn,m2En,h)
+        peakStructure.append(peakTuple)
+    
+    #This is a sanity check to check if the code can detect a fake peak and not consider it in the analysis. The values are all random and made up by me
+    #extraPeak = (450,460,470,4875,4980,5090,481.63339537078315)
+    #peakStructure.append(extraPeak)
+    
+    #convert from np.float and np.int to "normal" float and int
+    peakStructure = [(int(a), int(b), int(c), float(x), float(y), float(z), float(h)) for (a, b, c, x, y, z, h) in peakStructure]
+    
+    print(peakStructure)
 
     ##################
     # Identify peaks #
     ##################
     elements_present = {}
     elements_rejected = {}
+    #Final dictionary of present elements
+    present_element_peaks = {}
 
     #Go through the dictionary of the emission lines and check if the peaks in the data are within +- 20 eV (resolution of the EDX detector is 125 eV)
     for el, lines in emissionDict.items():
         print("el:",el)
         print("lines:",lines)
+       
+        K_matches, L_matches, present = element_present(lines, peakStructure, tol=20)
 
-        K_matches, L_matches, present = element_present(lines, peakValues, tol=20)
         print("K matches in main:",K_matches)
         print("L matches in main:",L_matches)
-        
-        print("present:",present)
+        print("present in main:",present)
 
+        #Build element dictionary
+        if present:
+            present_element_peaks[el] = {
+                'K': K_matches,
+                'L': L_matches
+            }
+
+        #This is not realyl necessary for analysis but only for debug it's left
         if present:
             elements_present[el] = lines
         else:
             elements_rejected[el] = lines
-
-    print("Present elements:",elements_present)
-
-    #Debug printout
+    
+    #This is with the energy from the emission line dictionary
     if False:
-        print("Present elements:")
-        for el in elements_present:
-            print(el)
+        print("Present elements:",elements_present)
 
-        print("\nRejected (L without K):")
-        for el in elements_rejected:
-            print(el)
-
-    #Build a dictionary of elements and lines in the peaks I found
-    #key = element name
-    #element = list of K = [a,b,c] and L = [d,e,f] where a,...,f are the indeces of the elements in my list
-    element_peaks = build_element_peak_map(emissionDict,peakValues,tol=20)
-
-    print("element_peaks:",element_peaks)
-   
-    #############################
-    # Remove "artificial" peaks #
-    #############################
-    validLines = valid_emission_lines(emissionDict,peakValues,tol=20)
-    validPeakindices, validPeaks, validBounds = filter_spurious_peaks(peakList, peakValues, bounds, validLines, tol=20)
-    
-    print("Peaks before cleaning:",peakValues)
-    print("Indices before cleaning",peakList)
-    print("Bounds before cleaning",bounds)
-    
-    print("Peaks after cleaning:",validPeaks)
-    print("Indeces after cleaning",validPeakindices)
-    print("Bounds after cleaning",validBounds)
-
-    #Attach all info to element map: peak position, K and L lines, bounds of each peak
-    element_map_full = attach_peak_metadata(
-        element_peaks,
-        peakValues, #validPeaks
-        bounds #validBounds
-    )
-
-    print("\nFull elements dictionary",element_map_full,"\n")
+    print("present_element_peaks built by me",present_element_peaks)
 
     ###################
     # Integrate peaks #
@@ -412,7 +312,7 @@ def main():
     totArea = 0.
     concentrations = dict()
     
-    totArea = integrate_elements(element_map_full,cleanSpectrum)
+    totArea = integrate_elements(present_element_peaks,cleanSpectrum)
     print("Integral per element:",totArea)
 
     #Sum all areas
@@ -427,9 +327,6 @@ def main():
     # Create a single figure and axis
     fig, ax = plt.subplots()
 
-    # Plot all on the same axis
-    #spectrum.plot(ax=ax, label='Spot 1')
-
     #Draw raw spectrum
     spectrum.plot(color="blue",alpha=0.2,label="EDX spot")
     
@@ -443,14 +340,35 @@ def main():
     #Create df from cleaned data in order to plot the markers of the peaks on the cleaned spectrum
     clean_df = pd.DataFrame({"Energy": spectrum.index.values,"Counts": cleanSpectrum})
 
-    print("\n",clean_df.iloc[validPeakindices].Counts,"\n")
+    #Extract index of the peak and name of the element from the dictionary
+    validPeakindicesNames = [
+        {"idx": peak[1], "element": el}
+        for el, shells in present_element_peaks.items()
+        for peaks in shells.values()
+        for peak in peaks
+    ]
 
-    #Show peaks
-    sns.scatterplot(data=clean_df.iloc[validPeakindices].reset_index(),
-                    x = "Energy",
-                    y = "Counts",
-                    color = "red",
-                    label="Peaks")
+    #Convert to df
+    validPeakindicesNames_df = pd.DataFrame(validPeakindicesNames)
+
+    #Show peaks on the plot
+    sns.scatterplot(
+        data=clean_df.iloc[validPeakindicesNames_df["idx"]].reset_index(),
+        x="Energy",
+        y="Counts",
+        color="red",
+        label="Peaks"
+    )
+
+    #Write down element names on the plot
+    for i, row in validPeakindicesNames_df.iterrows():
+        idx = row["idx"]
+        el = row["element"]
+        
+        x = clean_df.iloc[idx]["Energy"]
+        y = clean_df.iloc[idx]["Counts"]
+        
+        plt.text(x, y+50, el, color="red", fontsize=9, ha='center', va='bottom')
     
     #plt.legend()
     ax.legend(["Spot 1", "Spot 2", "Spot 3"])
@@ -460,17 +378,6 @@ def main():
     plt.grid(True)
     ax.grid(True,which="both",linewidth=0.3,alpha=0.5)
 
-    #element_map_full is a dictionary of dictionaries
-    #each dictionary has two keys, K and L representing the emission lines as lists
-    #each of this lists only has one element and it is itself a dictionary and the key 'energy' has the information on the x position of the peak 
-    elementNames = element_map_full.keys()
-
-    for element in elementNames:
-        lines = element_map_full[element].keys()
-        for line in lines:
-            if len(element_map_full[element][line])!= 0:
-                plt.text((element_map_full[element][line][0]['energy'])/1000, 2500, str(element))
-    
     save = False
     if save:
         plt.savefig("../../plots/S6_B1_area2_Spots.png",bbox_inches='tight',dpi=300)
