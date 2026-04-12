@@ -178,8 +178,6 @@ def main():
 
     #Path to spectrum csv file to draw histo
     #If executed from python script -> get the path from .sh script, otherwise hard coded here
-    path = ""
-
     if len(sys.argv) < 2: #No string from command line
         #path = Path("~/marieCurie/EcoRPCchem/data/glass/S1/S1_G1/csv_spectra_S1_G1/Area 1/Full Area 1_1.csv").expanduser()
         #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S8/S8_B1/csv_spectra_S8_B1/Area 1 10 kV/Full Area 1_1.csv").expanduser()
@@ -385,10 +383,10 @@ def main():
 
     for i, part in enumerate(parts):
         if part.startswith("csv_spectra_"):
-            # remove prefix "csv_spectra_"
+            #Remove prefix "csv_spectra_"
             first = part.replace("csv_spectra_", "")
         
-            # build the rest of the path without .csv
+            #Build the rest of the path without .csv
             rest = Path(*parts[i+1:]).with_suffix("")
         
             sampleName = Path(first) / rest
@@ -412,7 +410,7 @@ def main():
     plt.show()
     
     path = str(path).replace(".csv",".json")
-    #Save element concentrations to a .txt file in the csv folder of each sample
+    #Save element concentrations to a .json file in the csv folder of each sample
     with open(path,"w") as conc:
         json.dump(concentrations,conc)
 
