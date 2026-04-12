@@ -8,6 +8,7 @@ from scipy import sparse
 from scipy.sparse.linalg import spsolve
 from pathlib import Path
 import sys
+import json
 
 #Integrate valid elements
 def integrate_elements(element_map_full, spectrum):
@@ -379,11 +380,41 @@ def main():
     plt.grid(True)
     ax.grid(True,which="both",linewidth=0.3,alpha=0.5)
 
-    save = False
+    #Extract sample name and region to save image and open .txt file to write out elemental concentrations
+    parts = path.parts
+
+    for i, part in enumerate(parts):
+        if part.startswith("csv_spectra_"):
+            # remove prefix "csv_spectra_"
+            first = part.replace("csv_spectra_", "")
+        
+            # build the rest of the path without .csv
+            rest = Path(*parts[i+1:]).with_suffix("")
+        
+            sampleName = Path(first) / rest
+            break
+    
+    #Convert to string
+    sampleName = str(sampleName)
+    #Replace / and spaces with _
+    sampleName = sampleName.replace("/","_")
+    sampleName = sampleName.replace(" ","_")
+
+    #Understand from the context if the plot needs to be saved on disk or not
+    if len(sys.argv) < 3:
+        save = False
+    else: 
+        save = bool(int(sys.argv[2]))
+    
     if save:
-        plt.savefig("../../plots/S6_B1_area2_Spots.png",bbox_inches='tight',dpi=300)
+        plt.savefig("../../plots/" + sampleName + ".png",bbox_inches='tight',dpi=300)
     
     plt.show()
+    
+    path = str(path).replace(".csv",".json")
+    #Save element concentrations to a .txt file in the csv folder of each sample
+    with open(path,"w") as conc:
+        json.dump(concentrations,conc)
 
 if __name__ == "__main__":
     main()
