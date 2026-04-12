@@ -2,14 +2,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import pandas as pd
-from peakutils import indexes
-from peakutils import baseline
 from scipy.signal import find_peaks as fp
 from scipy.signal import savgol_filter
-from scipy.signal import peak_widths
 from scipy import sparse
 from scipy.sparse.linalg import spsolve
 from pathlib import Path
+import sys
 
 #Integrate valid elements
 def integrate_elements(element_map_full, spectrum):
@@ -173,19 +171,26 @@ def main():
     if debug:
         print(emissionDict)
 
-    #############################
-    # Load spectra from samples #
-    #############################
+    ###############################
+    # Load spectra from sample(s) #
+    ###############################
 
     #Path to spectrum csv file to draw histo
-    #path = Path("~/marieCurie/EcoRPCchem/data/glass/S1/S1_G1/csv_spectra_S1_G1/Area 1/Full Area 1_1.csv").expanduser()
-    #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S8/S8_B1/csv_spectra_S8_B1/Area 1 10 kV/Full Area 1_1.csv").expanduser()
-    #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S11/S11_B1_CS/csv_spectra_S11_B1_CS/Area 1/Selected Area 2_1.csv").expanduser()
-    path = Path("~/marieCurie/EcoRPCchem/data/glass/S1/S1_G1/csv_spectra_S1_G1/Area 4_30kV/Full Area 1_1.csv").expanduser()
-    #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S4/S4_B1/csv_spectra_S4_B1/Area 2/Full Area 1_1.csv").expanduser()
-    #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S12/S12_B0/csv_spectra_S12_B0/Area 1 10 kV/Selected Area 4_1.csv").expanduser()
-    #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S12/S12_B0/csv_spectra_S12_B0/Area 1 10 kV/Full Area 1_1.csv").expanduser()
-    #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S7/S7_B0/csv_spectra_S7_B0/Area 1/EDS Spot 1_1.csv").expanduser()
+    #If executed from python script -> get the path from .sh script, otherwise hard coded here
+    path = ""
+
+    if len(sys.argv) < 2: #No string from command line
+        #path = Path("~/marieCurie/EcoRPCchem/data/glass/S1/S1_G1/csv_spectra_S1_G1/Area 1/Full Area 1_1.csv").expanduser()
+        #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S8/S8_B1/csv_spectra_S8_B1/Area 1 10 kV/Full Area 1_1.csv").expanduser()
+        #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S11/S11_B1_CS/csv_spectra_S11_B1_CS/Area 1/Selected Area 2_1.csv").expanduser()
+        #path = Path("~/marieCurie/EcoRPCchem/data/glass/S1/S1_G1/csv_spectra_S1_G1/Area 4_30kV/Full Area 1_1.csv").expanduser()
+        #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S4/S4_B1/csv_spectra_S4_B1/Area 2/Full Area 1_1.csv").expanduser()
+        #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S12/S12_B0/csv_spectra_S12_B0/Area 1 10 kV/Selected Area 4_1.csv").expanduser()
+        #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S12/S12_B0/csv_spectra_S12_B0/Area 1 10 kV/Full Area 1_1.csv").expanduser()
+        path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S7/S7_B0/csv_spectra_S7_B0/Area 1/EDS Spot 1_1.csv").expanduser()
+    
+    else:
+        path = Path(sys.argv[1]).expanduser()
 
     energy, counts = np.genfromtxt(path,delimiter=',',unpack=True)
 
@@ -324,11 +329,8 @@ def main():
         
     print("Concentrations",concentrations)
 
-    # Create a single figure and axis
-    fig, ax = plt.subplots()
-
-    #Draw raw spectrum
-    spectrum.plot(color="blue",alpha=0.2,label="EDX spot")
+    #Create single plot
+    ax = spectrum.plot(color="blue",alpha=0.4,label="EDX spot")
     
     #Draw with Sav-Gol filter
     plt.plot(spectrum.index.to_numpy(), np.asarray(yFilter),color="green",label="Sav-Gol filter")
@@ -370,8 +372,7 @@ def main():
         
         plt.text(x, y+50, el, color="red", fontsize=9, ha='center', va='bottom')
     
-    #plt.legend()
-    ax.legend(["Spot 1", "Spot 2", "Spot 3"])
+    plt.legend()
     ax.set_xlabel("Energy [keV]")
     ax.set_ylabel("Counts")
     plt.xlim(0, 10)
