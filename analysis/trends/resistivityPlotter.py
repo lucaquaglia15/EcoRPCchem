@@ -10,12 +10,14 @@ def linear(x, a, b):
 #Convert time to datetime
 def convertTime(df):
     #df["date"] = pd.to_datetime(df["date"], errors="coerce")
-    df.index = pd.to_datetime(df.index,errors="coerce",dayfirst=True)
+    df.index = pd.to_datetime(df.index,errors="coerce",format="%d/%m/%Y %H:%M")
     
+    """
     df["date"] = pd.to_datetime(
     df["date"],
     format="%d/%m/%Y %H:%M"
-)
+    )
+    """
     return df
 
 def main():
@@ -33,7 +35,9 @@ def main():
     sMatExposure = "Material exposure"
 
     #Load each sheet in a pandas df
-    dfSpacers = pd.read_excel(file_name, sheet_name=sSpacers,index_col=0,skiprows=1,usecols="A:N")
+    dfNewSpacers = pd.read_excel(file_name, sheet_name=sSpacers,index_col=0,skiprows=1,usecols="A:M")
+    dfMatCompSpacers = pd.read_excel(file_name, sheet_name=sSpacers,index_col=0,skiprows=1,usecols="P:AB")
+    dfAgedSpacers = pd.read_excel(file_name, sheet_name=sSpacers,index_col=0,skiprows=1,usecols="AE:AQ")
     dfNewDrying= pd.read_excel(file_name, sheet_name=sNewDrying,index_col=0,skiprows=1,usecols="A:N") #Ok
     dfOldHumidAir = pd.read_excel(file_name, sheet_name=sOldHumidAir,index_col=0,skiprows=1,usecols="A:N") #Ok
     dfOldWater = pd.read_excel(file_name, sheet_name=sOldWater,index_col=0,skiprows=1,usecols="A:N") #Ok
@@ -44,7 +48,33 @@ def main():
     dfMatExposure_S3_B0 = pd.read_excel(file_name, sheet_name=sMatExposure,index_col=0,skiprows=1,usecols="Q:AD")
     dfMatExposure_S8_B4 = pd.read_excel(file_name, sheet_name=sMatExposure,index_col=0,skiprows=1,usecols="AG:AT")
 
-    print(dfOldWater)  # print first 5 rows of the dataframe
+    print(dfOldHumidAir)  # print first 5 rows of the dataframe
+
+    #Index column + column names
+    #spacers
+    dfNewSpacers.index.names = ["date"]
+    dfNewSpacers.columns = ["resistance","avgRes","errAvgRes","resistivity","avgResistivity","errAvgResistivity","voltage",
+                            "RH","T","elTime","area","thickness"]
+
+    dfMatCompSpacers.index.names = ["date"]
+    dfMatCompSpacers.columns = ["resistance","avgRes","errAvgRes","resistivity","avgResistivity","errAvgResistivity","voltage",
+                            "RH","T","elTime","area","thickness"]
+    
+    dfAgedSpacers.index.names = ["date"]
+    dfAgedSpacers.columns = ["resistance","avgRes","errAvgRes","resistivity","avgResistivity","errAvgResistivity","voltage",
+                            "RH","T","elTime","area","thickness"]
+    
+    convertTime(dfNewSpacers)
+    dfNewSpacers = dfNewSpacers.apply(pd.to_numeric)
+    dfNewSpacers = dfNewSpacers.dropna()
+
+    convertTime(dfMatCompSpacers)
+    dfMatCompSpacers = dfMatCompSpacers.apply(pd.to_numeric)
+    dfMatCompSpacers = dfMatCompSpacers.dropna()
+
+    convertTime(dfAgedSpacers)
+    dfAgedSpacers = dfAgedSpacers.apply(pd.to_numeric)
+    dfAgedSpacers = dfAgedSpacers.dropna()  
 
     #Index column + column names
     #2025 bakelite drying
@@ -131,16 +161,56 @@ def main():
     dfMatExposure_S8_B4 = dfMatExposure_S8_B4.dropna()
 
     #print(dfOldWater)
+    print(dfOldHumidAir)
 
     #Plot data
-    #Avg of 
-    ax = dfOldWater.plot(y="avgRes", marker="o", linestyle="none",c="green",label="Sample 1")
-    ax.plot(dfMatExposure_S2_B0["avgRes"], marker="o", linestyle="none",c="blue",label="Sample 2")
-    ax.plot(dfMatExposure_S3_B0["avgRes"], marker="o", linestyle="none",c="pink",label="Sample 3")
-    ax.plot(dfMatExposure_S8_B4["avgRes"], marker="o", linestyle="none",c="red",label="Sample 4")
-    #ax.errorbar(dfOldWater.index,dfOldWater["avgRes"],yerr=dfOldWater["errAvgRes"],fmt="none",ecolor="green",capsize=3)
-    ax.set_yscale('log')
-    plt.grid()
+    #Spacers
+    #ax = dfNewSpacers.plot(y="avgRes", marker="o", linestyle="none",c="green",label="New spacers")
+    #ax.plot(dfMatCompSpacers["avgRes"], marker="o", linestyle="none",c="blue",label="Spacers after material compatibiliy")
+    #ax.plot(dfAgedSpacers["avgRes"], marker="o", linestyle="none",c="red",label="Spacers from aged RPC")
+
+    #New bakelite drying
+    #ax = dfNewDrying.plot(y="avgRes", marker="o", linestyle="none",c="green",label="New baeklite drying")
+
+    #Old bakelite humid air
+    #ax = dfOldHumidAir.plot(y="avgRes", marker="o", linestyle="none",c="green",label="Old bakelite humid air")
+
+    #Old bakelite water
+    #ax = dfOldWater.plot(y="avgRes", marker="o", linestyle="none",c="green",label="Old bakelite in water")
+
+    #Old bakelite ambient
+    #ax = dfOldAmbient.plot(y="avgRes", marker="o", linestyle="none",c="green",label="Old bakelite ambient")
+
+    #Aged RPC
+    #ax = dfAgedRPC_S6_B3.plot(y="avgRes", marker="o", linestyle="none",c="green",label="HV electrode aged RPC")
+    #ax.plot(dfAgedRPC_S7_B3["avgRes"], marker="o", linestyle="none",c="blue",label="GND electrode aged RPC")
+
+    #Material exposure
+    #ax = dfMatExposure_S2_B0.plot(y="avgRes", marker="o", linestyle="none",c="green",label="After material compatibility (old, no oil)")
+    #ax.plot(dfMatExposure_S3_B0["avgRes"], marker="o", linestyle="none",c="blue",label="After material compatibility (old, with oil)")
+    #ax.plot(dfMatExposure_S8_B4["avgRes"], marker="o", linestyle="none",c="red",label="After material compatibility (new, with oil)")
+
+    fig1, ax1 = plt.subplots()
+
+    ax1 = dfMatExposure_S2_B0.plot(y="avgRes", marker="o", linestyle="none",c="green",label="After material compatibility (old, no oil)")
+    ax1.plot(dfMatExposure_S3_B0["avgRes"], marker="o", linestyle="none",c="blue",label="After material compatibility (old, with oil)")
+    ax1.plot(dfOldAmbient["avgRes"], marker="o", linestyle="none",c="pink",label="Old bakelite ambient")
+    ax1.plot(dfMatExposure_S8_B4["avgRes"], marker="o", linestyle="none",c="red",label="After material compatibility (new, with oil)")
+
+    ax1.set_yscale('log')
+    ax1.grid(True, which="both")
+    ax1.legend()
+
+    fig2, ax2 = plt.subplots()
+
+    ax2 = dfMatExposure_S8_B4.plot(y="avgRes", marker="o", linestyle="none",c="green",label="After mat comp (new, oil)")
+    ax2.plot(dfAgedRPC_S6_B3["avgRes"], marker="o", linestyle="none",c="blue",label="Aged RPC HV")
+    ax2.plot(dfAgedRPC_S7_B3["avgRes"], marker="o", linestyle="none",c="pink",label="Aged RPC GND")
+
+    ax2.set_yscale('log')
+    ax2.grid(True, which="both")
+    ax2.legend()
+    
     plt.show()
     
     """
