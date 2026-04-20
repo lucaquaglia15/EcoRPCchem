@@ -15,6 +15,7 @@ import board
 from adafruit_ads1x15 import ADS1115, AnalogIn, ads1x15
 
 #Read environmental temperature/pressure/humidity via BME280
+"""
 def readEnv():
 	# BME280 sensor address (default address)
 	address = 0x76
@@ -39,7 +40,7 @@ def readEnv():
 	except Exception as e:
 		print('An unexpected error occurred while fetching the BME280 parameters:', str(e))
 		return None, None, None
-
+"""
 #Read pressure via labjack
 def read_pressure(device_type="ANY", connection_type="ANY", identifier="ANY"): 
 	
@@ -175,8 +176,11 @@ def main():
 	humidity, temperature = read_temperature_and_humidity()
 	
 	#Get env temperature, pressure and humidity from BME280 outside vessel
-	envTemp, envPress, envHumi = readEnv()
-	
+	#envTemp, envPress, envHumi = readEnv()
+	envTemp = None
+	envPress = None
+	envHumi = None
+		
 	#Printout for debug
 	if temperature is not None and pressure is not None and humidity is not None:
 		print("Temperature: %f C" % temperature)
