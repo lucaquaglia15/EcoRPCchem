@@ -2,14 +2,14 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import pandas as pd
+from pathlib import Path
 
 #Plot data from elemental map analysis
 def main():
 
     debug = False
     
-    #path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/bakelite/S12/S12_B0/csv_spectra_S12_B0/Area 1 10 kV/Live Map 1_Roi_C K_ImageView_1.csv"
-    path = "/home/luca/cernbox/marieCurie/EcoRPCchem/data/bakelite/S12/S12_B0/csv_spectra_S12_B0/Area 1 10 kV/Live Map 1_Roi_N K_ImageView_1.csv"
+    path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S1/S1_B1/csv_spectra_S1_B1/Area 5 10 kV/Live Map 1_Roi_C K_ImageView_1.csv").expanduser()
 
     #Get data in df
     counts = pd.read_csv(path, delimiter = ',', skiprows=4, index_col=0)
@@ -42,7 +42,7 @@ def main():
 
     #2D histogram
     plt.figure(figsize=(8, 6))
-    plt.pcolormesh(y, x, values_flipped, shading='nearest')
+    plt.pcolormesh(y, x, values_flipped, shading='nearest',cmap='nipy_spectral')
     plt.colorbar(label="Counts")
     plt.xlabel("X")
     plt.ylabel("Y")
