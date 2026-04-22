@@ -30,7 +30,7 @@ def main():
     sNewDrying = "New Bakelite drying"
     sOldHumidAir = "Old bakelite humid air"
     sOldWater = "Old bakelite in water"
-    sOldAmbient = "Old bakelite ambient"
+    sOldAmbient = "Bakelite ambient"
     sAgedRPC = "Aged RPC"
     sMatExposure = "Material exposure"
 
