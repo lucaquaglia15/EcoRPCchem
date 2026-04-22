@@ -21,6 +21,10 @@
 | |
 | |_SEM
 | | |_SEM.py
+| | |_SEM_elementalMap.py
+| | |_SEM_multiPlot.py
+| | |_mergeJSON.py
+| | |_runSemAnalysis.sh
 | |
 | |_vk4reader
 | | |_setup.py
@@ -32,9 +36,13 @@
 | | | |_vk4extract.py
 | |
 | |_trends
+| | |_drying.py
 | | |_plotPressure.py
+| | |_resistivityPlotter.py
+| | |_vesselCondition.py
 | |
 | |_README.md
 |
 |_plots
+| |_README.md
 ```
