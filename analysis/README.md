@@ -25,6 +25,13 @@
 | |_plotPressure.py
 | |_resistivityPlotter.py
 | |_vesselCondition.py
+|
+|_SEM
+| |_SEM.py
+| |_SEM_elementalMap.py
+| |_SEM_multiPlot.py
+| |_mergeJSON.py
+| |_runSemAnalysis.sh
 ```
 ## Folder description
 
@@ -46,3 +53,10 @@
     - plotPressure.py: code to use to plot the trend of the pressure data within the vessel during the filling process
     - resistivityPlotter.py: code to use to plot the trend of the resistivity measured with the HP4339B high resistance meter for different materials
     - vesselCondition.py: code to use to plot the environmental parameters within the vessel and the lab
+
+- SEM: folder which contains the codes used to run the analysis on the EDX data obtained from the SEM
+    - SEM.py: main code to analyze EDX spectra. It filters the data, calculate baseline and removes it, finds peak and itegrate them to have concentrations estimates and saves output to .json files
+    - SEM_elementalMap.py: plots the 2D elemental map (when it has been acquired)
+    - SEM_multiPlot.py: plots several EDX spectra on the same plot
+    - mergeJSON.py: it opens all the .json files from each EDX spot/area obtained from SEM.py and saves all the data from a given area in a global .json file
+    - runSemAnalysis.sh: script used to run multiple times SEM.py on different files and enabling saving of the plots       
