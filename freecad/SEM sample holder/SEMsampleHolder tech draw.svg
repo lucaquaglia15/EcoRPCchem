@@ -1,0 +1,381 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<svg viewBox="0 0 2970 2100" height="210mm" xmlns:dc="http://purl.org/dc/elements/1.1/" width="297mm" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:cc="http://creativecommons.org/ns#" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" baseProfile="tiny" xmlns:freecad="https://www.freecad.org/wiki/index.php?title=Svg_Namespace" version="1.2" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <title>FreeCAD SVG Export</title>
+ <desc>Drawing page: Page exported from FreeCAD document: SEMsampleHolder</desc>
+ <defs/>
+ <g inkscape:label="TechDraw" id="Page" inkscape:groupmode="layer">
+  <g transform="scale(10.000000, 10.000000)" style="stroke: none;" id="A4_Landscape_ISO5457_minimal1.svg">
+   <title id="title">Drawing sheet ISO 5457 - A4T - Minimal</title>
+   <metadata id="metadata">
+    <rdf:RDF>
+     <cc:Work rdf:about="">
+      <cc:license rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/"/>
+      <dc:title>Drawing sheet ISO 5457 - A4T - Minimal</dc:title>
+      <dc:creator>
+       <cc:Agent>
+        <dc:title>Benjamin May</dc:title>
+       </cc:Agent>
+      </dc:creator>
+     </cc:Work>
+     <cc:License rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+      <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+      <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+      <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+     </cc:License>
+    </rdf:RDF>
+   </metadata>
+   <rect x="20" y="10" style="fill:none;stroke:#000000;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:round" height="190" width="267" id="drawing_space_frame"/>
+   <g style="fill:none;stroke:#000000;stroke-width:0.7;stroke-linecap:round" id="centring_marks">
+    <path id="top_centering" d="m 148.5,5 v 10"/>
+    <path id="right_centering" d="m 292,105 h -10"/>
+    <path id="bottom_centering" d="m 148.5,205 v -6"/>
+    <path id="left_centering" d="m 15,105 h 10"/>
+   </g>
+   <g id="grid_reference_system">
+    <g style="fill:none;stroke:#000000;stroke-width:0.35;stroke-linecap:round;stroke-linejoin:round" id="grid_reference_borders">
+     <rect x="15" y="5" height="200" width="277" id="grid_reference_border"/>
+     <path id="upper_border_1" d="m 48.5,5 v 5"/>
+     <path id="upper_border_2" d="m 98.5,5 v 5"/>
+     <path id="upper_border_4" d="m 198.5,5 v 5"/>
+     <path id="upper_border_5" d="m 248.5,5 v 5"/>
+     <path id="right_border_1" d="m 292,55 h -5"/>
+     <path id="right_border_3" d="m 292,155 h -5"/>
+     <path id="lower_border_1" d="m 48.5,205 v -5"/>
+     <path id="lower_border_2" d="m 98.5,205 v -5"/>
+     <path id="lower_border_4" d="m 198.5,205 v -5"/>
+     <path id="lower_border_5" d="m 248.5,205 v -5"/>
+     <path id="left_border_1" d="m 15,55 h 5"/>
+     <path id="left_border_3" d="m 15,155 h 5"/>
+    </g>
+    <g style="font-size:3.5px;font-family:osifont;text-align:center;text-anchor:middle;fill:#000000;stroke:none" id="grid_reference_markers">
+     <text x="23.5" y="8.8" id="upper_marker_1">1</text>
+     <text x="73.5" y="8.8" id="upper_marker_2">2</text>
+     <text x="123.5" y="8.8" id="upper_marker_3">3</text>
+     <text x="173.5" y="8.8" id="upper_marker_4">4</text>
+     <text x="223.5" y="8.8" id="upper_marker_5">5</text>
+     <text x="273.5" y="8.8" id="upper_marker_6">6</text>
+     <text x="289.5" y="31.3" id="right_marker_1">A</text>
+     <text x="289.5" y="81.3" id="right_marker_2">B</text>
+     <text x="289.5" y="131.3" id="right_marker_3">C</text>
+     <text x="289.5" y="181.3" id="right_marker_4">D</text>
+     <text x="273.5" y="203.8" id="lower_marker_6">A4</text>
+    </g>
+   </g>
+   <g style="fill:#000000;stroke:none" id="trimming_marks">
+    <path id="top_left_trimming" d="m 0,0 h 10 v 5 h -5 v 5 h -5 z"/>
+    <path id="top_right_trimming" d="m 297,0 h -10 v 5 h 5 v 5 h 5 z"/>
+    <path id="bottom_right_trimming" d="m 297,210 h -10 v -5 h 5 v -5 h 5 z"/>
+    <path id="bottom_left_trimming" d="m 0,210 h 10 v -5 h -5 v -5 h -5 z"/>
+   </g>
+   <!-- Title block -->
+   <g style="fill:none;stroke:#000000;stroke-width:0.35;stroke-linecap:round;stroke-linejoin:round" id="title_block_borders">
+    <rect x="107" y="164" style="stroke-width:0.7" height="36" width="180" id="title_block_frame"/>
+    <rect x="247" y="164" height="24" width="40" id="legal_owner_border"/>
+    <rect x="107" y="188" height="12" width="80" id="identification_number_border"/>
+    <rect x="247" y="188" height="12" width="20" id="revision_index_border"/>
+    <rect x="207" y="188" height="12" width="40" id="date_of_issue_border"/>
+    <rect x="267" y="188" height="12" width="20" id="sheet_number_border"/>
+    <rect x="187" y="188" height="12" width="20" id="language_code_border"/>
+    <rect x="107" y="164" height="12" width="80" id="title_border"/>
+    <rect x="187" y="176" height="12" width="60" id="approval_person_border"/>
+    <rect x="187" y="164" height="12" width="60" id="creator_border"/>
+    <rect x="107" y="176" height="12" width="80" id="document_type_border"/>
+   </g>
+   <g style="font-size:3.5px;font-family:osifont;text-anchor:start;fill:#000000;stroke:none" id="title_block_labels">
+    <text x="247.5" y="167.6" id="legal_owner label">Owner:</text>
+    <text x="107.5" y="191.6" id="identification_number_label">Drawing number:</text>
+    <text x="247.5" y="191.6" id="revision_index_label">Revision:</text>
+    <text x="207.5" y="191.6" id="date_of_issue_label">Issue date:</text>
+    <text x="267.5" y="191.6" id="sheet_number_label">Sheet:</text>
+    <text x="187.5" y="191.6" id="language_code_label">Language:</text>
+    <text x="107.5" y="167.6" id="title_label">Title:</text>
+    <text x="187.5" y="179.6" id="approval_person_label">Approved by:</text>
+    <text x="187.5" y="167.6" id="creator_label">Created by:</text>
+    <text x="107.5" y="179.6" id="document_type_label">Document type:</text>
+    <text x="227.5" y="155.6" id="sheet_scale_label">Scale:</text>
+    <text x="187.5" y="155.6" id="general_tolerances_label">General tolerances:</text>
+    <text x="107.5" y="155.6" id="part_material_label">Part Material:</text>
+   </g>
+   <g style="font-size:5px;font-family:osifont;text-anchor:start;fill:#000000;stroke:none" id="title_block_data_fields">
+    <text x="267" y="173.1" style="font-size:3.5px;text-align:center;text-anchor:middle" freecad:editable="legal_owner_1" freecad:autofill="organization" id="legal_owner_1_data_field">
+     <tspan xml:space="preserve"/>
+    </text>
+    <text x="267" y="177.1" style="font-size:3.5px;text-align:center;text-anchor:middle" freecad:editable="legal_owner_2" id="legal_owner_2_data_field">
+     <tspan xml:space="preserve"/>
+    </text>
+    <text x="267" y="181.1" style="font-size:3.5px;text-align:center;text-anchor:middle" freecad:editable="legal_owner_3" id="legal_owner_3_data_field">
+     <tspan xml:space="preserve"/>
+    </text>
+    <text x="267" y="185.1" style="font-size:3.5px;text-align:center;text-anchor:middle" freecad:editable="legal_owner_4" id="legal_owner_4_data_field">
+     <tspan xml:space="preserve"/>
+    </text>
+    <text x="108" y="197.2" freecad:editable="identification_number" id="identification_number_data_field">
+     <tspan xml:space="preserve">DN</tspan>
+    </text>
+    <text x="257" y="197.2" style="text-align:center;text-anchor:middle" freecad:editable="revision_index" id="revision_index_data_field">
+     <tspan xml:space="preserve">AAA</tspan>
+    </text>
+    <text x="208" y="197.2" freecad:editable="date_of_issue" freecad:autofill="date" id="date_of_issue_data_field">
+     <tspan xml:space="preserve">18/02/26</tspan>
+    </text>
+    <text x="277" y="197.2" style="text-align:center;text-anchor:middle" freecad:editable="sheet_number" freecad:autofill="sheet" id="sheet_number_data_field">
+     <tspan xml:space="preserve">1 / 1</tspan>
+    </text>
+    <text x="197" y="197.2" style="text-align:center;text-anchor:middle" freecad:editable="language_code" id="language_code_data_field">
+     <tspan xml:space="preserve">EN</tspan>
+    </text>
+    <text x="108" y="173.2" freecad:editable="title" freecad:autofill="title" id="title_data_field">
+     <tspan xml:space="preserve">SEMsampleHolder</tspan>
+    </text>
+    <text x="188" y="185.2" freecad:editable="approval_person" id="approval_person_data_field">
+     <tspan xml:space="preserve">B. Hecate</tspan>
+    </text>
+    <text x="188" y="173.2" freecad:editable="creator" freecad:autofill="author" id="creator_data_field">
+     <tspan xml:space="preserve">A. Nemesis</tspan>
+    </text>
+    <text x="108" y="185.2" freecad:editable="document_type" id="document_type_data_field">
+     <tspan xml:space="preserve">Component Drawing</tspan>
+    </text>
+    <text x="237" y="161.2" style="text-align:center;text-anchor:middle" freecad:editable="scale" freecad:autofill="scale" id="sheet_scale_data_field">
+     <tspan xml:space="preserve">1 : 1</tspan>
+    </text>
+    <text x="188" y="161.2" freecad:editable="general_tolerances" id="general_tolerances_data_field">
+     <tspan xml:space="preserve">ISO 2768-m</tspan>
+    </text>
+    <text x="108" y="161.2" freecad:editable="part_material" id="part_material_data_field">
+     <tspan xml:space="preserve">Aluminum</tspan>
+    </text>
+   </g>
+   <g style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round" id="extras_outlines">
+    <path id="first_angle_trapezoid" d="m 266,147 -10,2.5 v 5 l 10,2.5 z"/>
+    <circle cy="152" r="2.5" id="first_angle_inner circle" cx="273"/>
+    <circle cy="152" r="5" id="first_angle_outer circle" cx="273"/>
+   </g>
+   <g style="fill:none;stroke:#000000;stroke-width:0.25;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:6, 0.75, 0.125, 0.75" id="extras_centre_lines">
+    <path style="stroke-dashoffset:0.25" id="first_angle_horizontal" d="m 255,152 h 24"/>
+    <path style="stroke-dashoffset:4.625" id="first_angle_vertical" d="m 273,158 v -12"/>
+   </g>
+  </g>
+  <g stroke="black" fill-rule="evenodd" stroke-width="1" stroke-linecap="square" id="DrawingContent" fill="none" stroke-linejoin="bevel">
+   <g stroke="#000000" transform="matrix(1,0,0,1,628.46,1302.8)" stroke-width="1" font-weight="400" font-style="normal" stroke-linecap="square" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <text stroke="none" x="4" xml:space="preserve" y="92.2188" font-weight="400" font-style="normal" fill-opacity="1" font-family="osifont" fill="#000000" font-size="67">Top view</text>
+   </g>
+   <g stroke="none" transform="matrix(1,0,0,1,755.015,796.804)" font-weight="400" font-style="normal" fill-opacity="1" font-family=".AppleSystemUIFont" fill="#f1f3f5" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M345,0 C345,190.538 190.538,345 0,345 C-190.538,345 -345,190.538 -345,0 C-345,-190.538 -190.538,-345 0,-345 C190.538,-345 345,-190.538 345,0 "/>
+   </g>
+   <g stroke="none" transform="matrix(1,0,0,1,755.015,796.804)" font-weight="400" font-style="normal" fill-opacity="1" font-family=".AppleSystemUIFont" fill="#f1f3f5" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M42,315 L12,315 C12,321.627 6.62742,327 0,327 C-6.62742,327 -12,321.627 -12,315 C-12,308.373 -6.62742,303 0,303 C6.62742,303 12,308.373 12,315 L-42,315 L12,315 L42,315"/>
+   </g>
+   <g stroke="none" transform="matrix(1,0,0,1,755.015,796.804)" font-weight="400" font-style="normal" fill-opacity="1" font-family=".AppleSystemUIFont" fill="#f1f3f5" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M42,-315 L12,-315 C12,-308.373 6.62742,-303 0,-303 C-6.62742,-303 -12,-308.373 -12,-315 C-12,-321.627 -6.62742,-327 0,-327 C6.62742,-327 12,-321.627 12,-315 L-42,-315 L12,-315 L42,-315"/>
+   </g>
+   <g stroke="none" transform="matrix(1,0,0,1,755.015,796.804)" font-weight="400" font-style="normal" fill-opacity="1" font-family=".AppleSystemUIFont" fill="#f1f3f5" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M12,315 C12,321.627 6.62742,327 0,327 C-6.62742,327 -12,321.627 -12,315 C-12,308.373 -6.62742,303 0,303 C6.62742,303 12,308.373 12,315 "/>
+   </g>
+   <g stroke="none" transform="matrix(1,0,0,1,755.015,796.804)" font-weight="400" font-style="normal" fill-opacity="1" font-family=".AppleSystemUIFont" fill="#f1f3f5" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M12,-315 C12,-308.373 6.62742,-303 0,-303 C-6.62742,-303 -12,-308.373 -12,-315 C-12,-321.627 -6.62742,-327 0,-327 C6.62742,-327 12,-321.627 12,-315 "/>
+   </g>
+   <g stroke="none" transform="matrix(1,0,0,1,755.015,796.804)" font-weight="400" font-style="normal" fill-opacity="1" font-family=".AppleSystemUIFont" fill="#f1f3f5" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M0,357 L0,273 L0,357"/>
+   </g>
+   <g stroke="none" transform="matrix(1,0,0,1,755.015,796.804)" font-weight="400" font-style="normal" fill-opacity="1" font-family=".AppleSystemUIFont" fill="#f1f3f5" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M0,-273 L0,-357 L0,-273"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,755.015,796.804)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M345,0 C345,190.538 190.538,345 0,345 C-190.538,345 -345,190.538 -345,0 C-345,-190.538 -190.538,-345 0,-345 C190.538,-345 345,-190.538 345,0 "/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,755.015,796.804)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M12,-315 C12,-308.373 6.62742,-303 0,-303 C-6.62742,-303 -12,-308.373 -12,-315 C-12,-321.627 -6.62742,-327 0,-327 C6.62742,-327 12,-321.627 12,-315 "/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,755.015,796.804)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M12,315 C12,321.627 6.62742,327 0,327 C-6.62742,327 -12,321.627 -12,315 C-12,308.373 -6.62742,303 0,303 C6.62742,303 12,308.373 12,315 "/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,755.015,796.804)" stroke-dashoffset="0" stroke-width="5" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-dasharray="60,15" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M42,-315 L-42,-315"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,755.015,796.804)" stroke-dashoffset="0" stroke-width="5" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-dasharray="60,15" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M0,-273 L0,-357"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,755.015,796.804)" stroke-dashoffset="0" stroke-width="5" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-dasharray="60,15" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M42,315 L-42,315"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,755.015,796.804)" stroke-dashoffset="0" stroke-width="5" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-dasharray="60,15" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M0,357 L0,273"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,755.015,796.804)" stroke-dashoffset="0" stroke-width="3.5" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-dasharray="84,42,42,42" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M0,445 L0,-445"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,755.015,796.804)" stroke-width="3.5" font-weight="400" font-style="normal" stroke-linecap="butt" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M35,445 L87.5,445 M35,-445 L87.5,-445"/>
+   </g>
+   <g stroke="#000000" transform="matrix(-1,1.50996e-07,-1.50996e-07,-1,755.015,1241.8)" stroke-width="1" font-weight="400" font-style="normal" fill-opacity="1" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="#000000" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M0,0 L-35,-5.83333 L-35,5.83333 L0,0"/>
+   </g>
+   <g stroke="#000000" transform="matrix(-1,1.50996e-07,-1.50996e-07,-1,755.015,351.804)" stroke-width="1" font-weight="400" font-style="normal" fill-opacity="1" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="#000000" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M0,0 L-35,-5.83333 L-35,5.83333 L0,0"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,755.015,796.804)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="square" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M0,462.5 L0,445 L0,427.5"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,755.015,796.804)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="square" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M0,-427.5 L0,-445 L0,-462.5"/>
+   </g>
+   <g stroke="#000000" transform="matrix(0.998227,-0.0595296,0.0595296,0.998227,1147.68,646.162)" stroke-width="1" font-weight="400" font-style="normal" stroke-linecap="square" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <text stroke="none" x="4" xml:space="preserve" y="92.2188" font-weight="400" font-style="normal" fill-opacity="1" font-family="osifont" fill="#000000" font-size="67">⌀46</text>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,755.015,796.804)" stroke-width="3.5" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-414.264,24.7048 L533.93,-31.8411"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1099.4,776.266)" stroke-width="3.5" font-weight="400" font-style="normal" fill-opacity="1" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="#000000" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M0,0 L35.2852,3.73945 L34.5907,-7.90652 L0,0"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,410.627,817.342)" stroke-width="3.5" font-weight="400" font-style="normal" fill-opacity="1" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="#000000" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M0,0 L-35.2852,-3.73945 L-34.5907,7.90652 L0,0"/>
+   </g>
+   <g stroke="#000000" transform="matrix(0.930105,-0.367295,0.367295,0.930105,946.757,269.542)" stroke-width="1" font-weight="400" font-style="normal" stroke-linecap="square" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <text stroke="none" x="4" xml:space="preserve" y="92.2188" font-weight="400" font-style="normal" fill-opacity="1" font-family="osifont" fill="#000000" font-size="67">M2</text>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,755.015,796.804)" stroke-width="3.5" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-76.2686,-284.882 L328.964,-444.907"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,766.176,477.397)" stroke-width="3.5" font-weight="400" font-style="normal" fill-opacity="1" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="#000000" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M0,0 L34.6962,-7.42971 L30.4111,-18.2809 L0,0"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,743.854,486.212)" stroke-width="3.5" font-weight="400" font-style="normal" fill-opacity="1" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="#000000" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M0,0 L-34.6962,7.42971 L-30.4111,18.2809 L0,0"/>
+   </g>
+   <g stroke="#000000" transform="matrix(0.929891,-0.367836,0.367836,0.929891,1127.2,828.004)" stroke-width="1" font-weight="400" font-style="normal" stroke-linecap="square" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <text stroke="none" x="4" xml:space="preserve" y="92.2188" font-weight="400" font-style="normal" fill-opacity="1" font-family="osifont" fill="#000000" font-size="67">M2</text>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,755.015,796.804)" stroke-width="3.5" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-76.251,345.163 L509.455,113.476"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,766.174,1107.39)" stroke-width="3.5" font-weight="400" font-style="normal" fill-opacity="1" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="#000000" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M0,0 L34.6919,-7.44989 L30.4005,-18.2986 L0,0"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,743.856,1116.22)" stroke-width="3.5" font-weight="400" font-style="normal" fill-opacity="1" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="#000000" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M0,0 L-34.6919,7.44989 L-30.4005,18.2986 L0,0"/>
+   </g>
+   <g stroke="#000000" transform="matrix(0,-1,1,0,535.501,775.71)" stroke-width="1" font-weight="400" font-style="normal" stroke-linecap="square" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <text stroke="none" x="4" xml:space="preserve" y="92.2188" font-weight="400" font-style="normal" fill-opacity="1" font-family="osifont" fill="#000000" font-size="67">42</text>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,755.015,796.804)" stroke-width="3.5" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-92.514,315 L-92.514,-315 M42,-315 L-120.514,-315 M42,315 L-120.514,315"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,662.501,481.804)" stroke-width="3.5" font-weight="400" font-style="normal" fill-opacity="1" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="#000000" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M0,0 L-5.83333,35 L5.83333,35 L0,0"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,662.501,1111.8)" stroke-width="3.5" font-weight="400" font-style="normal" fill-opacity="1" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="#000000" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M0,0 L5.83333,-35 L-5.83333,-35 L0,0"/>
+   </g>
+   <g stroke="none" transform="matrix(1,0,0,1,1535.76,863.287)" font-weight="400" font-style="normal" fill-opacity="1" font-family=".AppleSystemUIFont" fill="#f1f3f5" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M-30,690 L-71.25,690 L-71.25,672 L-108.75,672 L-108.75,690 L-150,690 L-150,654 L-150,606 L-150,-606 L-150,-654 L-150,-690 L-108.75,-690 L-108.75,-672 L-71.25,-672 L-71.25,-690 L-30,-690 L-30,-45 L150,-45 L150,45 L-30,45 L-30,690"/>
+   </g>
+   <g stroke="none" transform="matrix(1,0,0,1,1535.76,863.287)" font-weight="400" font-style="normal" fill-opacity="1" font-family=".AppleSystemUIFont" fill="#f1f3f5" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M-71.25,672 L-108.75,672 L-108.75,690 L-150,690 L-150,654 L-60,654 L-60,606 L-150,606 L-150,-606 L-60,-606 L-60,-654 L-150,-654 L-150,-690 L-108.75,-690 L-108.75,-672 L-71.25,-672 L-71.25,-690 L-30,-690 L-30,-45 L150,-45 L150,45 L-30,45 L-30,690 L-71.25,690 L-71.25,672"/>
+   </g>
+   <g stroke="none" transform="matrix(1,0,0,1,1535.76,863.287)" font-weight="400" font-style="normal" fill-opacity="1" font-family=".AppleSystemUIFont" fill="#f1f3f5" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M-150,-654 L-150,-606 L-60,-606 L-60,-654 L-150,-654"/>
+   </g>
+   <g stroke="none" transform="matrix(1,0,0,1,1535.76,863.287)" font-weight="400" font-style="normal" fill-opacity="1" font-family=".AppleSystemUIFont" fill="#f1f3f5" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M-150,606 L-150,654 L-60,654 L-60,606 L-150,606"/>
+   </g>
+   <g stroke="none" transform="matrix(1,0,0,1,1535.76,863.287)" font-weight="400" font-style="normal" fill-opacity="1" font-family=".AppleSystemUIFont" fill="#f1f3f5" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d=""/>
+   </g>
+   <g stroke="none" transform="matrix(1,0,0,1,1535.76,863.287)" font-weight="400" font-style="normal" fill-opacity="1" font-family=".AppleSystemUIFont" fill="#f1f3f5" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d=""/>
+   </g>
+   <g stroke="none" transform="matrix(1,0,0,1,1535.76,863.287)" font-weight="400" font-style="normal" fill-opacity="1" font-family=".AppleSystemUIFont" fill="#f1f3f5" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d=""/>
+   </g>
+   <g stroke="none" transform="matrix(1,0,0,1,1535.76,863.287)" font-weight="400" font-style="normal" fill-opacity="1" font-family=".AppleSystemUIFont" fill="#f1f3f5" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d=""/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="0.7" font-weight="400" font-style="normal" fill-opacity="1" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="#f1f3f5" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-30,690 L-71.25,690 L-71.25,672 L-108.75,672 L-108.75,690 L-150,690 L-150,654 L-60,654 L-60,606 L-150,606 L-150,-606 L-60,-606 L-60,-654 L-150,-654 L-150,-690 L-108.75,-690 L-108.75,-672 L-71.25,-672 L-71.25,-690 L-30,-690 L-30,-45 L150,-45 L150,45 L-30,45 L-30,690"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,671.756,-0.712692)" stroke-width="1" font-weight="400" font-style="normal" stroke-linecap="square" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <image x="0" y="0" height="1728" width="1728" xlink:href="data:image/png;base64,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/q/fDwAAAAAA4FQ9vnx9vKnf//X7AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/q/8AH5/Nc7JDS8cAAAAASUVORK5CYII=" preserveAspectRatio="none"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-150,-654 L-150,-690"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-150,-654 L-150,-606"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-150,606 L-150,-606"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-150,606 L-150,654"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-150,690 L-150,654"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-150,690 L-108.75,690"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-108.75,690 L-108.75,672"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-108.75,-672 L-108.75,-690"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-150,-690 L-108.75,-690"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-150,654 L-60,654"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-60,654 L-60,606"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-150,606 L-60,606"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-150,-606 L-60,-606"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-60,-606 L-60,-654"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-150,-654 L-60,-654"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-108.75,-672 L-71.25,-672"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-71.25,-672 L-71.25,-690"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-71.25,-690 L-30,-690"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-30,-690 L-30,-45"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-30,-45 L150,-45"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M150,-45 L150,45"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-30,45 L150,45"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-30,45 L-30,690"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-71.25,690 L-30,690"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-71.25,690 L-71.25,672"/>
+   </g>
+   <g stroke="#000000" transform="matrix(1,0,0,1,1535.76,863.287)" stroke-width="7" font-weight="400" font-style="normal" stroke-linecap="round" font-family=".AppleSystemUIFont" stroke-opacity="1" fill="none" stroke-linejoin="bevel" font-size="45.8611">
+    <path fill-rule="evenodd" vector-effect="none" d="M-108.75,672 L-71.25,672"/>
+   </g>
+  </g>
+ </g>
+</svg>
