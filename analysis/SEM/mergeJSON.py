@@ -6,7 +6,7 @@ import os
 
 def main():
 
-    path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S1/S1_B3/csv_spectra_S1_B3/Area 3/").expanduser() #input file path
+    path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S12/S12_B0/csv_spectra_S12_B0/Area 1 10 kV/").expanduser() #input file path
 
     ext = ("1.json") #extension of files (not simply .json to avoid picking up also the global json file in the merge)
 
@@ -48,7 +48,7 @@ def main():
                 outDict.append(conc)
         else:
             continue
-        
+
     with open(outFile,"w") as out:
         json.dump(outDict,out,indent=4)
 

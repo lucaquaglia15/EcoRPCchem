@@ -20,6 +20,9 @@ def integrate_elements(element_map_full, spectrum):
         total_area = 0.0
         print(el, shells)
 
+        #if el == "C":
+        #    continue
+
         for peak in shells["K"] + shells["L"]:
             print(peak[0],peak[2])
 
@@ -186,7 +189,8 @@ def main():
         #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S4/S4_B1/csv_spectra_S4_B1/Area 2/Full Area 1_1.csv").expanduser()
         #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S12/S12_B0/csv_spectra_S12_B0/Area 1 10 kV/Selected Area 4_1.csv").expanduser()
         #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S12/S12_B0/csv_spectra_S12_B0/Area 1 10 kV/Full Area 1_1.csv").expanduser()
-        path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S7/S7_B0/csv_spectra_S7_B0/Area 1/EDS Spot 1_1.csv").expanduser()
+        #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S7/S7_B0/csv_spectra_S7_B0/Area 1/EDS Spot 1_1.csv").expanduser()
+        path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S1/S1_B3/csv_spectra_S1_B3/Area 6/Selected Area 3_1.csv").expanduser()
     
     else:
         path = Path(sys.argv[1]).expanduser()
@@ -208,7 +212,7 @@ def main():
     ##########################
     # Sav Gol filter on data #
     ##########################
-    windowLength = 15 #was 11
+    windowLength = 17 #was 15
     polyOrder = 6 #was 5
     yFilter = savgol_filter(spectrum.Counts,window_length=windowLength,polyorder=polyOrder) 
     if debug:
@@ -224,8 +228,8 @@ def main():
     ##################################
     # Find peaks with scipy baseline #
     ##################################
-    h = 50 #Was 175 and working good
-    prom = 60 #Was 75 and working good
+    h = 30 #Was 50 and working good
+    prom = 20 #Was 60 and working good
     dist = None #Was 5 but not working as good either
 
     peakList, info = fp(x=cleanSpectrum,
@@ -378,7 +382,7 @@ def main():
     plt.grid(True)
     ax.grid(True,which="both",linewidth=0.3,alpha=0.5)
 
-    #Extract sample name and region to save image and open .txt file to write out elemental concentrations
+    #Extract sample name and region to save image and open .json file to write out elemental concentrations
     parts = path.parts
 
     for i, part in enumerate(parts):
@@ -400,7 +404,7 @@ def main():
 
     #Understand from the context if the plot needs to be saved on disk or not
     if len(sys.argv) < 3:
-        save = False
+        save = True
     else: 
         save = bool(int(sys.argv[2]))
     

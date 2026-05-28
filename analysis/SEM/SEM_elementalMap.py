@@ -9,7 +9,7 @@ def main():
 
     debug = False
     
-    path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S1/S1_B1/csv_spectra_S1_B1/Area 5 10 kV/Live Map 1_Roi_C K_ImageView_1.csv").expanduser()
+    path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S1/S1_B1/csv_spectra_S1_B1/Area 5 10 kV/Live Map 1_Roi_O K_ImageView_1.csv").expanduser()
 
     #Get data in df
     counts = pd.read_csv(path, delimiter = ',', skiprows=4, index_col=0)
@@ -48,12 +48,6 @@ def main():
     plt.ylabel("Y")
     plt.title("2D Histogram")
     plt.show()
-    
-    #gets the i-th row of the df (starting from 0)
-    #print(counts.iloc[0]) 
-
-    #This syntax gets the first column of the df
-    #print(counts.iloc[:, 0])
-    
+   
 if __name__ == "__main__":
     main()
