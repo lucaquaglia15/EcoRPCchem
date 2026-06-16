@@ -42,6 +42,7 @@ def main():
     dfOldHumidAir = pd.read_excel(file_name, sheet_name=sOldHumidAir,index_col=0,skiprows=1,usecols="A:N") #Ok
     dfOldWater = pd.read_excel(file_name, sheet_name=sOldWater,index_col=0,skiprows=1,usecols="A:N") #Ok
     dfOldAmbient = pd.read_excel(file_name, sheet_name=sOldAmbient,index_col=0,skiprows=1,usecols="A:N")
+    dfNewAmbient = pd.read_excel(file_name, sheet_name=sOldAmbient, index_col=0,skiprows=1,usecols="Q:AD")
     dfAgedRPC_S6_B3 = pd.read_excel(file_name, sheet_name=sAgedRPC,index_col=0,skiprows=1,usecols="A:N")
     dfAgedRPC_S7_B3 = pd.read_excel(file_name, sheet_name=sAgedRPC,index_col=0,skiprows=1,usecols="Q:AD")
     dfMatExposure_S2_B0 = pd.read_excel(file_name, sheet_name=sMatExposure,index_col=0,skiprows=1,usecols="A:N")
@@ -115,6 +116,16 @@ def main():
     convertTime(dfOldAmbient)
     dfOldAmbient = dfOldAmbient.apply(pd.to_numeric)
     dfOldAmbient = dfOldAmbient.dropna()
+
+    #Index column + column names
+    #New bakelite in air reference
+    dfNewAmbient.index.names = ["date"]
+    dfNewAmbient.columns = ["resistance","current","avgRes","errAvgRes","resistivity","avgResistivity","errAvgResistivity","voltage",
+                            "RH","T","elTime","area","thickness"]
+
+    convertTime(dfNewAmbient)
+    dfNewAmbient = dfNewAmbient.apply(pd.to_numeric)
+    dfNewAmbient = dfNewAmbient.dropna()
 
     #Index column + column names
     #Aged RPC, S6_B3 S7_B3 
@@ -210,8 +221,42 @@ def main():
     ax2.set_yscale('log')
     ax2.grid(True, which="both")
     ax2.legend()
+
+    print("AVG of resistivity in dfMatExposure_S2_B1: ", dfOldAmbient["avgResistivity"].mean(), " +- ", dfOldAmbient["avgResistivity"].sem())
+    print("AVG of resistivity in dfMatExposure_S8_B3: ", dfNewAmbient["avgResistivity"].mean(), " +- ", dfNewAmbient["avgResistivity"].sem())
+
+    print("AVG of resistivity in dfMatExposure_S2_B0: ", dfMatExposure_S2_B0["avgResistivity"].mean(), " +- ", dfMatExposure_S2_B0["avgResistivity"].sem())
+    print("AVG of resistivity in dfMatExposure_S3_B0: ", dfMatExposure_S3_B0["avgResistivity"].mean(), " +- ", dfMatExposure_S3_B0["avgResistivity"].sem())
+    print("AVG of resistivity in dfMatExposure_S8_B4: ", dfMatExposure_S8_B4["avgResistivity"].mean(), " +- ", dfMatExposure_S8_B4["avgResistivity"].sem())
+
+    print("AVG of resistivity in dfAgedRPC_S6_B3: ", dfAgedRPC_S6_B3["avgResistivity"].mean(), " +- ", dfAgedRPC_S6_B3["avgResistivity"].sem())
+    print("AVG of resistivity in dfAgedRPC_S7_B3: ", dfAgedRPC_S7_B3["avgResistivity"].mean(), " +- ", dfAgedRPC_S7_B3["avgResistivity"].sem())
     
+    #Summary plot
+    #samples = ["old bakelite no oil in air", "new bakelite with oil in air","old bakelite no oil exposed","old bakelite with oil exposed","new bakelite with oil exposed","aged RPC HV side","aged RPC GND side"]
+    samples = ["S2_B1","S8_B3","S2_B0","S3_B0","S8_B4","S6_B3","S7_B3"]
+    avgResistivities = [dfOldAmbient["avgResistivity"].mean(), dfNewAmbient["avgResistivity"].mean(), dfMatExposure_S2_B0["avgResistivity"].mean(), dfMatExposure_S3_B0["avgResistivity"].mean(),
+                        dfMatExposure_S8_B4["avgResistivity"].mean(), dfAgedRPC_S6_B3["avgResistivity"].mean(), dfAgedRPC_S7_B3["avgResistivity"].mean()]
+    errorOnAvgResistivity = [dfOldAmbient["avgResistivity"].sem(), dfNewAmbient["avgResistivity"].sem(), dfMatExposure_S2_B0["avgResistivity"].sem(), dfMatExposure_S3_B0["avgResistivity"].sem(),
+                        dfMatExposure_S8_B4["avgResistivity"].sem(), dfAgedRPC_S6_B3["avgResistivity"].sem(), dfAgedRPC_S7_B3["avgResistivity"].sem()]
+    x = np.arange(2,16,2)
+    rndm = [1,2,3,4,5,6,7]
+
+    fig, ax = plt.subplots(1,1) 
+    ax.plot(x,avgResistivities,marker="o",linestyle="None",color="orange")
+    ax.set_yscale('log')
+    ax.grid(True, which="both",alpha=0.4)
+    ax.errorbar(x,avgResistivities,yerr=errorOnAvgResistivity,ecolor="orange",fmt="none",capsize=3)
+    ax.set_ylim(1e+10,2e+12)
+    ax.set_xlabel("Sample name")
+    ax.set_ylabel(r'Resistivity [$\Omega$*cm]')
+    # Set number of ticks for x-axis
+    ax.set_xticks(x)
+    # Set ticks labels for x-axis
+    ax.set_xticklabels(samples, rotation=45, size='small')
     plt.show()
+
+
     
     """
     ax.errorbar(dfDryingData.index,dfDryingData["avgS9"],yerr=dfDryingData["errAvgS9"],fmt="none",ecolor="green",capsize=3)
