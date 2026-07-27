@@ -1,0 +1,318 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" height="210mm" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:cc="http://creativecommons.org/ns#" xmlns="http://www.w3.org/2000/svg" version="1.2" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2970 2100" baseProfile="tiny" xmlns:freecad="https://www.freecad.org/wiki/index.php?title=Svg_Namespace" width="297mm" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+ <title>FreeCAD SVG Export</title>
+ <desc>Drawing page: Page exported from FreeCAD document: spacers</desc>
+ <defs/>
+ <g id="Page" inkscape:label="TechDraw" inkscape:groupmode="layer">
+  <g id="A4_Landscape_ISO5457_minimal.svg" style="stroke: none;" transform="scale(10.000000, 10.000000)">
+   <title id="title">Drawing sheet ISO 5457 - A4T - Minimal</title>
+   <metadata id="metadata">
+    <rdf:RDF>
+     <cc:Work rdf:about="">
+      <cc:license rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/"/>
+      <dc:title>Drawing sheet ISO 5457 - A4T - Minimal</dc:title>
+      <dc:creator>
+       <cc:Agent>
+        <dc:title>Benjamin May</dc:title>
+       </cc:Agent>
+      </dc:creator>
+     </cc:Work>
+     <cc:License rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+      <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+      <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+      <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+     </cc:License>
+    </rdf:RDF>
+   </metadata>
+   <rect height="190" id="drawing_space_frame" x="20" y="10" style="fill:none;stroke:#000000;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:round" width="267"/>
+   <g id="centring_marks" style="fill:none;stroke:#000000;stroke-width:0.7;stroke-linecap:round">
+    <path id="top_centering" d="m 148.5,5 v 10"/>
+    <path id="right_centering" d="m 292,105 h -10"/>
+    <path id="bottom_centering" d="m 148.5,205 v -6"/>
+    <path id="left_centering" d="m 15,105 h 10"/>
+   </g>
+   <g id="grid_reference_system">
+    <g id="grid_reference_borders" style="fill:none;stroke:#000000;stroke-width:0.35;stroke-linecap:round;stroke-linejoin:round">
+     <rect height="200" id="grid_reference_border" x="15" y="5" width="277"/>
+     <path id="upper_border_1" d="m 48.5,5 v 5"/>
+     <path id="upper_border_2" d="m 98.5,5 v 5"/>
+     <path id="upper_border_4" d="m 198.5,5 v 5"/>
+     <path id="upper_border_5" d="m 248.5,5 v 5"/>
+     <path id="right_border_1" d="m 292,55 h -5"/>
+     <path id="right_border_3" d="m 292,155 h -5"/>
+     <path id="lower_border_1" d="m 48.5,205 v -5"/>
+     <path id="lower_border_2" d="m 98.5,205 v -5"/>
+     <path id="lower_border_4" d="m 198.5,205 v -5"/>
+     <path id="lower_border_5" d="m 248.5,205 v -5"/>
+     <path id="left_border_1" d="m 15,55 h 5"/>
+     <path id="left_border_3" d="m 15,155 h 5"/>
+    </g>
+    <g id="grid_reference_markers" style="font-size:3.5px;font-family:osifont;text-align:center;text-anchor:middle;fill:#000000;stroke:none">
+     <text id="upper_marker_1" x="23.5" y="8.8">1</text>
+     <text id="upper_marker_2" x="73.5" y="8.8">2</text>
+     <text id="upper_marker_3" x="123.5" y="8.8">3</text>
+     <text id="upper_marker_4" x="173.5" y="8.8">4</text>
+     <text id="upper_marker_5" x="223.5" y="8.8">5</text>
+     <text id="upper_marker_6" x="273.5" y="8.8">6</text>
+     <text id="right_marker_1" x="289.5" y="31.3">A</text>
+     <text id="right_marker_2" x="289.5" y="81.3">B</text>
+     <text id="right_marker_3" x="289.5" y="131.3">C</text>
+     <text id="right_marker_4" x="289.5" y="181.3">D</text>
+     <text id="lower_marker_6" x="273.5" y="203.8">A4</text>
+    </g>
+   </g>
+   <g id="trimming_marks" style="fill:#000000;stroke:none">
+    <path id="top_left_trimming" d="m 0,0 h 10 v 5 h -5 v 5 h -5 z"/>
+    <path id="top_right_trimming" d="m 297,0 h -10 v 5 h 5 v 5 h 5 z"/>
+    <path id="bottom_right_trimming" d="m 297,210 h -10 v -5 h 5 v -5 h 5 z"/>
+    <path id="bottom_left_trimming" d="m 0,210 h 10 v -5 h -5 v -5 h -5 z"/>
+   </g>
+   <!-- Title block -->
+   <g id="title_block_borders" style="fill:none;stroke:#000000;stroke-width:0.35;stroke-linecap:round;stroke-linejoin:round">
+    <rect height="36" id="title_block_frame" x="107" y="164" style="stroke-width:0.7" width="180"/>
+    <rect height="24" id="legal_owner_border" x="247" y="164" width="40"/>
+    <rect height="12" id="identification_number_border" x="107" y="188" width="80"/>
+    <rect height="12" id="revision_index_border" x="247" y="188" width="20"/>
+    <rect height="12" id="date_of_issue_border" x="207" y="188" width="40"/>
+    <rect height="12" id="sheet_number_border" x="267" y="188" width="20"/>
+    <rect height="12" id="language_code_border" x="187" y="188" width="20"/>
+    <rect height="12" id="title_border" x="107" y="164" width="80"/>
+    <rect height="12" id="approval_person_border" x="187" y="176" width="60"/>
+    <rect height="12" id="creator_border" x="187" y="164" width="60"/>
+    <rect height="12" id="document_type_border" x="107" y="176" width="80"/>
+   </g>
+   <g id="title_block_labels" style="font-size:3.5px;font-family:osifont;text-anchor:start;fill:#000000;stroke:none">
+    <text id="legal_owner label" x="247.5" y="167.6">Owner:</text>
+    <text id="identification_number_label" x="107.5" y="191.6">Drawing number:</text>
+    <text id="revision_index_label" x="247.5" y="191.6">Revision:</text>
+    <text id="date_of_issue_label" x="207.5" y="191.6">Issue date:</text>
+    <text id="sheet_number_label" x="267.5" y="191.6">Sheet:</text>
+    <text id="language_code_label" x="187.5" y="191.6">Language:</text>
+    <text id="title_label" x="107.5" y="167.6">Title:</text>
+    <text id="approval_person_label" x="187.5" y="179.6">Approved by:</text>
+    <text id="creator_label" x="187.5" y="167.6">Created by:</text>
+    <text id="document_type_label" x="107.5" y="179.6">Document type:</text>
+    <text id="sheet_scale_label" x="227.5" y="155.6">Scale:</text>
+    <text id="general_tolerances_label" x="187.5" y="155.6">General tolerances:</text>
+    <text id="part_material_label" x="107.5" y="155.6">Part Material:</text>
+   </g>
+   <g id="title_block_data_fields" style="font-size:5px;font-family:osifont;text-anchor:start;fill:#000000;stroke:none">
+    <text freecad:editable="legal_owner_1" freecad:autofill="organization" id="legal_owner_1_data_field" x="267" y="173.1" style="font-size:3.5px;text-align:center;text-anchor:middle">
+     <tspan xml:space="preserve"/>
+    </text>
+    <text freecad:editable="legal_owner_2" id="legal_owner_2_data_field" x="267" y="177.1" style="font-size:3.5px;text-align:center;text-anchor:middle">
+     <tspan xml:space="preserve"/>
+    </text>
+    <text freecad:editable="legal_owner_3" id="legal_owner_3_data_field" x="267" y="181.1" style="font-size:3.5px;text-align:center;text-anchor:middle">
+     <tspan xml:space="preserve"/>
+    </text>
+    <text freecad:editable="legal_owner_4" id="legal_owner_4_data_field" x="267" y="185.1" style="font-size:3.5px;text-align:center;text-anchor:middle">
+     <tspan xml:space="preserve"/>
+    </text>
+    <text freecad:editable="identification_number" id="identification_number_data_field" x="108" y="197.2">
+     <tspan xml:space="preserve"/>
+    </text>
+    <text freecad:editable="revision_index" id="revision_index_data_field" x="257" y="197.2" style="text-align:center;text-anchor:middle">
+     <tspan xml:space="preserve">AAA</tspan>
+    </text>
+    <text freecad:editable="date_of_issue" freecad:autofill="date" id="date_of_issue_data_field" x="208" y="197.2">
+     <tspan xml:space="preserve">17/06/26</tspan>
+    </text>
+    <text freecad:editable="sheet_number" freecad:autofill="sheet" id="sheet_number_data_field" x="277" y="197.2" style="text-align:center;text-anchor:middle">
+     <tspan xml:space="preserve">1 / 1</tspan>
+    </text>
+    <text freecad:editable="language_code" id="language_code_data_field" x="197" y="197.2" style="text-align:center;text-anchor:middle">
+     <tspan xml:space="preserve">EN</tspan>
+    </text>
+    <text freecad:editable="title" freecad:autofill="title" id="title_data_field" x="108" y="173.2">
+     <tspan xml:space="preserve">Spacers</tspan>
+    </text>
+    <text freecad:editable="approval_person" id="approval_person_data_field" x="188" y="185.2">
+     <tspan xml:space="preserve"/>
+    </text>
+    <text freecad:editable="creator" freecad:autofill="author" id="creator_data_field" x="188" y="173.2">
+     <tspan xml:space="preserve">L. Quaglia</tspan>
+    </text>
+    <text freecad:editable="document_type" id="document_type_data_field" x="108" y="185.2">
+     <tspan xml:space="preserve"/>
+    </text>
+    <text freecad:editable="scale" freecad:autofill="scale" id="sheet_scale_data_field" x="237" y="161.2" style="text-align:center;text-anchor:middle">
+     <tspan xml:space="preserve">3 : 1</tspan>
+    </text>
+    <text freecad:editable="general_tolerances" id="general_tolerances_data_field" x="188" y="161.2">
+     <tspan xml:space="preserve">ISO 2768-m</tspan>
+    </text>
+    <text freecad:editable="part_material" id="part_material_data_field" x="108" y="161.2">
+     <tspan xml:space="preserve">Various</tspan>
+    </text>
+   </g>
+   <g id="extras_outlines" style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round">
+    <path id="first_angle_trapezoid" d="m 266,147 -10,2.5 v 5 l 10,2.5 z"/>
+    <circle id="first_angle_inner circle" r="2.5" cx="273" cy="152"/>
+    <circle id="first_angle_outer circle" r="5" cx="273" cy="152"/>
+   </g>
+   <g id="extras_centre_lines" style="fill:none;stroke:#000000;stroke-width:0.25;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:6, 0.75, 0.125, 0.75">
+    <path id="first_angle_horizontal" d="m 255,152 h 24" style="stroke-dashoffset:0.25"/>
+    <path id="first_angle_vertical" d="m 273,158 v -12" style="stroke-dashoffset:4.625"/>
+   </g>
+  </g>
+  <g stroke-linecap="square" id="DrawingContent" stroke-linejoin="bevel" fill="none" stroke-width="1" fill-rule="evenodd" stroke="black">
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,485.98,508.502)" font-weight="400" stroke="#000000">
+    <rect height="0" x="0" y="0" width="0"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,359.425,634.502)" font-weight="400" stroke="#000000">
+    <text font-family="osifont" font-style="normal" font-size="67" fill="#000000" x="4" xml:space="preserve" y="92.2188" fill-opacity="1" font-weight="400" stroke="none">Top view</text>
+   </g>
+   <g font-family=".AppleSystemUIFont" font-style="normal" font-size="45.8611" fill="#f1f3f5" fill-opacity="1" transform="matrix(1,0,0,1,485.98,508.502)" font-weight="400" stroke="none">
+    <path d="M120,0 C120,66.2742 66.2742,120 0,120 C-66.2742,120 -120,66.2742 -120,0 C-120,-66.2742 -66.2742,-120 0,-120 C66.2742,-120 120,-66.2742 120,0 " vector-effect="non-scaling-stroke" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="7" transform="matrix(1,0,0,1,485.98,508.502)" font-weight="400" stroke="#000000">
+    <path d="M120,0 C120,66.2742 66.2742,120 0,120 C-66.2742,120 -120,66.2742 -120,0 C-120,-66.2742 -66.2742,-120 0,-120 C66.2742,-120 120,-66.2742 120,0 " vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(0.999802,-0.0198953,0.0198953,0.999802,659.279,378.028)" font-weight="400" stroke="#000000">
+    <text font-family="osifont" font-style="normal" font-size="67" fill="#000000" x="4" xml:space="preserve" y="92.2188" fill-opacity="1" font-weight="400" stroke="none">⌀8</text>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="3.5" transform="matrix(1,0,0,1,485.98,508.502)" font-weight="400" stroke="#000000">
+    <path d="M-189.962,3.78011 L276.529,-5.50271" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="#000000" stroke-width="3.5" fill-opacity="1" transform="matrix(1,0,0,1,605.956,506.115)" font-weight="400" stroke="#000000">
+    <path d="M0,0 L35.1091,5.13584 L34.877,-6.52851 L0,0" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="#000000" stroke-width="3.5" fill-opacity="1" transform="matrix(1,0,0,1,366.003,510.889)" font-weight="400" stroke="#000000">
+    <path d="M0,0 L-35.1091,-5.13584 L-34.877,6.52851 L0,0" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,332.722,907.165)" font-weight="400" stroke="#000000">
+    <text font-family="osifont" font-style="normal" font-size="67" fill="#000000" x="4" xml:space="preserve" y="92.2188" fill-opacity="1" font-weight="400" stroke="none">Front view</text>
+   </g>
+   <g font-family=".AppleSystemUIFont" font-style="normal" font-size="45.8611" fill="#f1f3f5" fill-opacity="1" transform="matrix(1,0,0,1,485.98,886.165)" font-weight="400" stroke="none">
+    <path d="M-120,-15 L-120,15 L120,15 L120,-15 L-120,-15" vector-effect="non-scaling-stroke" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="7" transform="matrix(1,0,0,1,485.98,886.165)" font-weight="400" stroke="#000000">
+    <path d="M120,15 L120,-15" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="7" transform="matrix(1,0,0,1,485.98,886.165)" font-weight="400" stroke="#000000">
+    <path d="M-120,15 L120,15" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="7" transform="matrix(1,0,0,1,485.98,886.165)" font-weight="400" stroke="#000000">
+    <path d="M-120,-15 L120,-15" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="7" transform="matrix(1,0,0,1,485.98,886.165)" font-weight="400" stroke="#000000">
+    <path d="M-120,-15 L-120,15" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(0,-1,1,0,625.474,839.147)" font-weight="400" stroke="#000000">
+    <text font-family="osifont" font-style="normal" font-size="67" fill="#000000" x="4" xml:space="preserve" y="92.2188" fill-opacity="1" font-weight="400" stroke="none">1</text>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="3.5" transform="matrix(1,0,0,1,485.98,886.165)" font-weight="400" stroke="#000000">
+    <path d="M266.495,85 L266.495,-91.4353 M120,-15 L294.495,-15 M120,15 L294.495,15" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="#000000" stroke-width="3.5" fill-opacity="1" transform="matrix(1,0,0,1,752.474,871.165)" font-weight="400" stroke="#000000">
+    <path d="M0,0 L5.83333,-35 L-5.83333,-35 L0,0" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="#000000" stroke-width="3.5" fill-opacity="1" transform="matrix(1,0,0,1,752.474,901.165)" font-weight="400" stroke="#000000">
+    <path d="M0,0 L-5.83333,35 L5.83333,35 L0,0" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,2142.33,488.232)" font-weight="400" stroke="#000000">
+    <rect height="0" x="0" y="0" width="0"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,2015.77,524.232)" font-weight="400" stroke="#000000">
+    <text font-family="osifont" font-style="normal" font-size="67" fill="#000000" x="4" xml:space="preserve" y="92.2188" fill-opacity="1" font-weight="400" stroke="none">Top view</text>
+   </g>
+   <g font-family=".AppleSystemUIFont" font-style="normal" font-size="45.8611" fill="#f1f3f5" fill-opacity="1" transform="matrix(1,0,0,1,2142.33,488.232)" font-weight="400" stroke="none">
+    <path d="M150,-30 L150,30 L-150,30 L-150,-30 L150,-30" vector-effect="non-scaling-stroke" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="7" transform="matrix(1,0,0,1,2142.33,488.232)" font-weight="400" stroke="#000000">
+    <path d="M-150,-30 L150,-30" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="7" transform="matrix(1,0,0,1,2142.33,488.232)" font-weight="400" stroke="#000000">
+    <path d="M150,-30 L150,30" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="7" transform="matrix(1,0,0,1,2142.33,488.232)" font-weight="400" stroke="#000000">
+    <path d="M150,30 L-150,30" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="7" transform="matrix(1,0,0,1,2142.33,488.232)" font-weight="400" stroke="#000000">
+    <path d="M-150,30 L-150,-30" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,1994.91,223.532)" font-weight="400" stroke="#000000">
+    <text font-family="osifont" font-style="normal" font-size="67" fill="#000000" x="4" xml:space="preserve" y="92.2188" fill-opacity="1" font-weight="400" stroke="none">10</text>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="3.5" transform="matrix(1,0,0,1,2142.33,488.232)" font-weight="400" stroke="#000000">
+    <path d="M-220,-137.7 L220,-137.7 M150,-30 L150,-165.7 M-150,-30 L-150,-165.7" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="#000000" stroke-width="3.5" fill-opacity="1" transform="matrix(1,0,0,1,2292.33,350.532)" font-weight="400" stroke="#000000">
+    <path d="M0,0 L35,5.83333 L35,-5.83333 L0,0" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="#000000" stroke-width="3.5" fill-opacity="1" transform="matrix(1,0,0,1,1992.33,350.532)" font-weight="400" stroke="#000000">
+    <path d="M0,0 L-35,-5.83333 L-35,5.83333 L0,0" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(0,-1,1,0,2334.94,633.163)" font-weight="400" stroke="#000000">
+    <text font-family="osifont" font-style="normal" font-size="67" fill="#000000" x="4" xml:space="preserve" y="92.2188" fill-opacity="1" font-weight="400" stroke="none">2</text>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="3.5" transform="matrix(1,0,0,1,2142.33,488.232)" font-weight="400" stroke="#000000">
+    <path d="M319.618,148.431 L319.618,-100 M150,-30 L347.618,-30 M150,30 L347.618,30" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="#000000" stroke-width="3.5" fill-opacity="1" transform="matrix(1,0,0,1,2461.94,458.232)" font-weight="400" stroke="#000000">
+    <path d="M0,0 L5.83333,-35 L-5.83333,-35 L0,0" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="#000000" stroke-width="3.5" fill-opacity="1" transform="matrix(1,0,0,1,2461.94,518.232)" font-weight="400" stroke="#000000">
+    <path d="M0,0 L-5.83333,35 L5.83333,35 L0,0" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,1674.07,524.232)" font-weight="400" stroke="#000000">
+    <text font-family="osifont" font-style="normal" font-size="67" fill="#000000" x="4" xml:space="preserve" y="92.2188" fill-opacity="1" font-weight="400" stroke="none">Front view</text>
+   </g>
+   <g font-family=".AppleSystemUIFont" font-style="normal" font-size="45.8611" fill="#f1f3f5" fill-opacity="1" transform="matrix(1,0,0,1,1827.33,488.232)" font-weight="400" stroke="none">
+    <path d="M-15,-30 L15,-30 L15,30 L-15,30 L-15,-30" vector-effect="non-scaling-stroke" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="7" transform="matrix(1,0,0,1,1827.33,488.232)" font-weight="400" stroke="#000000">
+    <path d="M-15,-30 L15,-30" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="7" transform="matrix(1,0,0,1,1827.33,488.232)" font-weight="400" stroke="#000000">
+    <path d="M-15,30 L15,30" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="7" transform="matrix(1,0,0,1,1827.33,488.232)" font-weight="400" stroke="#000000">
+    <path d="M-15,-30 L-15,30" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="7" transform="matrix(1,0,0,1,1827.33,488.232)" font-weight="400" stroke="#000000">
+    <path d="M15,-30 L15,30" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,1700.95,240.953)" font-weight="400" stroke="#000000">
+    <text font-family="osifont" font-style="normal" font-size="67" fill="#000000" x="4" xml:space="preserve" y="92.2188" fill-opacity="1" font-weight="400" stroke="none">1</text>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="3.5" transform="matrix(1,0,0,1,1827.33,488.232)" font-weight="400" stroke="#000000">
+    <path d="M-129.879,-120.279 L85,-120.279 M15,-30 L15,-148.279 M-15,-30 L-15,-148.279" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="#000000" stroke-width="3.5" fill-opacity="1" transform="matrix(1,0,0,1,1842.33,367.953)" font-weight="400" stroke="#000000">
+    <path d="M0,0 L35,5.83333 L35,-5.83333 L0,0" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="round" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="#000000" stroke-width="3.5" fill-opacity="1" transform="matrix(1,0,0,1,1812.33,367.953)" font-weight="400" stroke="#000000">
+    <path d="M0,0 L-35,-5.83333 L-35,5.83333 L0,0" vector-effect="none" fill-rule="evenodd"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,301.673,1166.64)" font-weight="400" stroke="#000000">
+    <text font-family="osifont" font-style="normal" font-size="67" fill="#000000" x="4" xml:space="preserve" y="92.2188" fill-opacity="1" font-weight="400" stroke="none">Circular spacer</text>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="0.847059" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,301.673,1166.64)" font-weight="400" stroke="#ffffff">
+    <text font-family=".AppleSystemUIFont" font-style="normal" font-size="45.8611" fill="#ffffff" x="430.531" xml:space="preserve" y="92.2188" fill-opacity="0.847059" font-weight="400" stroke="none"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,1864.04,729.386)" font-weight="400" stroke="#000000">
+    <text font-family="osifont" font-style="normal" font-size="67" fill="#000000" x="4" xml:space="preserve" y="92.2188" fill-opacity="1" font-weight="400" stroke="none">Rectangular spacer</text>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="0.847059" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,1864.04,729.386)" font-weight="400" stroke="#ffffff">
+    <text font-family=".AppleSystemUIFont" font-style="normal" font-size="45.8611" fill="#ffffff" x="549" xml:space="preserve" y="92.2188" fill-opacity="0.847059" font-weight="400" stroke="none"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,1022.11,812.38)" font-weight="400" stroke="#000000">
+    <text font-family="osifont" font-style="normal" font-size="67" fill="#000000" x="4" xml:space="preserve" y="92.2188" fill-opacity="1" font-weight="400" stroke="none">Circular spacers x12</text>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,1022.11,812.38)" font-weight="400" stroke="#000000">
+    <text font-family="osifont" font-style="normal" font-size="67" fill="#000000" x="4" xml:space="preserve" y="204.219" fill-opacity="1" font-weight="400" stroke="none">Rectangular spacers x8</text>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="0.847059" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,1022.11,812.38)" font-weight="400" stroke="#ffffff">
+    <text font-family=".AppleSystemUIFont" font-style="normal" font-size="45.8611" fill="#ffffff" x="674.969" xml:space="preserve" y="204.219" fill-opacity="0.847059" font-weight="400" stroke="none"/>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="1" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,1021.85,1155.06)" font-weight="400" stroke="#000000">
+    <text font-family="osifont" font-style="normal" font-size="67" fill="#000000" x="4" xml:space="preserve" y="92.2188" fill-opacity="1" font-weight="400" stroke="none">All spacers should be made out of Mica and Peek</text>
+   </g>
+   <g font-family=".AppleSystemUIFont" stroke-linecap="square" stroke-opacity="0.847059" font-style="normal" stroke-linejoin="bevel" font-size="45.8611" fill="none" stroke-width="1" transform="matrix(1,0,0,1,1021.85,1155.06)" font-weight="400" stroke="#ffffff">
+    <text font-family=".AppleSystemUIFont" font-style="normal" font-size="45.8611" fill="#ffffff" x="1457.33" xml:space="preserve" y="92.2188" fill-opacity="0.847059" font-weight="400" stroke="none"/>
+   </g>
+  </g>
+ </g>
+</svg>
