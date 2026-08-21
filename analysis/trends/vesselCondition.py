@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from numpy import genfromtxt
+import matplotlib.dates as mdates
 
 #Convert time to datetime
 def convertTime(df):
@@ -110,7 +111,7 @@ def main():
 
     #Time range cut
     time_ranges = {
-        1: ("2025-11-08 00:00:00", "2026-02-06 18:00:00"),  #Time range
+        1: ("2025-11-08 00:00:00", "2026-03-23 08:00:00"),  #Time range
         #1: (None, None),  #No cut
     }
     start_time, end_time = time_ranges.get(1, (None, None))
@@ -144,7 +145,7 @@ def main():
                     top=0.986, bottom=0.065, 
                     wspace=0.4, hspace=0.250)
 
-    plt.savefig("../../plots/vesselTrends_Nov2025_Feb2026.png",bbox_inches='tight',dpi=300)
+    plt.savefig("../../plots/vesselTrends_Nov2025_Mar2026.png",bbox_inches='tight',dpi=300)
     plt.show()
 
     fig1, axes1 = plt.subplots(nrows=3, ncols=1)
@@ -166,8 +167,29 @@ def main():
                     top=0.986, bottom=0.065, 
                     wspace=0.4, hspace=0.250)
 
-    plt.savefig("../../plots/LabTrends_Nov2025_Feb2026.png",bbox_inches='tight',dpi=300)
+    plt.savefig("../../plots/LabTrends_Nov2025_Mar2026.png",bbox_inches='tight',dpi=300)
     plt.show()
+
+    fig, ax = plt.subplots(figsize=(25,5))
+    df_filtered_RH_vessel.plot(ax=ax,color="red",label="RH in the vessel")
+    ax.grid(True, which='major', alpha=0.4)
+    ax.xaxis.set_major_locator(mdates.MonthLocator())
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y/%m'))
+    ax.set_xlabel("Date", fontsize=36)
+    ax.set_ylabel("RH [%]", fontsize=36)
+    ax.tick_params(axis='x', labelsize=36, rotation=0)
+    ax.tick_params(axis='y', labelsize=36)
+    ax.set_xlim(pd.Timestamp("2025-11-01"),pd.Timestamp("2026-04-01"))
+    plt.setp(ax.get_xticklabels(), ha='center')
+    #ax.legend()
+    legend = ax.get_legend()
+    if legend is not None:
+        legend.remove()
+
+    fig.savefig("../../plots/RH_trend_vessel_aging.pdf",bbox_inches='tight',dpi=300)
+
+    plt.show()
+
 
 if __name__ == "__main__":
 	main()

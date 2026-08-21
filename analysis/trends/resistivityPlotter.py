@@ -35,30 +35,38 @@ def main():
     sMatExposure = "Material exposure"
 
     #Load each sheet in a pandas df
-    dfNewSpacers = pd.read_excel(file_name, sheet_name=sSpacers,index_col=0,skiprows=1,usecols="A:M")
-    dfMatCompSpacers = pd.read_excel(file_name, sheet_name=sSpacers,index_col=0,skiprows=1,usecols="P:AB")
-    dfAgedSpacers = pd.read_excel(file_name, sheet_name=sSpacers,index_col=0,skiprows=1,usecols="AE:AQ")
+    dfNewSpacers = pd.read_excel(file_name, sheet_name=sSpacers,index_col=0,skiprows=1,usecols="A:S")
+    dfMatCompSpacers = pd.read_excel(file_name, sheet_name=sSpacers,index_col=0,skiprows=1,usecols="V:AN")
+    dfAgedSpacers = pd.read_excel(file_name, sheet_name=sSpacers,index_col=0,skiprows=1,usecols="AQ:BC")
     dfNewDrying= pd.read_excel(file_name, sheet_name=sNewDrying,index_col=0,skiprows=1,usecols="A:N") #Ok
     dfOldHumidAir = pd.read_excel(file_name, sheet_name=sOldHumidAir,index_col=0,skiprows=1,usecols="A:N") #Ok
     dfOldWater = pd.read_excel(file_name, sheet_name=sOldWater,index_col=0,skiprows=1,usecols="A:N") #Ok
-    dfOldAmbient = pd.read_excel(file_name, sheet_name=sOldAmbient,index_col=0,skiprows=1,usecols="A:N")
-    dfNewAmbient = pd.read_excel(file_name, sheet_name=sOldAmbient, index_col=0,skiprows=1,usecols="Q:AD")
+    dfOldAmbient = pd.read_excel(file_name, sheet_name=sOldAmbient,index_col=0,skiprows=1,usecols="A:S")
+    dfNewAmbient = pd.read_excel(file_name, sheet_name=sOldAmbient, index_col=0,skiprows=1,usecols="V:AN")
     dfAgedRPC_S6_B3 = pd.read_excel(file_name, sheet_name=sAgedRPC,index_col=0,skiprows=1,usecols="A:N")
     dfAgedRPC_S7_B3 = pd.read_excel(file_name, sheet_name=sAgedRPC,index_col=0,skiprows=1,usecols="Q:AD")
-    dfMatExposure_S2_B0 = pd.read_excel(file_name, sheet_name=sMatExposure,index_col=0,skiprows=1,usecols="A:N")
-    dfMatExposure_S3_B0 = pd.read_excel(file_name, sheet_name=sMatExposure,index_col=0,skiprows=1,usecols="Q:AD")
-    dfMatExposure_S8_B4 = pd.read_excel(file_name, sheet_name=sMatExposure,index_col=0,skiprows=1,usecols="AG:AT")
+    dfMatExposure_S2_B0 = pd.read_excel(file_name, sheet_name=sMatExposure,index_col=0,skiprows=1,usecols="A:S")
+    dfMatExposure_S3_B0 = pd.read_excel(file_name, sheet_name=sMatExposure,index_col=0,skiprows=1,usecols="V:AN")
+    dfMatExposure_S8_B4 = pd.read_excel(file_name, sheet_name=sMatExposure,index_col=0,skiprows=1,usecols="AQ:BI")
 
-    print(dfOldHumidAir)  # print first 5 rows of the dataframe
+    #print(dfOldHumidAir)  # print first 5 rows of the dataframe
 
     #Index column + column names
     #spacers
     dfNewSpacers.index.names = ["date"]
-    dfNewSpacers.columns = ["resistance","avgRes","errAvgRes","resistivity","avgResistivity","errAvgResistivity","voltage",
+    #dfNewSpacers.columns = ["resistance","avgRes","errAvgRes","resistivity","avgResistivity","errAvgResistivity","voltage",
+    #                        "RH","T","elTime","area","thickness"]
+
+    dfNewSpacers.columns = ["resistance","resErrPerInst","resErrInst","current","avgRes","errAvgRes","resistivity","resistivityErrInst",
+                            "avgResistivity","errAvgResistivity","errAvgResistivityIrnst","finalErrorResistivity","voltage",
                             "RH","T","elTime","area","thickness"]
 
     dfMatCompSpacers.index.names = ["date"]
-    dfMatCompSpacers.columns = ["resistance","avgRes","errAvgRes","resistivity","avgResistivity","errAvgResistivity","voltage",
+    #dfMatCompSpacers.columns = ["resistance","avgRes","errAvgRes","resistivity","avgResistivity","errAvgResistivity","voltage",
+    #                        "RH","T","elTime","area","thickness"]
+
+    dfMatCompSpacers.columns = ["resistance","resErrPerInst","resErrInst","current","avgRes","errAvgRes","resistivity","resistivityErrInst",
+                            "avgResistivity","errAvgResistivity","errAvgResistivityIrnst","finalErrorResistivity","voltage",
                             "RH","T","elTime","area","thickness"]
     
     dfAgedSpacers.index.names = ["date"]
@@ -110,7 +118,8 @@ def main():
     #Index column + column names
     #Old bakelite in air reference
     dfOldAmbient.index.names = ["date"]
-    dfOldAmbient.columns = ["resistance","current","avgRes","errAvgRes","resistivity","avgResistivity","errAvgResistivity","voltage",
+    dfOldAmbient.columns = ["resistance","resErrPerInst","resErrInst","current","avgRes","errAvgRes","resistivity","resistivityErrInst",
+                            "avgResistivity","errAvgResistivity","errAvgResistivityIrnst","finalErrorResistivity","voltage",
                             "RH","T","elTime","area","thickness"]
 
     convertTime(dfOldAmbient)
@@ -120,7 +129,8 @@ def main():
     #Index column + column names
     #New bakelite in air reference
     dfNewAmbient.index.names = ["date"]
-    dfNewAmbient.columns = ["resistance","current","avgRes","errAvgRes","resistivity","avgResistivity","errAvgResistivity","voltage",
+    dfNewAmbient.columns = ["resistance","resErrPerInst","resErrInst","current","avgRes","errAvgRes","resistivity","resistivityErrInst",
+                            "avgResistivity","errAvgResistivity","errAvgResistivityIrnst","finalErrorResistivity","voltage",
                             "RH","T","elTime","area","thickness"]
 
     convertTime(dfNewAmbient)
@@ -148,7 +158,8 @@ def main():
     #Index column + column names
     #Material exposure
     dfMatExposure_S2_B0.index.names = ["date"]
-    dfMatExposure_S2_B0.columns = ["resistance","current","avgRes","errAvgRes","resistivity","avgResistivity","errAvgResistivity","voltage",
+    dfMatExposure_S2_B0.columns = ["resistance","resErrPerInst","resErrInst","current","avgRes","errAvgRes","resistivity","resistivityErrInst",
+                            "avgResistivity","errAvgResistivity","errAvgResistivityIrnst","finalErrorResistivity","voltage",
                             "RH","T","elTime","area","thickness"]
 
     convertTime(dfMatExposure_S2_B0)
@@ -156,7 +167,8 @@ def main():
     dfMatExposure_S2_B0 = dfMatExposure_S2_B0.dropna()
 
     dfMatExposure_S3_B0.index.names = ["date"]
-    dfMatExposure_S3_B0.columns = ["resistance","current","avgRes","errAvgRes","resistivity","avgResistivity","errAvgResistivity","voltage",
+    dfMatExposure_S3_B0.columns = ["resistance","resErrPerInst","resErrInst","current","avgRes","errAvgRes","resistivity","resistivityErrInst",
+                            "avgResistivity","errAvgResistivity","errAvgResistivityIrnst","finalErrorResistivity","voltage",
                             "RH","T","elTime","area","thickness"]
 
     convertTime(dfMatExposure_S3_B0)
@@ -164,7 +176,8 @@ def main():
     dfMatExposure_S3_B0 = dfMatExposure_S3_B0.dropna()
 
     dfMatExposure_S8_B4.index.names = ["date"]
-    dfMatExposure_S8_B4.columns = ["resistance","current","avgRes","errAvgRes","resistivity","avgResistivity","errAvgResistivity","voltage",
+    dfMatExposure_S8_B4.columns = ["resistance","resErrPerInst","resErrInst","current","avgRes","errAvgRes","resistivity","resistivityErrInst",
+                            "avgResistivity","errAvgResistivity","errAvgResistivityIrnst","finalErrorResistivity","voltage",
                             "RH","T","elTime","area","thickness"]
 
     convertTime(dfMatExposure_S8_B4)
@@ -234,26 +247,83 @@ def main():
     
     #Summary plot
     #samples = ["old bakelite no oil in air", "new bakelite with oil in air","old bakelite no oil exposed","old bakelite with oil exposed","new bakelite with oil exposed","aged RPC HV side","aged RPC GND side"]
-    samples = ["S2_B1","S8_B3","S2_B0","S3_B0","S8_B4","S6_B3","S7_B3"]
+    samples = ["S2_B1","S8_B3","S2_B0","S3_B0","S8_B4","New spacers","Exposed spacers"]
     avgResistivities = [dfOldAmbient["avgResistivity"].mean(), dfNewAmbient["avgResistivity"].mean(), dfMatExposure_S2_B0["avgResistivity"].mean(), dfMatExposure_S3_B0["avgResistivity"].mean(),
-                        dfMatExposure_S8_B4["avgResistivity"].mean(), dfAgedRPC_S6_B3["avgResistivity"].mean(), dfAgedRPC_S7_B3["avgResistivity"].mean()]
-    errorOnAvgResistivity = [dfOldAmbient["avgResistivity"].sem(), dfNewAmbient["avgResistivity"].sem(), dfMatExposure_S2_B0["avgResistivity"].sem(), dfMatExposure_S3_B0["avgResistivity"].sem(),
-                        dfMatExposure_S8_B4["avgResistivity"].sem(), dfAgedRPC_S6_B3["avgResistivity"].sem(), dfAgedRPC_S7_B3["avgResistivity"].sem()]
-    x = np.arange(2,16,2)
-    rndm = [1,2,3,4,5,6,7]
+                        dfMatExposure_S8_B4["avgResistivity"].mean(), dfNewSpacers["avgResistivity"].mean(), dfMatCompSpacers["avgResistivity"].mean()]
 
-    fig, ax = plt.subplots(1,1) 
-    ax.plot(x,avgResistivities,marker="o",linestyle="None",color="orange")
-    ax.set_yscale('log')
-    ax.grid(True, which="both",alpha=0.4)
-    ax.errorbar(x,avgResistivities,yerr=errorOnAvgResistivity,ecolor="orange",fmt="none",capsize=3)
-    ax.set_ylim(1e+10,2e+12)
-    ax.set_xlabel("Sample name")
-    ax.set_ylabel(r'Resistivity [$\Omega$*cm]')
+    instrErrorOnAvgResistivity = [dfOldAmbient["finalErrorResistivity"].mean(), dfNewAmbient["finalErrorResistivity"].mean(), dfMatExposure_S2_B0["finalErrorResistivity"].mean(), dfMatExposure_S3_B0["finalErrorResistivity"].mean(),
+                        dfMatExposure_S8_B4["finalErrorResistivity"].mean(), dfNewSpacers["finalErrorResistivity"].mean(), dfMatCompSpacers["finalErrorResistivity"].mean()]
+
+    statErrorOnAvgResistivity = [dfOldAmbient["avgResistivity"].sem(), dfNewAmbient["avgResistivity"].sem(), dfMatExposure_S2_B0["avgResistivity"].sem(), dfMatExposure_S3_B0["avgResistivity"].sem(),
+                        dfMatExposure_S8_B4["avgResistivity"].sem(), dfNewSpacers["avgResistivity"].sem(), dfMatCompSpacers["avgResistivity"].sem()]
+
+    errorOnAvgResistivity = np.hypot(instrErrorOnAvgResistivity,statErrorOnAvgResistivity)
+
+    x = np.arange(2,16, 2)
+
+    #Broken y axis
+    fig, (ax_top, ax_bot) = plt.subplots(
+        2,1,
+        sharex=True,
+        gridspec_kw={
+            'height_ratios': [1,3],
+            'hspace': 0.05
+        }
+    )
+        
+    for ax in (ax_top, ax_bot):
+            ax.plot(x,avgResistivities,marker="o",linestyle="None",color="orange")
+            ax.set_yscale('log')
+            ax.grid(True, which="both",alpha=0.4)
+            ax.errorbar(x,avgResistivities,yerr=errorOnAvgResistivity,ecolor="orange",fmt="none",capsize=3)
+    
+    ax_bot.set_ylim(1e+10,2e+12)
+    ax_top.set_ylim(1e+15,5e+16)
+    ax_top.spines["bottom"].set_visible(False)
+    ax_bot.spines["top"].set_visible(False)
+    ax_top.tick_params(bottom=False)
+    ax_top.tick_params(labelbottom=False)
+    ax_bot.set_xticks(x)
+    ax_bot.set_xticklabels(samples, rotation=45, size='small')
+    #ax_bot.set_xlabel("Sample name")
+    #ax_bot.set_ylabel(r'Resistivity [$\Omega$*cm]')
+
+    #ax_bot.set_xlabel("Sample name", fontsize=16)
+    ax_bot.set_ylabel(r'Resistivity [$\Omega$*cm]', fontsize=16)
+    ax_bot.tick_params(axis='x', labelsize=16, rotation=45)
+    ax_bot.tick_params(axis='y', labelsize=16)
+    ax_top.tick_params(axis='y', labelsize=16)
+
+    #Create y axis line break
+    d = .5
+    kwargs = dict(
+        marker=[(-1, -d), (1, d)],
+        markersize=12,
+        linestyle="none",
+        color="k",
+        mec="k",
+        mew=1,
+        clip_on=False,
+    )
+
+    ax_top.plot([0, 1], [0, 0], transform=ax_top.transAxes, **kwargs)
+    ax_bot.plot([0, 1], [1, 1], transform=ax_bot.transAxes, **kwargs)
+
+    #fig, ax = plt.subplots(1,1) 
+    #ax.plot(x,avgResistivities,marker="o",linestyle="None",color="orange")
+    #ax.set_yscale('log')
+    #ax.grid(True, which="both",alpha=0.4)
+    #ax.errorbar(x,avgResistivities,yerr=errorOnAvgResistivity,ecolor="orange",fmt="none",capsize=3)
+    #ax.set_ylim(1e+10,1e+16) #2e+12
+    #ax.set_xlabel("Sample name")
+    #ax.set_ylabel(r'Resistivity [$\Omega$*cm]')
     # Set number of ticks for x-axis
-    ax.set_xticks(x)
+    #ax.set_xticks(x)
     # Set ticks labels for x-axis
-    ax.set_xticklabels(samples, rotation=45, size='small')
+    #ax.set_xticklabels(samples, rotation=45, size='small')
+    save = True
+    if save:
+        plt.savefig("../../plots/resistivityMeasMatExp.pdf",bbox_inches='tight',dpi=300)
     plt.show()
 
 
