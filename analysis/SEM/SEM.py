@@ -7,17 +7,19 @@ from scipy.signal import savgol_filter
 from scipy import sparse
 from scipy.sparse.linalg import spsolve
 from pathlib import Path
+from brokenaxes import brokenaxes
 import sys
 import json
 
 #Integrate valid elements
 def integrate_elements(element_map_full, spectrum):
-    import numpy as np
 
     element_integrals = {}
+    element_errors = {}
 
     for el, shells in element_map_full.items():
         total_area = 0.0
+        total_variance = 0.0
         print(el, shells)
 
         #if el == "C":
@@ -33,10 +35,21 @@ def integrate_elements(element_map_full, spectrum):
             hi = min(len(spectrum) - 1, hi)
 
             total_area += np.trapezoid(spectrum[lo:hi])
+            #Error estimation propating sqrt(N) over the selected integration interval
+            counts = spectrum[lo:hi]
+
+            variance = (0.01**2) * (
+                counts[0]/4 +
+                np.sum(counts[1:-1]) +
+                counts[1]/4
+            )
+
+            total_variance += variance
             
         element_integrals[el] = total_area
+        element_errors[el] = float(np.sqrt(total_variance))
 
-    return element_integrals
+    return element_integrals, element_errors
 
 #Split K and L lines
 def split_K_L(lines):
@@ -182,14 +195,6 @@ def main():
     #Path to spectrum csv file to draw histo
     #If executed from python script -> get the path from .sh script, otherwise hard coded here
     if len(sys.argv) < 2: #No string from command line
-        #path = Path("~/marieCurie/EcoRPCchem/data/glass/S1/S1_G1/csv_spectra_S1_G1/Area 1/Full Area 1_1.csv").expanduser()
-        #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S8/S8_B1/csv_spectra_S8_B1/Area 1 10 kV/Full Area 1_1.csv").expanduser()
-        #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S11/S11_B1_CS/csv_spectra_S11_B1_CS/Area 1/Selected Area 2_1.csv").expanduser()
-        #path = Path("~/marieCurie/EcoRPCchem/data/glass/S1/S1_G1/csv_spectra_S1_G1/Area 4_30kV/Full Area 1_1.csv").expanduser()
-        #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S4/S4_B1/csv_spectra_S4_B1/Area 2/Full Area 1_1.csv").expanduser()
-        #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S12/S12_B0/csv_spectra_S12_B0/Area 1 10 kV/Selected Area 4_1.csv").expanduser()
-        #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S12/S12_B0/csv_spectra_S12_B0/Area 1 10 kV/Full Area 1_1.csv").expanduser()
-        #path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S7/S7_B0/csv_spectra_S7_B0/Area 1/EDS Spot 1_1.csv").expanduser()
         path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S1/S1_B3/csv_spectra_S1_B3/Area 6/Selected Area 3_1.csv").expanduser()
     
     else:
@@ -318,21 +323,32 @@ def main():
     # Integrate peaks #
     ###################
     totArea = 0.
+    totAreaErr = 0.
     concentrations = dict()
+    concentration_errors = dict()
     
-    totArea = integrate_elements(present_element_peaks,cleanSpectrum)
+    totArea, totAreaErr = integrate_elements(present_element_peaks,cleanSpectrum)
     print("Integral per element:",totArea)
+    print("Area errors:", totAreaErr)
 
     #Sum all areas
     res = sum(totArea.values())
+
+    #Error on total area
+    res_err = np.sqrt(sum(v**2 for v in totAreaErr.values()))
     
     #Compute concentration
     for el,area in totArea.items():
         concentrations[el] = ((area/res)*100)
+        dC_dA = 100.0 / res
+        dC_dT = -100.0 * area / (res**2)
+        sigma = np.sqrt((dC_dA * totAreaErr[el])**2 + (dC_dT * res_err)**2)
+        concentration_errors[el] = float(sigma)
         
     print("Concentrations",concentrations)
+    print("Concentrations errors",concentration_errors)
 
-    #Create single plot
+    #Create single plot with all thing superimposed and no broken y axis
     ax = spectrum.plot(color="blue",alpha=0.4,label="EDX spot")
     
     #Draw with Sav-Gol filter
@@ -382,6 +398,66 @@ def main():
     plt.grid(True)
     ax.grid(True,which="both",linewidth=0.3,alpha=0.5)
 
+    #Broken y axis
+    fig, (ax_top, ax_bot) = plt.subplots(
+        2,1,
+        sharex=True,
+        gridspec_kw={
+            'height_ratios': [1,3],
+            'hspace': 0.05
+        }
+    )
+    
+    for ax in (ax_top, ax_bot):
+        #spectrum.plot(ax=ax,color='blue',alpha=0.4,label='EDX spot')
+        #ax.plot(spectrum.index,bl,color="pink",alpha=0.4,label="Baseline")
+        ax.plot(spectrum.index,cleanSpectrum,color="blue",label="Cleaned spectrum")
+
+    ax_bot.set_ylim(0,500)
+    ax_top.set_ylim(4000,9000)
+    ax_top.spines["bottom"].set_visible(False)
+    ax_bot.spines["top"].set_visible(False)
+    ax_top.tick_params(labelbottom=False)
+    
+    #Create y axis line break
+    d = .5
+    kwargs = dict(
+        marker=[(-1, -d), (1, d)],
+        markersize=12,
+        linestyle="none",
+        color="k",
+        mec="k",
+        mew=1,
+        clip_on=False,
+    )
+
+    ax_top.plot([0, 1], [0, 0], transform=ax_top.transAxes, **kwargs)
+    ax_bot.plot([0, 1], [1, 1], transform=ax_bot.transAxes, **kwargs)
+    
+    #Set labels
+    ax_bot.set_xlabel("Energy (keV)")
+    ax_bot.set_ylabel("Counts")
+    plt.xlim(0, 10)
+    ax_top.legend()
+
+    #Draw element names
+    for peak in validPeakindicesNames:
+        x = spectrum.index[peak["idx"]]
+        y = cleanSpectrum[peak["idx"]]
+
+        target_ax = ax_top if y > 4000 else ax_bot
+
+        target_ax.scatter(x, y, color="red", s=20)
+
+        target_ax.text(
+            x,
+            y + (0.1*y),
+            peak["element"],
+            rotation=90,
+            ha="center",
+            fontsize=8
+        )
+
     #Extract sample name and region to save image and open .json file to write out elemental concentrations
     parts = path.parts
 
@@ -412,11 +488,27 @@ def main():
         plt.savefig("../../plots/" + sampleName + ".png",bbox_inches='tight',dpi=300)
     
     plt.show()
+
+    #Save data to csv for later plotting
+    cleanSpectrumPath = str(path).replace(".csv","_cleanSpectrum_df.csv")
+    print("cleanSpectrumPath:",cleanSpectrumPath)
+
+    saveToCsv = True
+    if saveToCsv:
+        clean_df.to_csv(cleanSpectrumPath,index=False)
+
+    #Build a dict of dict to include element concentration with statistical error on area calculation
+    concWithError = {
+        'conc': concentrations,
+        'errors': concentration_errors
+    }
     
     path = str(path).replace(".csv",".json")
     #Save element concentrations to a .json file in the csv folder of each sample
     with open(path,"w") as conc:
-        json.dump(concentrations,conc)
+        #json.dump(concentrations,conc)
+        #json.dump(concentration_errors,conc)
+        json.dump(concWithError,conc,indent=4)
 
 if __name__ == "__main__":
     main()
