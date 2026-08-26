@@ -1,11 +1,8 @@
-from pymatgen.core.structure import Structure
-from pymatgen.analysis.diffraction.xrd import XRDCalculator
 import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
 import pandas as pd
 from pathlib import Path
-
+from matplotlib import gridspec
 
 def main():
 
@@ -15,6 +12,7 @@ def main():
     # ================================
     NaF_path = Path("~/marieCurie/EcoRPCchem/data/bakelite/XRD measurements/Entry_00-036-1455.cif").expanduser() #NaF
     NaHF2_path = Path("~/marieCurie/EcoRPCchem/data/bakelite/XRD measurements/Entry_00-074-1612.cif").expanduser() #NaHF2
+    samplePath = Path("~/marieCurie/EcoRPCchem/data/bakelite/XRD measurements/yellow_powder.xye").expanduser() #From sample
 
     wavelength = 1.5406         # Cu K-alpha1 wavelength in Angstroms
     fwhm = 0.15                 # Peak broadening (FWHM in degrees 2theta)
@@ -97,19 +95,32 @@ def main():
     two_theta_NaHF2 = 2 * theta_NaHF2 * 180 / np.pi
 
     # ================================
-    # 4. Plot the stick pattern
+    # 4. Open the data file and load to a pandas df
+    # ================================  
+    #dfSample = pd.read_csv(samplePath, sep ='    ')
+    dfSample = pd.read_csv(samplePath, sep=r'\s+', header=None, comment='#',names=['x', 'y', 'error'])
+    dfSample['y_norm_1000'] = dfSample['y'] / dfSample['y'].max() * 1000
+    print(dfSample)
+
+    # ================================
+    # 5. Plot the stick pattern
     # ================================
     plt.figure(figsize=(12, 5))
-    plt.stem(two_theta_NaF, intensities_NaF, basefmt=" ", linefmt='r-', markerfmt=None, label='Stick pattern NaF')
-    plt.stem(two_theta_NaHF2, intensities_NaHF2, basefmt=" ", linefmt='b--', markerfmt=None,label='Stick pattern NaHF2')
+    plt.stem(two_theta_NaF, intensities_NaF, basefmt=" ", linefmt='r--', markerfmt="", label='NaF diffraction pattern')
+    plt.stem(two_theta_NaHF2, intensities_NaHF2, basefmt=" ", linefmt='b--', markerfmt="",label='NaHF2 diffraction pattern')
+    plt.plot(dfSample.x,dfSample.y_norm_1000)
     plt.xlabel('2θ (degrees)', fontsize=12)
     plt.ylabel('Intensity (a.u.)', fontsize=12)
-    plt.title(f'XRD Pattern from {NaF_path} (Cu Kα, λ={wavelength} Å)', fontsize=14)
+    #plt.title(f'XRD Pattern from {NaF_path} (Cu Kα, λ={wavelength} Å)', fontsize=14)
     plt.grid(alpha=0.3)
     plt.legend()
     plt.tight_layout()
-    plt.show()
 
+    save = True
+    if save:
+        plt.savefig("../../plots/XRD_spectrum_yellowDust.pdf")
+
+    plt.show()
    
 
 if __name__ == "__main__":
