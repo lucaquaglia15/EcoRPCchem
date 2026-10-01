@@ -105,7 +105,7 @@ def main():
     # ================================
     # 5. Plot the stick pattern
     # ================================
-    plt.figure(figsize=(12, 5))
+    plt.figure(figsize=(7, 7))
     plt.stem(two_theta_NaF, intensities_NaF, basefmt=" ", linefmt='r--', markerfmt="", label='NaF diffraction pattern')
     plt.stem(two_theta_NaHF2, intensities_NaHF2, basefmt=" ", linefmt='b--', markerfmt="",label='NaHF2 diffraction pattern')
     plt.plot(dfSample.x,dfSample.y_norm_1000)
