@@ -26,7 +26,7 @@ def main():
     )
     
     for ax in (ax_top, ax_bot):
-        ax.plot(df_p1.index,df_p1.Counts,color="blue",label="Before exposuew")
+        ax.plot(df_p1.index,df_p1.Counts,color="blue",label="Before exposure")
         ax.plot(df_p2.index,df_p2.Counts,color="red",alpha=0.8,linestyle='--',label="After exposure")
         ax.grid(True,'both',alpha=0.4)
 
@@ -70,18 +70,12 @@ def main():
 
     plt.show()
 
+    """
     df_p1_copy = df_p1.copy()
     df_p2_copy = df_p2.copy()
-    #counts_p1 = df_p1_copy('Counts')
-    #counts_p2 = df_p2_copy('Counts')
 
     df_p1_copy.Counts = df_p1_copy.Counts/df_p1_copy['Counts'].max()
     df_p2_copy.Counts = df_p2_copy.Counts/df_p2_copy['Counts'].max()
-
-
-    #df_p1_copy = df_p1_copy[df_p1_copy['Counts']/df_p1_copy['Counts'].max()]
-    #df_p2_copy = df_p2_copy[df_p2_copy('Counts')/df_p2_copy['Counts'].max()]
-    #counts_norm = counts / counts.max()
 
     fig, ax = plt.subplots()
     ax.plot(df_p1_copy.index,df_p1_copy.Counts,color="blue",label="Before")
@@ -89,8 +83,202 @@ def main():
     ax.set_xlim(0,7)
             
     plt.show()
+    """
 
+    #Aged RPC at GIF++ (HV electrode) and virgin bakelite of same production
 
+    p3 = Path("~/marieCurie/EcoRPCchem/data/bakelite/S8/S8_B1/csv_spectra_S8_B1/Area 1 10 kV/Full Area 1_1_cleanSpectrum_df.csv").expanduser() #input file path
+    p4 = Path("~/marieCurie/EcoRPCchem/data/bakelite/S6/S6_B6/csv_spectra_S6_B6/Area 2 10 kV/Full Area 1_1_cleanSpectrum_df.csv").expanduser() #input file path
+
+    df_p3 = pd.read_csv(p3, index_col=0)
+    df_p4 = pd.read_csv(p4, index_col=0)
+
+    #Broken y axis
+    fig, (ax_top, ax_bot) = plt.subplots(
+        2,1,
+        sharex=True,
+        gridspec_kw={
+            'height_ratios': [1,2],
+            'hspace': 0.05
+        }
+    )
+    
+    for ax in (ax_top, ax_bot):
+        ax.plot(df_p3.index,df_p3.Counts,color="blue",label="Virgin Bakelite")
+        ax.plot(df_p4.index,df_p4.Counts,color="red",alpha=0.8,linestyle='--',label="HV electrode after GIF++ aging")
+        ax.grid(True,'both',alpha=0.4)
+
+    ax_bot.set_xlim(0,5)
+    ax_top.set_xlim(0,5)
+    ax_bot.set_ylim(0,500)
+    ax_top.set_ylim(500,12000)
+    ax_top.spines["bottom"].set_visible(False)
+    ax_bot.spines["top"].set_visible(False)
+    ax_top.tick_params(bottom=False)
+    ax_top.tick_params(labelbottom=False)
+    
+    #Create y axis line break
+    d = .5
+    kwargs = dict(
+        marker=[(-1, -d), (1, d)],
+        markersize=12,
+        linestyle="none",
+        color="k",
+        mec="k",
+        mew=1,
+        clip_on=False,
+    )
+
+    ax_top.plot([0, 1], [0, 0], transform=ax_top.transAxes, **kwargs)
+    ax_bot.plot([0, 1], [1, 1], transform=ax_bot.transAxes, **kwargs)
+    
+    #Set labels
+    ax_bot.set_xlabel("Energy (keV)")
+    ax_bot.set_ylabel("Counts")
+    plt.xlim(0,4)
+    ax_top.legend()
+    #Write element names, hardcoded to make it easier since anyway this is only to show one or two examples
+    ax_top.text(0.26, 1.05e+4, "C", color="black", fontsize=10, ha='center', va='bottom')
+    ax_top.text(0.38, 6.5e+3, "N", color="black", fontsize=10, ha='center', va='bottom')
+    ax_top.text(0.51, 3e+3, "O", color="black", fontsize=10, ha='center', va='bottom')
+    ax_top.text(0.7, 4e+3, "F", color="black", fontsize=10, ha='center', va='bottom')
+    plt.text(1.04, 150, "Na", color="black", fontsize=10, ha='center', va='bottom')
+    plt.text(2.3, 400, "S", color="black", fontsize=10, ha='center', va='bottom')
+
+    save = True
+    if save:
+            plt.savefig("../../plots/comparison_S8_B1_S6_B6_beforeAfterExposure.pdf",bbox_inches='tight',dpi=300)
+
+    plt.show()
+
+    #Aged RPC at GIF++ (HV electrode) and virgin bakelite of same production
+    
+    p5 = Path("~/marieCurie/EcoRPCchem/data/bakelite/S8/S8_B1/csv_spectra_S8_B1/Area 7 10 kV/Full Area 1_1_cleanSpectrum_df.csv").expanduser() #input file path
+    p6 = Path("~/marieCurie/EcoRPCchem/data/bakelite/S6/S6_B6/csv_spectra_S6_B6/Area 3 10 kV/Full Area 1_1_cleanSpectrum_df.csv").expanduser() #input file path
+
+    df_p5 = pd.read_csv(p5, index_col=0)
+    df_p6 = pd.read_csv(p6, index_col=0)
+
+    #Broken y axis
+    fig, (ax_top, ax_bot) = plt.subplots(
+        2,1,
+        sharex=True,
+        gridspec_kw={
+            'height_ratios': [1,2],
+            'hspace': 0.05
+        }
+    )
+    
+    for ax in (ax_top, ax_bot):
+        ax.plot(df_p5.index,df_p5.Counts,color="blue",label="Virgin Bakelite")
+        ax.plot(df_p6.index,df_p6.Counts,color="red",alpha=0.8,linestyle='--',label="HV electrode after GIF++ aging")
+        ax.grid(True,'both',alpha=0.4)
+
+    ax_bot.set_xlim(0,5)
+    ax_top.set_xlim(0,5)
+    ax_bot.set_ylim(0,300)
+    ax_top.set_ylim(300,12000)
+    ax_top.spines["bottom"].set_visible(False)
+    ax_bot.spines["top"].set_visible(False)
+    ax_top.tick_params(bottom=False)
+    ax_top.tick_params(labelbottom=False)
+    
+    #Create y axis line break
+    d = .5
+    kwargs = dict(
+        marker=[(-1, -d), (1, d)],
+        markersize=12,
+        linestyle="none",
+        color="k",
+        mec="k",
+        mew=1,
+        clip_on=False,
+    )
+
+    ax_top.plot([0, 1], [0, 0], transform=ax_top.transAxes, **kwargs)
+    ax_bot.plot([0, 1], [1, 1], transform=ax_bot.transAxes, **kwargs)
+    
+    #Set labels
+    ax_bot.set_xlabel("Energy (keV)")
+    ax_bot.set_ylabel("Counts")
+    plt.xlim(0,4)
+    ax_top.legend()
+    #Write element names, hardcoded to make it easier since anyway this is only to show one or two examples
+    ax_top.text(0.26, 6.5e+3, "C", color="black", fontsize=10, ha='center', va='bottom')
+    ax_top.text(0.38, 2.5e+3, "N", color="black", fontsize=10, ha='center', va='bottom')
+    ax_top.text(0.51, 3e+3, "O", color="black", fontsize=10, ha='center', va='bottom')
+    ax_top.text(0.7, 1.05e+4, "F", color="black", fontsize=10, ha='center', va='bottom')
+    ax_top.text(1.04, 3500, "Na", color="black", fontsize=10, ha='center', va='bottom')
+    plt.text(2.3, 250, "S", color="black", fontsize=10, ha='center', va='bottom')
+
+    save = True
+    if save:
+            plt.savefig("../../plots/comparison_S8_B1_S6_B6_beforeAfterExposure_NaRichArea.pdf",bbox_inches='tight',dpi=300)
+
+    plt.show()
+
+    p7 = Path("~/marieCurie/EcoRPCchem/data/bakelite/S7/S7_B0/csv_spectra_S7_B0/Area 1 10 kV/EDS Spot 1_1_cleanSpectrum_df.csv").expanduser() #input file path
+    
+    df_p7 = pd.read_csv(p7, index_col=0)
+    #df_p8 = pd.read_csv(p8, index_col=0)
+
+    #Broken y axis
+    fig, (ax_top, ax_bot) = plt.subplots(
+        2,1,
+        sharex=True,
+        gridspec_kw={
+            'height_ratios': [1,2],
+            'hspace': 0.05
+        }
+    )
+    
+    for ax in (ax_top, ax_bot):
+        ax.plot(df_p7.index,df_p7.Counts,color="red",alpha=0.8,linestyle='--',label="Defect")
+        #ax.plot(df_p8.index,df_p8.Counts,color="blue",label="Virgin material")
+        ax.grid(True,'both',alpha=0.4)
+
+    ax_bot.set_xlim(0,5)
+    ax_top.set_xlim(0,5)
+    ax_bot.set_ylim(0,300)
+    ax_top.set_ylim(300,30000)
+    ax_top.spines["bottom"].set_visible(False)
+    ax_bot.spines["top"].set_visible(False)
+    ax_top.tick_params(bottom=False)
+    ax_top.tick_params(labelbottom=False)
+    
+    #Create y axis line break
+    d = .5
+    kwargs = dict(
+        marker=[(-1, -d), (1, d)],
+        markersize=12,
+        linestyle="none",
+        color="k",
+        mec="k",
+        mew=1,
+        clip_on=False,
+    )
+
+    ax_top.plot([0, 1], [0, 0], transform=ax_top.transAxes, **kwargs)
+    ax_bot.plot([0, 1], [1, 1], transform=ax_bot.transAxes, **kwargs)
+    
+    #Set labels
+    ax_bot.set_xlabel("Energy (keV)")
+    ax_bot.set_ylabel("Counts")
+    plt.xlim(0,4)
+    ax_top.legend()
+    #Write element names, hardcoded to make it easier since anyway this is only to show one or two examples
+    ax_top.text(0.26, 6.5e+3, "C", color="black", fontsize=10, ha='center', va='bottom')
+    #ax_top.text(0.38, 2.5e+3, "N", color="black", fontsize=10, ha='center', va='bottom')
+    ax_top.text(0.51, 3e+3, "O", color="black", fontsize=10, ha='center', va='bottom')
+    ax_top.text(0.7, 2.8e+4, "F", color="black", fontsize=10, ha='center', va='bottom')
+    ax_top.text(1.04, 1.5e+4, "Na", color="black", fontsize=10, ha='center', va='bottom')
+    plt.text(2.3, 250, "S", color="black", fontsize=10, ha='center', va='bottom')
+
+    save = True
+    if save:
+            plt.savefig("../../plots/comparison_S7_B0_GND_defectbeforeAfterExposure_NaRichArea.pdf",bbox_inches='tight',dpi=300)
+
+    plt.show()
 
     """
     #Draw element names
