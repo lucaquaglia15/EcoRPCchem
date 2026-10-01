@@ -140,6 +140,12 @@ def main():
     axes[2].legend(["Vessel temperature"])
     axes[2].tick_params(labelrotation=0)
     axes[2].set_ylabel('Temperature [°C]')
+
+    # Format dates: one tick per month, showing Month Year
+    for ax in axes:
+        ax.xaxis.set_major_locator(mdates.MonthLocator())
+        ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
+        ax.tick_params(axis='x', labelrotation=0)
     
     plt.subplots_adjust(left=0.05, right=0.994, 
                     top=0.986, bottom=0.065, 
