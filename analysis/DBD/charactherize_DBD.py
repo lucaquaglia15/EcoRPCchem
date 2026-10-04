@@ -3,12 +3,19 @@ import numpy as np
 import pandas as pd
 #To find vertices of quadrilateral
 from quadrilateral_fitter import QuadrilateralFitter
+import os
 from pathlib import Path
 import sys
 import json
 
-def open_file(filename):
-    return 0
+def open_files(dataPath):
+
+    print("path in function to open data",dataPath)
+    df = pd.read_csv(dataPath, delimiter = ',',index_col=0,skiprows=5)
+    df.columns = ["Amplitude"]
+    df.index.names = ["Time"]
+
+    return df
 
 #Calculate area inside the parallelogram
 def polygon_area(vertices):
@@ -32,11 +39,6 @@ def line_intersection(line1, line2):
 
 #Fit each side of the QV plot
 def fit_side(x, y, p1, p2, tolerance):
-    """
-    Select experimental points close to the quadrilateral side
-    between p1 and p2, then perform a linear fit.
-    """
-
     x1, y1 = p1
     x2, y2 = p2
 
@@ -85,17 +87,25 @@ def main():
     #Scope channels: C1 = HV probe, C2 = capacitor, F1 = avg of C1, F2 = avg of C2
     channels = ["C1","C2","F1","F2"]
 
+    #gases used (to build path)
+    gas = "air"
+
     #Path to files
     #30/09/2026 -> Dry air + glass (2 mm) + single barrier discharge, wrong avg settings on the scope
     #when triggering on "single" -> the average was calculated on the single trigger hence it was the same 
     #as the "pure" channel data
     #data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_30_09_single_barrier_glass/"
-    #31/09/2026 -> Dry air + glass (2 mm) + single barrier discharge
-    data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_31_09_single_barrier_glass/"
+    #01/10/2026 -> Dry air + glass (2 mm) + single barrier discharge
+    #data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_01_10_single_barrier_glass/"
+    #02/10/2026 -> Dry air + glass (2 mm) + single barrier discharge
+    data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_02_10_single_barrier_glass/"
     
     #Open voltages file and save to a list
     print("Opening voltages file")
     voltagePath = data + "voltages.txt"
+
+    #Output dictionary
+    outputDict = {}
 
     #list for voltages
     voltages = []
@@ -105,143 +115,142 @@ def main():
             voltage = voltage.replace("\n", "") #Remove trailing \n
             voltages.append(voltage)
 
-    #Loop through all voltages tested
+    #Loop through all voltages tested and build dataPath
+    #List of df to store the time-amplitude dfs for each channel
+    #dfList = [C1,C2,F1,F2]
+    dfList = []
+
     for volt in voltages:
-        print(volt)
+        for i in range(3):
+            for ch in channels:
+                #Build file name by looping through N numbers (N is arbitrary)
+                #If the file is found, it is opened and saved to df, otherwise we break the loop
+                dataPath = ""
+                name = ""
 
-    #Open an example file and plot
-    exC1 = data + "C1-test-12800-00003.csv"
-    exC2 = data + "C2-test-12800-00003.csv"
-    exF1 = data + "F1-test-12800-00003.csv"
-    exF2 = data + "F2-test-12800-00003.csv"
+                if "down" in volt:
+                    dataPath = data + ch + "-" + volt.replace("-down","") + "-" + gas + "-down-" + "0000" + str(i) + ".csv"
+                    print("Before",dataPath)
+                    name = volt.replace("-down","") + "-" + gas + "-down-" + "0000" + str(i)
+                else:
+                    dataPath = data + ch + "-" + volt + "-" + gas + "-" + "0000" + str(i) + ".csv"
+                    name = volt + "-" + gas + "-" + "0000" + str(i)
+                
+                try:
+                    df = pd.read_csv(dataPath, delimiter = ',',index_col=0,skiprows=5)
+                    df.columns = ["Amplitude"]
+                    df.index.names = ["Time"]
+                    #Append to df list only if df does not throw error (i.e. if the file exists)
+                    dfList.append(df)
+                    #Print (sanity check) only if df does not throw error (i.e. if the file exists)
+                    print("After",dataPath)
+                except:
+                    break
 
-    #Load waveform
-    C1 = pd.read_csv(exC1, delimiter = ',',index_col=0,skiprows=5)
-    C1.columns = ["Amplitude"]
-    C1.index.names = ["Time"]
+            #Recall that dfList = [C1,C2,F1,F2]
+            print("size during work:",len(dfList))
 
-    C2 = pd.read_csv(exC2, delimiter = ',',index_col=0,skiprows=5)
-    C2.columns = ["Amplitude"]
-    C2["Amplitude"] = C2["Amplitude"]/10.
-    C2.index.names = ["Time"]
+            #If there is at least one element -> we work on the data
+            if (len(dfList) > 0):
+                #Add element name to dictionary
+                outputDict[name] = {}
 
-    F1 = pd.read_csv(exF1, delimiter = ',',index_col=0,skiprows=5)
-    F1.columns = ["Amplitude"]
-    F1.index.names = ["Time"]
+                C1 = dfList[0]
+                C2 = dfList[1]
+                C2["Amplitude"] = C2["Amplitude"]/10.
+                F1 = dfList[2]
+                F2 = dfList[3]
+                F2["Amplitude"] = F2["Amplitude"]/10.
+
+                #print("C1:",C1)
+
+                #Create quadrilateral to find vertices
+                x = F1["Amplitude"].to_numpy()
+                y = F2["Amplitude"].to_numpy()
+                points = np.column_stack((x, y))
+                #Create quadrilateral that matches the points
+                fitter = QuadrilateralFitter(polygon=points)
+                quadrilateral = np.array(fitter.fit())
+
+                #Extract sides for linear fit
+                tolerance = 0.02
+                fits = []
+                vertices = []
+
+                try:
+                    #Loop on all four sides of the parallelogram
+                    for i in range(4):
+                        p1 = quadrilateral[i]
+                        p2 = quadrilateral[(i + 1) % 4]
+                
+                        m, b, mask = fit_side(x,y,p1,p2,tolerance)
+                
+                        fits.append((m, b, mask))
+                
+                        print(
+                            f"Side {i+1}: "
+                            f"slope = {m:.6g}, "
+                            f"intercept = {b:.6g}, "
+                            f"N = {mask.sum()}"
+                        )
+
+                    #Calculate area. First we need the "vertices" i.e. intersection between the four linear fits 
+                    #and then we apply the function to calculate area
+                    for i in range(4):
+                        line1 = fits[i]
+                        line2 = fits[(i + 1) % 4]
+                
+                        vertex = line_intersection(line1, line2)
+                        vertices.append(vertex)
+                
+                    vertices = np.array(vertices)
+                    print("vertices",vertices)
+                    area = polygon_area(vertices)
+                    print("Area =", area)  
+
+                    outputDict[name]["parameters"] = {
+                        "x1": vertices[0][0],
+                        "y1": vertices[0][1],
+                        "x2": vertices[1][0],
+                        "y2": vertices[1][1],
+                        "x3": vertices[2][0],
+                        "y3": vertices[2][1],
+                        "x4": vertices[3][0],
+                        "y4": vertices[3][1],
+                        "m1":fits[0][0],
+                        "m2":fits[1][0],
+                        "m3":fits[2][0],
+                        "m4":fits[3][0],
+                        "area": area}
+                    
+                except:
+                    print("Fit or something else failed")
+                    outputDict[name]["parameters"] = {
+                    "x1":0,
+                    "y1":0,
+                    "x2":0,
+                    "y2":0,
+                    "x3":0,
+                    "y3":0,
+                    "x4":0,
+                    "y4":0,
+                    "m1":0,
+                    "m2":0,
+                    "m3":0,
+                    "m4":0,
+                    "area":0}
+
+                #Clear list at the end
+                dfList.clear()
+                fits.clear()
+                vertices = []
+                points = []
+                print("size at the end:",len(dfList), len(fits),len(vertices))
+
+    print(outputDict)
+
+    with open(data + "output.json", "w") as fp:
+        json.dump(outputDict, fp, indent=4)
     
-    F2 = pd.read_csv(exF2, delimiter = ',',index_col=0,skiprows=5)
-    F2.columns = ["Amplitude"]
-    F2["Amplitude"] = F2["Amplitude"]/10.
-    F2.index.names = ["Time"]
-
-    if baseDebug:
-        print(C1)
-
-    #QV plot
-    plt.plot(F1["Amplitude"], F2["Amplitude"],".",color="black",label="X-Y plot")
-    #plt.set_xlabel('Amplitude [V]')
-    #plt.set_ylabel(r'Charge [$\mu$C]')
-
-    #Convert to useful format for QuadrilateralFitter library
-    x = F1["Amplitude"].to_numpy()
-    y = F2["Amplitude"].to_numpy()
-
-    points = np.column_stack((x, y))
-    fitter = QuadrilateralFitter(polygon=points)
-    quadrilateral = np.array(fitter.fit())
-
-    # Close the quadrilateral
-    quad_closed = np.vstack([quadrilateral, quadrilateral[0]])
-    #Plot quadrilateral
-    #plt.plot(quad_closed[:, 0],quad_closed[:, 1],"-",color="red",linewidth=2,label="Fitted quadrilateral")
-    #Plot four corners
-    #plt.plot(quadrilateral[:, 0],quadrilateral[:, 1],"o",color="black")
-
-    print("Quadrilateral:",quadrilateral)
-
-    #Extract sides for linear fit
-    tolerance = 0.02
-    fits = []
-
-    #Loop on all four sides of the parallelogram
-    for i in range(4):
-        p1 = quadrilateral[i]
-        p2 = quadrilateral[(i + 1) % 4]
-
-        m, b, mask = fit_side(x,y,p1,p2,tolerance)
-
-        fits.append((m, b, mask))
-
-        print(
-            f"Side {i+1}: "
-            f"slope = {m:.6g}, "
-            f"intercept = {b:.6g}, "
-            f"N = {mask.sum()}"
-        )
-
-    for i, (m, b, mask) in enumerate(fits):
-
-        p1 = quadrilateral[i]
-        p2 = quadrilateral[(i + 1) % 4]
-
-        #Plot selected points
-        plt.plot(x[mask],y[mask],".",markersize=5,label=f"Side {i+1} points")
-
-        #Plot regression line
-        x_line = np.linspace(min(p1[0], p2[0]),max(p1[0], p2[0]),100)
-
-        y_line = m * x_line + b
-
-        plt.plot(x_line,y_line,linewidth=2,label=f"Fit {i+1}: m={m:.4g}")
-    plt.legend()
-
-    #Calculate area. First we need the "vertices" i.e. intersection between the four linear fits 
-    #and then we apply the function to calculate area
-    vertices = []
-    for i in range(4):
-        line1 = fits[i]
-        line2 = fits[(i + 1) % 4]
-
-        vertex = line_intersection(line1, line2)
-        vertices.append(vertex)
-
-    vertices = np.array(vertices)
-
-    print("vertices",vertices)
-
-    area = polygon_area(vertices)
-    print("Area =", area)
-
-    # Plot vertices
-    plt.plot(vertices[:, 0],vertices[:, 1],"o",color="yellow",label="Fitted vertices")
-        
-    """
-    #Plot on 4 separate panels
-    ax = C1.plot(color="blue",alpha=0.8,label="Ex C1")
-    ax = C2.plot(color="red",alpha=0.8,label="Ex C2")
-    ax = F1.plot(color="green",alpha=0.8,label="Ex F1")
-    ax = F2.plot(color="orange",alpha=0.8,label="Ex F2")
-    plt.plot(C2.index, C2["Amplitude"],color="green",label="C2",alpha=0.2)
-    ax.legend()
-    """
-
-    #C1 and C2 on the same panel
-    fig, axs = plt.subplots()
-
-    p1 = axs.plot(F1.index, F1.Amplitude, '-', label = 'F1', c='green')
-    ax1 = axs.twinx()
-    p2 = ax1.plot(F2.index, F2.Amplitude, '-', label = 'F2', c='red')
-    ax1.tick_params(axis='y')
-    axs.set_ylabel('Amplitude [V]')
-    ax1.set_ylabel(r'Charge [$\mu$C]')
-    axs.set_xlabel('Time')
-
-    l = p1 + p2
-    labs = [li.get_label() for li in l]
-    axs.legend(l, labs, loc='upper left', fontsize = 8)
-    axs.grid(linestyle = '--', color = 'lightgrey')
-
-    plt.show()
-
 if __name__ == "__main__":
     main()
