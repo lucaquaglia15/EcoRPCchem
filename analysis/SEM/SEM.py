@@ -151,6 +151,9 @@ def main():
     #If true -> debug printouts enabled
     debug = False
 
+    #If true -> normalization of counts to C peak (mainly for visual purposes)
+    normalizeToC = True
+
     ##############################
     # Load energy emission lines #
     ##############################
@@ -483,9 +486,14 @@ def main():
         save = True
     else: 
         save = bool(int(sys.argv[2]))
-    
-    if save:
+
+    #Save spectrum as png images if there is NO normalization to C peak
+    if save and normalizeToC == False:
         plt.savefig("../../plots/" + sampleName + ".png",bbox_inches='tight',dpi=300)
+    
+    #Save spectrum as png images if there is normalization to C peak
+    elif save and normalizeToC == True:
+        plt.savefig("../../plots/" + sampleName + "_normalized_counts_to_C.png",bbox_inches='tight',dpi=300)
     
     plt.show()
 

@@ -6,7 +6,7 @@ import os
 
 def main():
 
-    path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S6/S6_B6/csv_spectra_S6_B6/Area 5 10 kV/").expanduser() #input file path
+    path = Path("~/marieCurie/EcoRPCchem/data/bakelite/S7/S7_B0/csv_spectra_S7_B0/Area 1 10 kV/").expanduser() #input file path
 
     ext = ("1.json") #extension of files (not simply .json to avoid picking up also the global json file in the merge)
 
