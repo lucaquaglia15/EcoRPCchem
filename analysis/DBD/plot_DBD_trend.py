@@ -11,7 +11,14 @@ def main():
     #01/10/2026 -> Dry air + glass (2 mm) + single barrier discharge
     #data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_01_10_single_barrier_glass/"
     #02/10/2026 -> Dry air + glass (2 mm) + single barrier discharge
-    data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_02_10_single_barrier_glass/"
+    #data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_02_10_single_barrier_glass/"
+    #15/10/2026 -> Dry air + glass (2 mm) + single barrier discharge -> scan with small voltage steps
+    #data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_15_10_single_barrier_glass/"
+    #20/10/2026 -> Dry Ar + glass (2mm) + single barrier discharge, measurements at different Ar flows and without flow
+    data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_Ar_2_slm_20_10_single_barries_glass"
+    data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_Ar_5_slm_20_10_single_barries_glass"
+    data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_Ar_10_slm_20_10_single_barries_glass"
+    data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_Ar_no_gas_flow_single_barrier_glass"
 
     #Values will be taken from output .json file
     voltages = []
@@ -52,16 +59,18 @@ def main():
     ax.plot(voltages, areas,"o",color="black",label="Q-V plot area vs voltage")
     ax.set_xlabel('Peak-to-peak voltage [V]')
     ax.set_ylabel('Energy [mJ]')
+    ax.grid(linestyle = '--', color = 'lightgrey')
 
     #Plot slopes vs peak-to-peak voltage
     fig, ax = plt.subplots()
-    ax.plot(voltages, cap_m1,"o",color="green",label="Slope m1")
-    ax.plot(voltages, cap_m2,"o",color="red",label="Slope m2")
-    ax.plot(voltages, cap_m3,"o",color="blue",label="Slope m3")
-    ax.plot(voltages, cap_m4,"o",color="black",label="Slope m4")
+    ax.plot(voltages, cap_m1,"o",color="green",label=r"Slope m1 C$_{cell}$ + C$_{s}$")
+    ax.plot(voltages, cap_m2,"o",color="red",label=r"Slope m2 $\zeta _{d}$ + C$_{s}$")
+    ax.plot(voltages, cap_m3,"o",color="blue",label=r"Slope m3 C$_{cell}$ + C$_{s}$")
+    ax.plot(voltages, cap_m4,"o",color="black",label=r"Slope m4 $\zeta _{d}$ + C$_{s}$")
     ax.set_xlabel('Peak-to-peak voltage [V]')
-    ax.set_ylabel('Slopes')
+    ax.set_ylabel('Slopes [F]')
     ax.legend()
+    ax.grid(linestyle = '--', color = 'lightgrey')
 
     plt.show()
 

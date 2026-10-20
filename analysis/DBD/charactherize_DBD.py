@@ -8,15 +8,6 @@ from pathlib import Path
 import sys
 import json
 
-def open_files(dataPath):
-
-    print("path in function to open data",dataPath)
-    df = pd.read_csv(dataPath, delimiter = ',',index_col=0,skiprows=5)
-    df.columns = ["Amplitude"]
-    df.index.names = ["Time"]
-
-    return df
-
 #Calculate area inside the parallelogram
 def polygon_area(vertices):
     x = vertices[:, 0]
@@ -71,10 +62,17 @@ def fit_side(x, y, p1, p2, tolerance):
     x_selected = x[mask]
     y_selected = y[mask]
 
-    # Linear regression
-    m, b = np.polyfit(x_selected, y_selected, 1)
+    # Linear regression, not including errors
+    #m, b = np.polyfit(x_selected, y_selected, 1)
+    #return m, b, mask
 
-    return m, b, mask
+    # Linear regression, including also errors Fit and covariance matrix in one operation
+    p, cov = np.polyfit(x_selected, y_selected, 1, cov=True)
+
+    m, b = p
+    m_err, b_err = np.sqrt(np.diag(cov))
+
+    return m, b, m_err, b_err, mask
 
 #Body of the code
 def main():
@@ -98,7 +96,15 @@ def main():
     #01/10/2026 -> Dry air + glass (2 mm) + single barrier discharge
     #data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_01_10_single_barrier_glass/"
     #02/10/2026 -> Dry air + glass (2 mm) + single barrier discharge
-    data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_02_10_single_barrier_glass/"
+    #data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_02_10_single_barrier_glass/"
+    #15/10/2026 -> Dry air + glass (2 mm) + single barrier discharge -> scan with small voltage steps
+    #data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_15_10_single_barrier_glass/"
+    #20/10/2026 -> Dry Ar + glass (2mm) + single barrier discharge, measurements at different Ar flows and without flow
+    data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_Ar_2_slm_20_10_single_barries_glass"
+    data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_Ar_5_slm_20_10_single_barries_glass"
+    data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_Ar_10_slm_20_10_single_barries_glass"
+    data = "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_Ar_no_gas_flow_single_barrier_glass"
+    
     
     #Open voltages file and save to a list
     print("Opening voltages file")
@@ -157,20 +163,52 @@ def main():
 
                 C1 = dfList[0]
                 C2 = dfList[1]
-                C2["Amplitude"] = C2["Amplitude"]/10.
+                C2["Amplitude"] = C2["Amplitude"]/10. #Go from Volts to Coulomb (uC in this case, V/100 nF)
                 F1 = dfList[2]
                 F2 = dfList[3]
-                F2["Amplitude"] = F2["Amplitude"]/10.
+                F2["Amplitude"] = F2["Amplitude"]/10. #Go from Volts to Coulomb (uC in this case, V/100 nF)
 
-                #print("C1:",C1)
+                ###################################
+                # Apply vertical shift/phse shift #
+                ###################################
+                ampShift = True
+                timeShift = True
 
-                #Create quadrilateral to find vertices
+                #Old capactor only vertical offset in C1
+                if ampShift and data != "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_15_10_single_barrier_glass/":
+                    C1["Amplitude"] = C1["Amplitude"]+50
+                    F1["Amplitude"] = F1["Amplitude"]+50
+
+                #New capacitor also induces a small vertical offset on C1/F1 and also on C2/F2  
+                elif ampShift and data == "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_15_10_single_barrier_glass/":
+                    C1["Amplitude"] = C1["Amplitude"]+50
+                    C2["Amplitude"] = C2["Amplitude"]-(0.0002941/2) #0.00044567/2
+                    F1["Amplitude"] = F1["Amplitude"]+50
+                    F2["Amplitude"] = F2["Amplitude"]-(0.0002941/2) #0.00044567/2)
+
+                #For old data there is a small shift also on the time, which is not there for the new capacitor
+                if timeShift and data != "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_15_10_single_barrier_glass/":
+                    C2.index = C2.index + 1.003e-05
+                    F2.index = F2.index + 1.003e-05
+
+                #########################################
+                # Create quadrilateral to find vertices #
+                #########################################
                 x = F1["Amplitude"].to_numpy()
                 y = F2["Amplitude"].to_numpy()
                 points = np.column_stack((x, y))
                 #Create quadrilateral that matches the points
                 fitter = QuadrilateralFitter(polygon=points)
                 quadrilateral = np.array(fitter.fit())
+
+                #Order the vertices to have proper fitting
+                #For 20 kV data point on 15/10 there is no need to order the datapoints
+                if data == "/Users/Luca/marieCurie/EcoRPCchem/data/DBD setup/dry_air_15_10_single_barrier_glass/" and volt == 20000:
+                    continue
+
+                else:
+                    idx = np.argsort(quadrilateral[:, 0])
+                    quadrilateral[:] = quadrilateral[idx[[0, 2, 3, 1]]]
 
                 #Extract sides for linear fit
                 tolerance = 0.02
@@ -183,14 +221,14 @@ def main():
                         p1 = quadrilateral[i]
                         p2 = quadrilateral[(i + 1) % 4]
                 
-                        m, b, mask = fit_side(x,y,p1,p2,tolerance)
+                        m, b, m_err, b_err, mask = fit_side(x,y,p1,p2,tolerance)
                 
-                        fits.append((m, b, mask))
+                        fits.append((m, b, m_err, b_err, mask))
                 
                         print(
                             f"Side {i+1}: "
-                            f"slope = {m:.6g}, "
-                            f"intercept = {b:.6g}, "
+                            f"slope = {m:.6g} +- {m_err:.2g}, "
+                            f"intercept = {b:.6g} +- {b_err:.2g}, "
                             f"N = {mask.sum()}"
                         )
 
